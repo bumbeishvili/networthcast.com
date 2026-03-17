@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NetWorthCast — Track Your Net Worth & Forecast Your Financial Future</title>
+<meta name="description" content="Track your assets, forecast your net worth, plan for FIRE, and discover where your money goes further. The all-in-one net worth tracker with financial forecasting and cost of living comparison.">
+<link rel="canonical" href="https://networthcast.com/">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://networthcast.com/">
+<meta property="og:title" content="NetWorthCast — Net Worth Tracker + Financial Forecasting">
+<meta property="og:description" content="Track assets, forecast your net worth, calculate your FIRE number, and compare cost of living across cities. Free to start.">
+<meta property="og:site_name" content="NetWorthCast">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="NetWorthCast — Net Worth Tracker + Financial Forecasting">
+<meta name="twitter:description" content="Track assets, forecast your net worth, calculate your FIRE number, and compare cost of living across cities. Free to start.">
+
+<!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "SoftwareApplication",
+  "name": "NetWorthCast",
+  "applicationCategory": "FinanceApplication",
+  "operatingSystem": "Web",
+  "url": "https://networthcast.com",
+  "description": "Track your net worth, forecast financial growth, plan for FIRE (Financial Independence, Retire Early), and compare cost of living across 44 cities worldwide.",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "featureList": [
+    "Net worth tracking with liquid and illiquid assets",
+    "30-year financial forecasting with compound growth",
+    "FIRE calculator with multiple FIRE variants",
+    "Cost of living comparison across 44 cities in 11 regions",
+    "Relocation affordability calculator with tax rates",
+    "Family size scaling for household planning",
+    "Revenue and expense tracking with annual growth rates",
+    "One-time income and expense event scheduling",
+    "Asset linking for income tied to property or investments"
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is a FIRE number?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your FIRE (Financial Independence, Retire Early) number is the amount of money you need invested to live off the returns indefinitely. It's typically calculated as your annual expenses divided by 0.04 (the 4% safe withdrawal rate). NetWorthCast calculates this automatically based on your monthly costs."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the net worth forecast work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "NetWorthCast projects your net worth up to 30 years into the future by compounding each asset at its individual return rate, factoring in recurring income and expenses (with annual growth rates), and accounting for one-time events like property purchases or asset sales."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does the cost of living comparison work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "NetWorthCast compares your current income against the cost of living in 44 cities across 11 world regions. It factors in local tax rates on remote income, scales costs for your household size, and shows which cities you can afford to live in comfortably."
+      }
+    }
+  ]
+}
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f5f2;--card:#fff;--brd:#e5e2dc;--txt:#1c1917;--mut:#8c857d;--acc:#2563eb;--acc-lt:#dbeafe;--grn:#059669;--grn-bg:#ecfdf5;--red:#dc2626;--red-bg:#fef2f2;--ylw:#d97706;--prp:#7c3aed;--prp-bg:#f5f3ff;--fn:'Outfit',sans-serif;--mo:'IBM Plex Mono',monospace;--rad:12px;--shd:0 1px 3px rgba(0,0,0,.05)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--fn);color:var(--txt);background:var(--bg);min-height:100vh}
+.w{max-width:860px;margin:0 auto;padding:16px 16px 80px}
+.c{background:var(--card);border-radius:var(--rad);border:1px solid var(--brd);box-shadow:var(--shd);margin-bottom:12px}
+.cp{padding:16px 20px}
+input,select{font-family:var(--fn);color:var(--txt)}
+.sm{background:var(--bg);border:1px solid var(--brd);border-radius:7px;padding:6px 8px;font-size:12px;outline:none;box-sizing:border-box}
+.rw{display:flex;gap:6px;align-items:center;padding:5px 0;border-bottom:1px solid var(--brd);flex-wrap:nowrap}
+.sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.st{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-family:var(--mo)}
+.ba{background:0;color:var(--acc);border:1px solid var(--brd);border-radius:6px;padding:3px 10px;font-size:11px;cursor:pointer;font-family:var(--fn);font-weight:600}
+.ba:hover{background:var(--acc-lt)}
+.bd{background:0;border:0;cursor:pointer;color:var(--mut);font-size:16px;padding:0 4px;line-height:1}
+.bd:hover{color:var(--red)}
+.hn{font-size:11px;color:var(--mut);margin:-6px 0 8px;line-height:1.4}
+.tg{font-size:9px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:2px 6px;border-radius:4px;font-family:var(--mo);margin-left:6px;display:inline-block}
+.br{display:flex;justify-content:space-between;align-items:center;padding:4px 0;font-size:13px}
+.bh{display:flex;justify-content:space-between;align-items:center;padding:8px 0 4px}
+.bhl{font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;font-family:var(--mo)}
+.bhr{font-size:11px;font-weight:700;font-family:var(--mo)}
+.dv{height:1px;background:var(--brd);margin:8px 0 4px}
+.sw{padding:16px 0 6px;user-select:none}
+.stp{position:absolute;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;pointer-events:none;transition:opacity .15s}
+.stb{background:var(--txt);color:#fff;border-radius:7px;padding:4px 10px;font-size:11px;font-weight:600;font-family:var(--mo);white-space:nowrap;box-shadow:0 4px 12px rgba(0,0,0,.15)}
+.sta{width:0;height:0;border-left:5px solid transparent;border-right:5px solid transparent;border-top:5px solid var(--txt)}
+.stk{position:relative;height:28px;cursor:pointer;display:flex;align-items:center;outline:none;border-radius:8px}
+.srl{position:absolute;left:0;right:0;height:5px;border-radius:3px;background:var(--brd)}
+.sfl{position:absolute;left:0;height:5px;border-radius:3px}
+.sth{position:absolute;transform:translateX(-50%);border-radius:50%;background:#fff;border:3px solid var(--acc);z-index:2;transition:all .15s;width:16px;height:16px;box-shadow:0 1px 4px rgba(0,0,0,.15)}
+.sth.on{width:20px;height:20px;box-shadow:0 0 0 5px rgba(37,99,235,.13),0 2px 8px rgba(0,0,0,.18)}
+.qb{display:flex;justify-content:center;gap:5px;margin-top:6px}
+.qb button{padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;font-family:var(--mo);cursor:pointer}
+.cr{padding:8px 14px;cursor:pointer;transition:border-color .15s}
+.cr:hover{border-color:var(--acc)!important}
+.ce{margin-top:8px;padding-top:8px;border-top:1px solid var(--brd)}
+.fb{padding:3px 8px;border-radius:5px;font-size:10px;cursor:pointer;font-family:var(--mo)}
+.mt{flex:1;border-radius:5px;padding:5px 8px;text-align:center}
+.ml{font-size:8px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);font-family:var(--mo)}
+.mv{font-size:13px;font-weight:700;font-family:var(--mo)}
+.ls{flex:0 0 40px;width:40px;padding:4px 2px;font-size:11px;text-align:center}
+.sr{font-size:11px;font-family:var(--mo);font-weight:600}
+.rw-primary{background:var(--acc-lt);border-left:3px solid var(--acc);border-bottom:1px solid #bfdbfe;padding-left:8px;border-radius:4px 0 0 4px;position:relative}
+.rw-primary::before{content:'★';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-size:9px;color:var(--acc)}
+.primary-badge{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:1px 5px;border-radius:3px;background:var(--acc);color:#fff;font-family:var(--mo);margin-left:6px;white-space:nowrap}
+.reorder-btn{background:none;border:1px solid var(--brd);border-radius:4px;cursor:pointer;color:var(--mut);font-size:11px;padding:2px 4px;line-height:1;display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0}
+.reorder-btn:hover{background:var(--acc-lt);color:var(--acc);border-color:var(--acc)}
+.reorder-wrap{display:flex;flex-direction:column;gap:1px;flex-shrink:0}
+@keyframes swapFlash{0%{background:rgba(37,99,235,.15)}100%{background:transparent}}
+.rw-swapped{animation:swapFlash .5s ease-out}
+.seo-only{position:absolute;left:-9999px;height:1px;overflow:hidden}
+</style>
+</head>
+<body>
+
+<!-- SEO: crawlable content hidden from visual UI but readable by search engines -->
+<div class="seo-only" aria-hidden="true">
+  <h1>Track Your Net Worth. Forecast Your Future.</h1>
+  <h2>See your complete financial picture</h2>
+  <p>NetWorthCast is a free net worth tracker and financial forecasting tool. Track liquid assets like cash, deposits, stocks, and crypto alongside illiquid assets like real estate and vehicles. Each asset compounds at its own rate for accurate projections up to 30 years.</p>
+  <h2>Know when you'll reach financial independence</h2>
+  <p>Calculate your FIRE number automatically based on your monthly expenses and the 4% safe withdrawal rate. See exactly when your net worth crosses the financial independence threshold with our interactive timeline.</p>
+  <h2>Discover where your money goes further</h2>
+  <p>Compare cost of living across 44 cities in 11 world regions including Lisbon, Berlin, Bangkok, Tbilisi, Mexico City, Bali, Dubai, and more. Factor in local tax rates on remote income and scale costs for your household size to find where you can live comfortably.</p>
+  <h2>Net Worth Calculator Features</h2>
+  <p>Multiple liquid asset accounts with individual return rates. Cascade expense logic draws from primary account first, then reserves. Revenue and cost tracking with annual growth rates. One-time income and expense events. Buy and sell assets with appreciation tracking. Asset-linked income that stops when the asset is sold.</p>
+</div>
+
+<div class="w" id="app">
+  <!-- Header -->
+  <header style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
+    <div style="width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#2563eb,#059669);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px">N</div>
+    <span style="font-weight:800;font-size:17px;letter-spacing:-.5px">NetWorthCast</span>
+    <span style="font-size:11px;color:var(--mut);margin-left:4px">Net Worth · Forecast · Relocate</span>
+  </header>
+
+  <!-- Hero -->
+  <div class="c" style="padding:20px 20px 14px" id="hero">
+    <div style="text-align:center">
+      <div id="h-label" style="font-size:10px;text-transform:uppercase;letter-spacing:2px;color:var(--mut);font-family:var(--mo)"></div>
+      <div id="h-val" style="font-size:44px;font-weight:800;line-height:1.1;margin:4px 0 2px"></div>
+      <div id="h-sub" style="font-size:11px;color:var(--mut);font-family:var(--mo)"></div>
+      <div id="h-fire" style="font-size:11px;margin-top:6px;font-family:var(--mo);display:flex;align-items:center;justify-content:center;gap:6px"></div>
+    </div>
+    <div style="margin-top:14px" id="chart-box"><canvas id="cv"></canvas></div>
+    <div class="sw">
+      <div style="position:relative;height:34px;margin-bottom:2px">
+        <div class="stp" id="tip" style="opacity:0"><div class="stb" id="tip-t"></div><div class="sta"></div></div>
+      </div>
+      <div class="stk" id="trk" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="360">
+        <div class="srl"></div>
+        <div class="sfl" id="fill"></div>
+        <div id="ticks"></div>
+        <div class="sth" id="thumb"></div>
+      </div>
+      <div id="labels" style="position:relative;height:16px;margin-top:2px"></div>
+      <div class="qb" id="qbtns"></div>
+    </div>
+  </div>
+
+  <!-- Relocate -->
+  <div class="c" style="overflow:hidden" id="reloc">
+    <div id="rel-hd" style="padding:12px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">🌍</span><div><span style="font-weight:700;font-size:13px">Where can you afford to live?</span><span id="rel-cnt" style="font-size:11px;color:var(--mut);margin-left:8px"></span></div></div>
+      <span id="rel-arr" style="font-size:14px;color:var(--mut);transition:transform .2s">▾</span>
+    </div>
+    <div id="rel-body" style="display:none;padding:0 18px 14px"></div>
+  </div>
+
+  <!-- Breakdown -->
+  <div id="bkdn"></div>
+
+  <!-- Editable sections -->
+  <div id="secs"></div>
+</div>
+
+<script>
+/* ═══════════════════════════════════════════════════════════════
+   WEALTHLENS — Pure HTML/CSS/JS, no frameworks
+   Architecture:
+   - updateView()     → hero text, chart, slider position, breakdown, relocate (called during drag)
+   - renderSections() → liquid/illiquid/rev/cost/event sections (called on add/remove/edit)
+   - Slider DOM is static, only style.left updates during drag
+   ═══════════════════════════════════════════════════════════════ */
+
+// ═══════════════ DATA
+const REGIONS=[
+{id:"we",name:"Western Europe",emoji:"🏰"},{id:"ee",name:"Eastern Europe",emoji:"🏛"},
+{id:"na",name:"North America",emoji:"🗽"},{id:"la",name:"Latin America",emoji:"🌎"},
+{id:"sea",name:"Southeast Asia",emoji:"🌴"},{id:"ea",name:"East Asia",emoji:"🏯"},
+{id:"me",name:"Middle East",emoji:"🕌"},{id:"sa",name:"South Asia",emoji:"🕉"},
+{id:"ca",name:"Central Asia & Caucasus",emoji:"⛰"},{id:"oc",name:"Oceania",emoji:"🦘"},
+{id:"af",name:"Africa",emoji:"🌍"}];
+const FAMS=[
+{id:"solo",label:"Solo",persons:1,rentMul:1,utilMul:1},
+{id:"couple",label:"Couple",persons:2,rentMul:1.3,utilMul:1.2},
+{id:"fam1",label:"+1 kid",persons:3,rentMul:1.6,utilMul:1.3},
+{id:"fam2",label:"+2 kids",persons:4,rentMul:1.8,utilMul:1.4},
+{id:"fam3",label:"+3 kids",persons:5,rentMul:2.0,utilMul:1.5},
+{id:"fam4",label:"+4 kids",persons:6,rentMul:2.2,utilMul:1.6}];
+function colTot(c,fam){const f=FAMS.find(p=>p.id===fam)||FAMS[0];return Math.round(c.rent*f.rentMul+(c.food+c.transport+c.other)*(f.persons*.65+.35)+c.utilities*f.utilMul+c.health*f.persons)}
+const COL=[
+{code:"LIS",city:"Lisbon",country:"Portugal",flag:"🇵🇹",region:"we",rent:1000,food:350,transport:60,utilities:130,health:50,other:200,inf:3.5,tax:20,notes:"D8 DN visa. NHR regime can lower tax."},
+{code:"BCN",city:"Barcelona",country:"Spain",flag:"🇪🇸",region:"we",rent:1100,food:400,transport:55,utilities:140,health:60,other:250,inf:3.5,tax:24,notes:"Beckham law: 24% flat for 6 yrs."},
+{code:"BER",city:"Berlin",country:"Germany",flag:"🇩🇪",region:"we",rent:1100,food:400,transport:90,utilities:250,health:200,other:260,inf:2.5,tax:30,notes:"Freelance visa. Progressive tax."},
+{code:"AMS",city:"Amsterdam",country:"Netherlands",flag:"🇳🇱",region:"we",rent:1600,food:420,transport:80,utilities:200,health:130,other:280,inf:2.8,tax:33,notes:"30% ruling can reduce taxable income."},
+{code:"PAR",city:"Paris",country:"France",flag:"🇫🇷",region:"we",rent:1300,food:450,transport:80,utilities:180,health:50,other:300,inf:2.5,tax:30,notes:"Talent passport. High social charges."},
+{code:"ZUR",city:"Zürich",country:"Switzerland",flag:"🇨🇭",region:"we",rent:2200,food:650,transport:120,utilities:200,health:350,other:400,inf:1.5,tax:22,notes:"Low tax but very high cost."},
+{code:"DUB",city:"Dublin",country:"Ireland",flag:"🇮🇪",region:"we",rent:1800,food:400,transport:100,utilities:200,health:60,other:280,inf:2.5,tax:32,notes:"English-speaking EU hub."},
+{code:"MIL",city:"Milan",country:"Italy",flag:"🇮🇹",region:"we",rent:1100,food:400,transport:50,utilities:180,health:60,other:240,inf:2.5,tax:7,notes:"7% flat tax for new residents."},
+{code:"SPL",city:"Split",country:"Croatia",flag:"🇭🇷",region:"we",rent:750,food:350,transport:40,utilities:140,health:50,other:200,inf:3.0,tax:0,notes:"DN visa: 0% tax on foreign income."},
+{code:"WAR",city:"Warsaw",country:"Poland",flag:"🇵🇱",region:"ee",rent:750,food:320,transport:35,utilities:160,health:50,other:200,inf:4.0,tax:19,notes:"19% flat for self-employed. EU."},
+{code:"BUD",city:"Budapest",country:"Hungary",flag:"🇭🇺",region:"ee",rent:650,food:300,transport:30,utilities:140,health:40,other:180,inf:5.0,tax:15,notes:"15% flat income tax."},
+{code:"SOF",city:"Sofia",country:"Bulgaria",flag:"🇧🇬",region:"ee",rent:500,food:280,transport:30,utilities:100,health:40,other:150,inf:3.5,tax:10,notes:"10% flat tax. EU. Very affordable."},
+{code:"BUC",city:"Bucharest",country:"Romania",flag:"🇷🇴",region:"ee",rent:550,food:300,transport:30,utilities:120,health:40,other:170,inf:4.5,tax:10,notes:"10% flat. Fastest EU internet."},
+{code:"PRG",city:"Prague",country:"Czechia",flag:"🇨🇿",region:"ee",rent:800,food:330,transport:30,utilities:160,health:50,other:200,inf:3.0,tax:23,notes:"Zivno visa for freelancers."},
+{code:"TAL",city:"Tallinn",country:"Estonia",flag:"🇪🇪",region:"ee",rent:700,food:350,transport:40,utilities:180,health:50,other:220,inf:3.5,tax:20,notes:"e-Residency. 20% flat."},
+{code:"BEL",city:"Belgrade",country:"Serbia",flag:"🇷🇸",region:"ee",rent:500,food:280,transport:25,utilities:100,health:40,other:160,inf:5.0,tax:10,notes:"10% flat. 1yr visa-free."},
+{code:"NYC",city:"New York",country:"USA",flag:"🇺🇸",region:"na",rent:2800,food:650,transport:130,utilities:200,health:500,other:500,inf:3.0,tax:32,notes:"Fed + state + city tax. HCOL."},
+{code:"AUS",city:"Austin",country:"USA",flag:"🇺🇸",region:"na",rent:1600,food:500,transport:150,utilities:180,health:450,other:350,inf:3.5,tax:24,notes:"No state income tax."},
+{code:"MIA",city:"Miami",country:"USA",flag:"🇺🇸",region:"na",rent:2000,food:550,transport:150,utilities:200,health:480,other:400,inf:3.5,tax:24,notes:"No state income tax. Crypto hub."},
+{code:"VAN",city:"Vancouver",country:"Canada",flag:"🇨🇦",region:"na",rent:1800,food:450,transport:100,utilities:150,health:0,other:350,inf:3.0,tax:28,notes:"Free healthcare. Beautiful."},
+{code:"TOR",city:"Toronto",country:"Canada",flag:"🇨🇦",region:"na",rent:1700,food:420,transport:110,utilities:160,health:0,other:320,inf:3.0,tax:28,notes:"Diverse. Free healthcare."},
+{code:"CDM",city:"Mexico City",country:"Mexico",flag:"🇲🇽",region:"la",rent:600,food:280,transport:40,utilities:60,health:50,other:180,inf:5.0,tax:15,notes:"Temp resident visa. US timezone."},
+{code:"MDE",city:"Medellín",country:"Colombia",flag:"🇨🇴",region:"la",rent:500,food:250,transport:30,utilities:70,health:50,other:150,inf:5.5,tax:0,notes:"DN visa. Foreign income untaxed 5yr."},
+{code:"BA",city:"Buenos Aires",country:"Argentina",flag:"🇦🇷",region:"la",rent:400,food:220,transport:15,utilities:30,health:50,other:130,inf:50.0,tax:0,notes:"Very cheap in USD. High local inflation."},
+{code:"SP",city:"São Paulo",country:"Brazil",flag:"🇧🇷",region:"la",rent:500,food:250,transport:40,utilities:70,health:80,other:160,inf:5.0,tax:15,notes:"DN visa. Largest LatAm economy."},
+{code:"PLY",city:"Playa del Carmen",country:"Mexico",flag:"🇲🇽",region:"la",rent:700,food:300,transport:30,utilities:70,health:50,other:180,inf:5.0,tax:15,notes:"Caribbean beach + US timezone."},
+{code:"BKK",city:"Bangkok",country:"Thailand",flag:"🇹🇭",region:"sea",rent:500,food:250,transport:50,utilities:80,health:40,other:150,inf:2.5,tax:0,notes:"Foreign income not remitted = untaxed."},
+{code:"CMI",city:"Chiang Mai",country:"Thailand",flag:"🇹🇭",region:"sea",rent:350,food:250,transport:40,utilities:70,health:40,other:120,inf:2.5,tax:0,notes:"OG nomad city. Under $1k/mo."},
+{code:"BAL",city:"Bali",country:"Indonesia",flag:"🇮🇩",region:"sea",rent:450,food:220,transport:40,utilities:60,health:30,other:140,inf:3.5,tax:0,notes:"DN visa. Foreign income untaxed."},
+{code:"DAN",city:"Da Nang",country:"Vietnam",flag:"🇻🇳",region:"sea",rent:400,food:200,transport:30,utilities:50,health:30,other:100,inf:3.5,tax:0,notes:"Beach city. Tourist visa = no tax."},
+{code:"HCM",city:"Ho Chi Minh",country:"Vietnam",flag:"🇻🇳",region:"sea",rent:450,food:220,transport:35,utilities:55,health:30,other:120,inf:3.5,tax:0,notes:"Energetic city. Great coffee."},
+{code:"KUL",city:"Kuala Lumpur",country:"Malaysia",flag:"🇲🇾",region:"sea",rent:500,food:220,transport:40,utilities:60,health:40,other:140,inf:3.0,tax:0,notes:"Foreign-sourced income exempt."},
+{code:"TYO",city:"Tokyo",country:"Japan",flag:"🇯🇵",region:"ea",rent:1000,food:400,transport:100,utilities:150,health:80,other:250,inf:2.0,tax:20,notes:"Resident taxed worldwide."},
+{code:"SEL",city:"Seoul",country:"South Korea",flag:"🇰🇷",region:"ea",rent:800,food:380,transport:60,utilities:130,health:60,other:220,inf:2.5,tax:19,notes:"Fast internet. 19% flat."},
+{code:"TPE",city:"Taipei",country:"Taiwan",flag:"🇹🇼",region:"ea",rent:600,food:300,transport:40,utilities:80,health:30,other:160,inf:2.0,tax:18,notes:"Gold Card program."},
+{code:"DXB",city:"Dubai",country:"UAE",flag:"🇦🇪",region:"me",rent:1800,food:500,transport:180,utilities:180,health:200,other:400,inf:2.5,tax:0,notes:"0% income tax. DN visa."},
+{code:"IST",city:"Istanbul",country:"Turkey",flag:"🇹🇷",region:"me",rent:550,food:280,transport:40,utilities:80,health:50,other:150,inf:40.0,tax:15,notes:"Volatile lira. Often untaxed."},
+{code:"BLR",city:"Bangalore",country:"India",flag:"🇮🇳",region:"sa",rent:300,food:150,transport:25,utilities:40,health:30,other:80,inf:5.0,tax:20,notes:"India's tech capital."},
+{code:"GOA",city:"Goa",country:"India",flag:"🇮🇳",region:"sa",rent:350,food:170,transport:30,utilities:45,health:30,other:100,inf:5.0,tax:20,notes:"Beach lifestyle. Nomad community."},
+{code:"TBS",city:"Tbilisi",country:"Georgia",flag:"🇬🇪",region:"ca",rent:500,food:250,transport:30,utilities:60,health:50,other:130,inf:4.0,tax:1,notes:"1% small biz. 1yr visa-free."},
+{code:"YER",city:"Yerevan",country:"Armenia",flag:"🇦🇲",region:"ca",rent:400,food:220,transport:25,utilities:50,health:40,other:110,inf:4.0,tax:10,notes:"IT: 10% rate. Growing scene."},
+{code:"ALA",city:"Almaty",country:"Kazakhstan",flag:"🇰🇿",region:"ca",rent:500,food:250,transport:30,utilities:70,health:40,other:130,inf:8.0,tax:10,notes:"10% flat. Mountains."},
+{code:"SYD",city:"Sydney",country:"Australia",flag:"🇦🇺",region:"oc",rent:2000,food:500,transport:120,utilities:180,health:100,other:350,inf:3.0,tax:30,notes:"High QoL. Taxed worldwide."},
+{code:"AKL",city:"Auckland",country:"New Zealand",flag:"🇳🇿",region:"oc",rent:1400,food:420,transport:100,utilities:160,health:0,other:280,inf:3.0,tax:30,notes:"Free healthcare."},
+{code:"CPT",city:"Cape Town",country:"South Africa",flag:"🇿🇦",region:"af",rent:600,food:250,transport:50,utilities:80,health:60,other:150,inf:5.5,tax:18,notes:"Foreign income exemption ~$1M."}
+];
+
+// ═══════════════ UTILS
+const uid=()=>Math.random().toString(36).slice(2,9);
+const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+function fm(n){if(n==null||isNaN(n))return'$0';const s=n<0?'-':'',a=Math.abs(n);if(a>=1e6)return s+'$'+(a/1e6).toFixed(1)+'M';if(a>=1e3)return s+'$'+(a/1e3).toFixed(1)+'k';return s+'$'+Math.round(a).toLocaleString()}
+function fmF(n){if(n==null||isNaN(n))return'$0';return(n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString()}
+function fmT(m){if(m<=0)return'now';const y=Math.floor(m/12),mo=m%12;if(!y)return`in ${mo} mo`;if(!mo)return y===1?'in 1 yr':`in ${y} yr`;return y===1?`in 1 yr ${mo} mo`:`in ${y} yr ${mo} mo`}
+const SK='wealthlens_v10';
+function load(){try{const r=localStorage.getItem(SK);return r?JSON.parse(r):null}catch{return null}}
+function persist(){try{localStorage.setItem(SK,JSON.stringify({liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam}))}catch{}}
+const NOW=new Date(),MX=360,DF=NOW.toISOString().slice(0,10);
+const DT=new Date(NOW.getFullYear()+30,NOW.getMonth(),NOW.getDate()).toISOString().slice(0,10);
+const SS=1000;
+const s2m=s=>Math.round(MX*(s/SS)**2);
+const m2s=m=>Math.round(SS*Math.sqrt(m/MX));
+const y1=String(NOW.getFullYear()+1),y3=String(NOW.getFullYear()+3),y5=String(NOW.getFullYear()+5);
+
+// ═══════════════ STATE
+const sv=load()||{};
+const D={
+  liq:sv.liquidAssets||[
+    {id:'cash_001',name:'Cash savings',value:22000,returnRate:0},
+    {id:'dep_001',name:'Bank deposit',value:16700,returnRate:4.5},
+    {id:'sp5_001',name:'S&P 500 index fund',value:32000,returnRate:10},
+    {id:'cry_001',name:'BTC + ETH',value:8400,returnRate:15}],
+  ill:sv.ownedAssets||[
+    {id:'apt_001',name:'Tbilisi apartment',value:95000,appRate:8},
+    {id:'car_001',name:'Toyota Corolla 2021',value:12500,appRate:-10}],
+  rev:sv.revs||[
+    {id:uid(),name:'Upwork clients',amount:7200,from:DF,to:`${y5}-06-01`,appRate:5,linkedAssetId:''},
+    {id:uid(),name:'Direct client retainer',amount:2800,from:DF,to:`${y3}-12-31`,appRate:0,linkedAssetId:''},
+    {id:uid(),name:'Rental income (apartment)',amount:650,from:DF,to:DT,appRate:3,linkedAssetId:'apt_001'}],
+  cst:sv.costs||[
+    {id:uid(),name:'Rent (own place)',amount:750,from:DF,to:DT,appRate:4,linkedAssetId:''},
+    {id:uid(),name:'Groceries & eating out',amount:520,from:DF,to:DT,appRate:6,linkedAssetId:''},
+    {id:uid(),name:'Car insurance',amount:120,from:DF,to:`${y3}-03-01`,appRate:0,linkedAssetId:'car_001'},
+    {id:uid(),name:'Car maintenance',amount:80,from:DF,to:`${y3}-03-01`,appRate:3,linkedAssetId:'car_001'},
+    {id:uid(),name:'Utilities & internet',amount:120,from:DF,to:DT,appRate:3,linkedAssetId:''},
+    {id:uid(),name:'Health insurance',amount:180,from:DF,to:DT,appRate:8,linkedAssetId:''},
+    {id:uid(),name:'Subscriptions & tools',amount:95,from:DF,to:DT,appRate:5,linkedAssetId:''},
+    {id:uid(),name:'Misc / fun',amount:300,from:DF,to:DT,appRate:3,linkedAssetId:''}],
+  iev:sv.incomeEvents||[
+    {id:uid(),type:'cash',name:'Tax refund',amount:2400,date:`${y1}-04-15`,sellAssetId:''},
+    {id:uid(),type:'cash',name:'Freelance bonus project',amount:8500,date:`${y1}-09-01`,sellAssetId:''},
+    {id:uid(),type:'sell',name:'',amount:0,date:`${y3}-06-01`,sellAssetId:'car_001'},
+    {id:uid(),type:'sell',name:'',amount:0,date:`${y5}-01-15`,sellAssetId:'apt_001'}],
+  eev:sv.expenseEvents||[
+    {id:uid(),type:'expense',name:'Vacation (Japan)',amount:4500,date:`${y1}-07-01`,appRate:0},
+    {id:uid(),type:'expense',name:'Dental work',amount:1800,date:`${y1}-02-15`,appRate:0},
+    {id:uid(),type:'expense',name:'New laptop',amount:2200,date:`${y1}-11-01`,appRate:0},
+    {id:'bcar_01',type:'buy',name:'New car (used Mazda)',amount:18000,date:`${y3}-07-01`,appRate:-12},
+    {id:uid(),type:'buy',name:'Investment property (Batumi)',amount:55000,date:`${y1}-10-01`,appRate:7},
+    {id:uid(),type:'expense',name:'Wedding',amount:12000,date:`${String(NOW.getFullYear()+2)}-06-15`,appRate:0}],
+  sl:sv.slider??36,
+  fam:sv.famSize||'solo',
+  relOpen:false,
+  relExp:null
+};
+
+// ═══════════════ FORECAST ENGINE
+let FC=[];
+function runFC(){
+  const pts=[];
+  const lb={};D.liq.forEach(a=>{lb[a.id]=a.value||0});
+  let cR=0;const lr={};D.liq.forEach(a=>{lr[a.id]=0});
+  const rc={};D.rev.forEach(r=>rc[r.id]=0);
+  const cc={};D.cst.forEach(c=>cc[c.id]=0);
+  const et={},xt={},sa=new Set(),ba={};
+  const cid=D.liq.length?D.liq[0].id:null;
+
+  // Cascade withdraw: deduct amount from liquid assets in order (first→last)
+  // Returns actual amount deducted (may be less if all assets drained)
+  function withdraw(amount){
+    let rem=amount;
+    for(const a of D.liq){
+      if(rem<=0)break;
+      const take=Math.min(rem,lb[a.id]);
+      if(take>0){lb[a.id]-=take;rem-=take}
+    }
+    // If still remaining, let the first asset go negative (debt)
+    if(rem>0&&cid){lb[cid]-=rem}
+    return amount;
+  }
+
+  for(let m=0;m<=MX;m++){
+    const d=new Date(NOW.getFullYear(),NOW.getMonth()+m,1);
+    if(m>0){
+      // Compound returns — each asset keeps its own returns
+      for(const a of D.liq){const mr=(a.returnRate||0)/100/12;const r=lb[a.id]*mr;lb[a.id]+=r;lr[a.id]=(lr[a.id]||0)+r;cR+=r}
+      const md=new Date(NOW.getFullYear(),NOW.getMonth()+m-1,15);
+      // Revenue flows into first asset
+      for(const r of D.rev){
+        if(r.linkedAssetId&&(sa.has(r.linkedAssetId)||sa.has('bought_'+r.linkedAssetId)))continue;
+        const f=r.from?new Date(r.from):new Date(0),t=r.to?new Date(r.to):new Date(9999,0);
+        if(md>=f&&md<=t){const mr=(r.appRate||0)/100/12;const am=(r.amount||0)*Math.pow(1+mr,m-1);if(cid)lb[cid]+=am;rc[r.id]=(rc[r.id]||0)+am}}
+      // Costs cascade: deduct from first, overflow to second, etc.
+      for(const c of D.cst){
+        if(c.linkedAssetId&&(sa.has(c.linkedAssetId)||sa.has('bought_'+c.linkedAssetId)))continue;
+        const f=c.from?new Date(c.from):new Date(0),t=c.to?new Date(c.to):new Date(9999,0);
+        if(md>=f&&md<=t){const mr=(c.appRate||0)/100/12;const am=(c.amount||0)*Math.pow(1+mr,m-1);withdraw(am);cc[c.id]=(cc[c.id]||0)+am}}
+    }
+    // Income events — proceeds to first asset
+    for(const ev of D.iev){if(ev.date){const ed=new Date(ev.date);if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&!et[ev.id]){
+      if(ev.type==='sell'&&ev.sellAssetId){
+        const as=D.ill.find(a=>a.id===ev.sellAssetId);
+        if(as&&!sa.has(as.id)){const mr=(as.appRate||0)/100/12;const ap=(as.value||0)*Math.pow(1+mr,m);if(cid)lb[cid]+=ap;et[ev.id]={value:ap,name:as.name};sa.add(as.id)}
+        const bi=ev.sellAssetId.replace('bought_','');const b=ba[bi];
+        if(b&&!sa.has('bought_'+bi)){const mo=m-b.buyMonth;const mr=(b.appRate||0)/100/12;const ap=b.value*Math.pow(1+mr,Math.max(0,mo));if(cid)lb[cid]+=ap;et[ev.id]={value:ap,name:b.name};sa.add('bought_'+bi)}
+      }else{if(cid)lb[cid]+=(ev.amount||0);et[ev.id]={value:ev.amount||0,name:ev.name}}}}}
+    // Expense events — cascade withdraw
+    for(const ev of D.eev){if(ev.date){const ed=new Date(ev.date);if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&!xt[ev.id]){
+      withdraw(ev.amount||0);if(ev.type==='buy')ba[ev.id]={name:ev.name,value:ev.amount||0,appRate:ev.appRate||0,buyMonth:m};xt[ev.id]=true}}}
+    let lT=0;const lv={};for(const a of D.liq){lv[a.id]=lb[a.id];lT+=lb[a.id]}
+    let iT=0;const av={};
+    for(const a of D.ill){if(!sa.has(a.id)){const mr=(a.appRate||0)/100/12;const v=(a.value||0)*Math.pow(1+mr,m);iT+=v;av[a.id]=v}else av[a.id]=0}
+    const bv={};for(const[k,b]of Object.entries(ba)){if(!sa.has('bought_'+k)){const mo=m-b.buyMonth;const mr=(b.appRate||0)/100/12;const v=b.value*Math.pow(1+mr,Math.max(0,mo));iT+=v;bv[k]=v}else bv[k]=0}
+    pts.push({month:m,value:lT+iT,cash:lT,assetTotal:iT,liqValues:{...lv},liqReturns:{...lr},assetValues:av,boughtValues:{...bv},boughtAssets:{...ba},date:d,cumReturns:cR,revCum:{...rc},costCum:{...cc},evtTriggered:{...et},expTriggered:{...xt},soldAssets:new Set(sa)});
+  }
+  FC=pts;
+}
+
+// ═══════════════ CHART (canvas)
+function drawChart(){
+  const cv=document.getElementById('cv'),bx=document.getElementById('chart-box');
+  if(!cv||!bx||!FC.length)return;
+  const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
+  const W=bx.clientWidth,H=190;
+  cv.width=W*2;cv.height=H*2;cv.style.width=W+'px';cv.style.height=H+'px';
+  const ctx=cv.getContext('2d');ctx.scale(2,2);ctx.clearRect(0,0,W,H);
+  const ei=Math.max(6,Math.min(D.sl||6,FC.length-1));
+  const vis=FC.slice(0,ei+1),len=vis.length;
+  const p={t:16,r:12,b:32,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const vals=vis.map(d=>d.value);
+  const fN=mCost>0?(mCost*12)/.04:null;
+  let fI=-1;if(fN>0)for(let i=0;i<len;i++)if(vis[i].value>=fN){fI=i;break}
+  let mn=Math.min(...vals,0),mx=Math.max(...vals,1);
+  if(fN>0&&fN<mx*1.6)mx=Math.max(mx,fN*1.08);
+  const rng=mx-mn||1;
+  const xO=i=>p.l+(i/Math.max(len-1,1))*cw;
+  const yO=v=>p.t+ch-((v-mn)/rng)*ch;
+  const MO='IBM Plex Mono,monospace';
+  // Y grid
+  ctx.strokeStyle='#eae7e2';ctx.lineWidth=.5;
+  for(let i=0;i<=4;i++){const v=mn+(rng/4)*i,y=yO(v);ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(W-p.r,y);ctx.stroke();ctx.fillStyle='#8c857d';ctx.font=`9px ${MO}`;ctx.textAlign='right';ctx.fillText(fm(v),p.l-5,y+3)}
+  // X labels
+  ctx.fillStyle='#8c857d';ctx.font=`9px ${MO}`;ctx.textAlign='center';
+  if(ei<=24){const ms=ei<=8?1:ei<=14?2:3;for(let mi=0;mi<=ei;mi+=ms){if(mi>=len)break;ctx.fillText(mi===0?'now':`in ${mi} mo`,xO(mi),H-p.b+14)}}
+  else{const ys=ei<=48?1:ei<=120?2:5;for(let yr=0;yr<=ei/12+.01;yr+=ys){const mi=Math.round(yr*12);if(mi>=len)break;ctx.fillText(mi===0?'now':`in ${Math.round(yr)} yr`,xO(mi),H-p.b+14)}}
+  // Zero line
+  if(mn<0){ctx.save();ctx.strokeStyle='#dc262640';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(p.l,yO(0));ctx.lineTo(W-p.r,yO(0));ctx.stroke();ctx.restore()}
+  // FIRE line
+  if(fN>0&&fN>=mn&&fN<=mx*1.1){const fy=yO(fN);ctx.save();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(p.l,fy);ctx.lineTo(W-p.r,fy);ctx.stroke();ctx.restore();ctx.fillStyle='#f59e0b';ctx.font=`bold 9px ${MO}`;ctx.textAlign='right';ctx.fillText('🔥 FIRE '+fm(fN),W-p.r,fy-5)}
+  // Area
+  ctx.beginPath();ctx.moveTo(xO(0),yO(0));for(let i=0;i<len;i++)ctx.lineTo(xO(i),yO(vis[i].value));ctx.lineTo(xO(len-1),yO(0));ctx.closePath();
+  const gr=ctx.createLinearGradient(0,p.t,0,p.t+ch);gr.addColorStop(0,'rgba(37,99,235,.10)');gr.addColorStop(1,'rgba(37,99,235,.01)');ctx.fillStyle=gr;ctx.fill();
+  // Line
+  ctx.beginPath();for(let i=0;i<len;i++){const x=xO(i),y=yO(vis[i].value);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.strokeStyle='#2563eb';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
+  // FIRE point
+  if(fI>=0&&fI<len){const fx=xO(fI),fy=yO(vis[fI].value),fd=vis[fI].date,fv=vis[fI].value;const yrs=Math.floor(fI/12),mos=fI%12;const ts=yrs>0?(mos>0?`${yrs} yr ${mos} mo`:`${yrs} yr`):`${mos} mo`;
+    ctx.beginPath();ctx.arc(fx,fy,12,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,.12)';ctx.fill();
+    ctx.beginPath();ctx.arc(fx,fy,7,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,.22)';ctx.fill();
+    ctx.beginPath();ctx.arc(fx,fy,4.5,0,Math.PI*2);ctx.fillStyle='#f59e0b';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+    const l1=`🔥 FIRE in ${ts}`,l2=`${fm(fv)} · ${fd.toLocaleDateString('en',{month:'short',year:'numeric'})}`;
+    ctx.font=`bold 10px ${MO}`;const tw1=ctx.measureText(l1).width;ctx.font=`9px ${MO}`;const tw2=ctx.measureText(l2).width;
+    const pw=Math.max(tw1,tw2)+16,ph=32;let px=fx-pw/2;if(px<p.l)px=p.l;if(px+pw>W-p.r)px=W-p.r-pw;
+    const above=fy-22-ph,ap=above<p.t?fy+14:above;
+    ctx.fillStyle='rgba(254,243,199,.95)';ctx.beginPath();const rr=6;ctx.moveTo(px+rr,ap);ctx.lineTo(px+pw-rr,ap);ctx.arcTo(px+pw,ap,px+pw,ap+rr,rr);ctx.lineTo(px+pw,ap+ph-rr);ctx.arcTo(px+pw,ap+ph,px+pw-rr,ap+ph,rr);ctx.lineTo(px+rr,ap+ph);ctx.arcTo(px,ap+ph,px,ap+ph-rr,rr);ctx.lineTo(px,ap+rr);ctx.arcTo(px,ap,px+rr,ap,rr);ctx.closePath();ctx.fill();ctx.strokeStyle='#f59e0b55';ctx.lineWidth=1;ctx.stroke();
+    ctx.fillStyle='#92400e';ctx.font=`bold 10px ${MO}`;ctx.textAlign='center';ctx.fillText(l1,px+pw/2,ap+13);
+    ctx.font=`9px ${MO}`;ctx.fillStyle='#b45309';ctx.fillText(l2,px+pw/2,ap+26)}
+  // End dot
+  const ex=xO(len-1),ey=yO(vis[len-1].value);ctx.beginPath();ctx.arc(ex,ey,5,0,Math.PI*2);ctx.fillStyle='#2563eb';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
+}
+
+// ═══════════════ SLIDER (persistent DOM — never rebuilt)
+let slDrag=false;
+function initSlider(){
+  const trk=document.getElementById('trk'),thumb=document.getElementById('thumb'),fill=document.getElementById('fill'),tip=document.getElementById('tip'),tipT=document.getElementById('tip-t');
+  // Build static ticks & labels
+  const ty=MX/12,ys=ty<=15?1:ty<=25?2:5;const tks=[];
+  for(let yr=0;yr<=ty;yr+=ys){const m2=yr*12;tks.push({yr,pct:(m2s(m2)/SS)*100,label:yr===0?'now':`in ${yr} yr`})}
+  let tkH='';tks.forEach((t,i)=>{tkH+=`<div style="position:absolute;left:${t.pct}%;transform:translateX(-50%);width:1px;height:${i===0?10:6}px;background:${i===0?'var(--mut)':'#d4d0ca'};pointer-events:none"></div>`});
+  document.getElementById('ticks').innerHTML=tkH;
+  let lbH='';tks.filter((_,i)=>i%(tks.length>12?2:1)===0).forEach(t=>{lbH+=`<span style="position:absolute;left:${t.pct}%;transform:translateX(-50%);font-size:9px;font-family:var(--mo);color:${t.yr===0?'var(--txt)':'var(--mut)'};font-weight:${t.yr===0?600:400}">${t.label}</span>`});
+  document.getElementById('labels').innerHTML=lbH;
+  // Quick buttons
+  const qbs=[{l:'6 mo',m:6},{l:'1 yr',m:12},{l:'2 yr',m:24},{l:'5 yr',m:60},{l:'10 yr',m:120},{l:'20 yr',m:240},{l:'30 yr',m:360}];
+  let qH='';qbs.forEach(b=>{qH+=`<button data-qm="${b.m}">${b.l}</button>`});
+  document.getElementById('qbtns').innerHTML=qH;
+  document.getElementById('qbtns').addEventListener('click',e=>{const m=+e.target.dataset.qm;if(m){D.sl=Math.min(m,MX);persist();fullUpdate()}});
+
+  function posToMonth(e){const r=trk.getBoundingClientRect();const cx=e.touches?e.touches[0].clientX:e.clientX;return s2m(Math.round(Math.max(0,Math.min(1,(cx-r.left)/r.width))*SS))}
+  function showTip(){tip.style.opacity='1'}
+  function hideTip(){if(!slDrag)tip.style.opacity='0'}
+
+  trk.addEventListener('mousedown',e=>{e.preventDefault();slDrag=true;thumb.classList.add('on');D.sl=posToMonth(e);updateView();showTip();trk.focus()});
+  trk.addEventListener('touchstart',e=>{e.preventDefault();slDrag=true;thumb.classList.add('on');D.sl=posToMonth(e);updateView();showTip();trk.focus()},{passive:false});
+  trk.addEventListener('mouseenter',showTip);
+  trk.addEventListener('mouseleave',hideTip);
+  trk.addEventListener('focus',showTip);
+  trk.addEventListener('blur',hideTip);
+  trk.addEventListener('keydown',e=>{
+    let n=D.sl;const s=e.shiftKey?12:1;
+    if(e.key==='ArrowRight'||e.key==='ArrowUp'){n=Math.min(D.sl+s,MX);e.preventDefault()}
+    else if(e.key==='ArrowLeft'||e.key==='ArrowDown'){n=Math.max(D.sl-s,0);e.preventDefault()}
+    else if(e.key==='Home'){n=0;e.preventDefault()}
+    else if(e.key==='End'){n=MX;e.preventDefault()}
+    else return;
+    D.sl=n;persist();fullUpdate()});
+  window.addEventListener('mousemove',e=>{if(!slDrag)return;e.preventDefault();D.sl=posToMonth(e);updateView()});
+  window.addEventListener('touchmove',e=>{if(!slDrag)return;e.preventDefault();D.sl=posToMonth(e);updateView()},{passive:false});
+  window.addEventListener('mouseup',()=>{if(slDrag){slDrag=false;thumb.classList.remove('on');hideTip();persist()}});
+  window.addEventListener('touchend',()=>{if(slDrag){slDrag=false;thumb.classList.remove('on');hideTip();persist()}});
+}
+
+function updateSliderPos(){
+  const pct=(m2s(D.sl)/SS)*100;
+  const cur=FC[Math.min(D.sl,FC.length-1)];
+  document.getElementById('fill').style.width=pct+'%';
+  document.getElementById('fill').style.background=`linear-gradient(90deg,var(--acc),${cur.value>=0?'#059669':'#dc2626'})`;
+  document.getElementById('fill').style.transition=slDrag?'none':'width .08s';
+  document.getElementById('thumb').style.left=pct+'%';
+  document.getElementById('thumb').style.transition=slDrag?'none':'all .15s';
+  document.getElementById('tip').style.left=`clamp(44px,${pct}%,calc(100% - 44px))`;
+  document.getElementById('tip-t').textContent=`${fmF(cur.value)}  ${fmT(D.sl)}`;
+  // Quick button highlights
+  document.querySelectorAll('#qbtns button').forEach(b=>{
+    const m=+b.dataset.qm;
+    b.style.border=D.sl===m?'1.5px solid var(--acc)':'1px solid var(--brd)';
+    b.style.background=D.sl===m?'var(--acc-lt)':'var(--card)';
+    b.style.color=D.sl===m?'var(--acc)':'var(--mut)';
+  });
+}
+
+// ═══════════════ UPDATE VIEW (called during slider drag — no innerHTML on sections)
+function updateView(){
+  const cur=FC[Math.min(D.sl,FC.length-1)];
+  const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
+  // Hero
+  const hl=document.getElementById('h-label');
+  hl.innerHTML=D.sl===0?'Net worth today':`${fmT(D.sl)}<span style="opacity:.5"> · ${cur.date.toLocaleDateString('en',{month:'short',year:'numeric'})}</span>`;
+  const hv=document.getElementById('h-val');
+  hv.textContent=fmF(cur.value);hv.style.color=cur.value>=0?'var(--grn)':'var(--red)';
+  document.getElementById('h-sub').textContent=`Liquid ${fm(cur.cash)} · Illiquid ${fm(cur.assetTotal)}`;
+  // FIRE
+  const hf=document.getElementById('h-fire');
+  if(mCost>0){
+    const fN=(mCost*12)/.04;const fM=FC.findIndex(p=>p.value>=fN);const reached=cur.value>=fN;
+    hf.innerHTML=`<span style="font-size:13px">🔥</span>`+(fM>=0?`<span style="color:${reached?'#f59e0b':'var(--mut)'}">FIRE at ${fm(fN)}${reached?' <span style="color:var(--grn);font-weight:700"> — reached!</span>':' — '+fmT(fM)}</span>`:`<span style="color:var(--mut)">FIRE target: ${fm(fN)} — not reached in 30 yr</span>`);
+  }else hf.innerHTML='';
+  // Slider position
+  updateSliderPos();
+  // Chart
+  drawChart();
+  // Breakdown
+  renderBreakdown();
+  // Relocate count
+  const mRev=D.rev.reduce((s,r)=>s+(r.amount||0),0);
+  const affCnt=COL.filter(c=>mRev*(1-(c.tax||0)/100)>=colTot(c,D.fam)).length;
+  document.getElementById('rel-cnt').textContent=`${affCnt} of ${COL.length} cities`;
+  // If relocate is open, re-render it
+  if(D.relOpen)renderRelocate();
+}
+
+// ═══════════════ TAG helper
+function tg(label,bg,col){return`<span class="tg" style="background:${bg};color:${col}">${label}</span>`}
+
+// ═══════════════ BREAKDOWN
+function renderBreakdown(){
+  const el=document.getElementById('bkdn');
+  if(D.sl<=0){el.innerHTML='';return}
+  const cur=FC[Math.min(D.sl,FC.length-1)];
+  const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
+  const totalIn=D.rev.reduce((s,r)=>s+(cur.revCum[r.id]||0),0)+D.iev.filter(e=>cur.evtTriggered[e.id]).reduce((s,e)=>s+(cur.evtTriggered[e.id]?.value||0),0)+cur.cumReturns;
+  const totalOut=D.cst.reduce((s,c)=>s+(cur.costCum[c.id]||0),0)+D.eev.filter(e=>cur.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0);
+  const hO=D.ill.filter(a=>!cur.soldAssets.has(a.id)).reduce((s,a)=>s+(cur.assetValues[a.id]||0),0);
+  const hB=Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).reduce((s,[k])=>s+(cur.boughtValues[k]||0),0);
+  const tH=hO+hB;
+  let h=`<div class="c cp" style="padding:14px 18px">
+  <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);font-family:var(--mo);margin-bottom:4px">By ${cur.date.toLocaleDateString('en',{month:'short',year:'numeric'})} — ${fmT(D.sl)}</div>
+  <div class="bh"><span class="bhl" style="color:var(--grn)">Money in</span><span class="bhr" style="color:var(--grn)">+${fm(totalIn)}</span></div>`;
+  D.rev.filter(r=>(cur.revCum[r.id]||0)>0).forEach(r=>{h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">↑ ${esc(r.name||'Income')}${tg('income','var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.revCum[r.id])}</span></div>`});
+  D.iev.filter(e=>cur.evtTriggered[e.id]).forEach(e=>{h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">◆ ${esc(cur.evtTriggered[e.id].name||'Event')}${e.type==='sell'?tg('sold','#fef3c7','#92400e'):tg('income','var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.evtTriggered[e.id].value)}</span></div>`});
+  if(cur.cumReturns>0)h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">◎ Investment returns${tg('returns','var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">+${fm(cur.cumReturns)}</span></div>`;
+  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--red)">Money out</span><span class="bhr" style="color:var(--red)">-${fm(totalOut)}</span></div>`;
+  D.cst.filter(c=>(cur.costCum[c.id]||0)>0).forEach(c=>{h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">↓ ${esc(c.name||'Expense')}${tg('expense','var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(cur.costCum[c.id])}</span></div>`});
+  D.eev.filter(e=>cur.expTriggered[e.id]).forEach(e=>{h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">◆ ${esc(e.name||'Expense')}${e.type==='buy'?tg('bought','var(--prp-bg)','var(--prp)'):tg('spent','var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(e.amount)}</span></div>`});
+  // Liquid assets
+  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--acc)">Liquid assets</span><span class="bhr" style="color:var(--acc)">${fm(cur.cash)}</span></div>`;
+  D.liq.forEach(a=>{h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">▪ ${esc(a.name)}${a.returnRate?` <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.returnRate>0?'+':''}${a.returnRate}%/yr)</span>`:''}${tg('liquid','var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">${fm(cur.liqValues[a.id]||0)}</span></div>`});
+  // Illiquid
+  if(hO>0||hB>0){
+    h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--prp)">Illiquid assets</span><span class="bhr" style="color:var(--prp)">${fm(tH)}</span></div>`;
+    D.ill.filter(a=>!cur.soldAssets.has(a.id)).forEach(a=>{h+=`<div class="br"><span style="color:var(--prp);display:flex;align-items:center">▪ ${esc(a.name)} <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.appRate>0?'+':''}${a.appRate}%/yr)</span>${tg('owned','var(--prp-bg)','var(--prp)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--prp)">${fm(cur.assetValues[a.id])}</span></div>`});
+    Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).forEach(([k,b])=>{h+=`<div class="br"><span style="color:var(--prp);display:flex;align-items:center">▪ ${esc(b.name)} <span style="font-size:10px;color:var(--mut);margin-left:4px">(${b.appRate>0?'+':''}${b.appRate}%/yr)</span>${tg('bought','var(--prp-bg)','var(--prp)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--prp)">${fm(cur.boughtValues[k])}</span></div>`});
+  }
+  h+=`</div>`;el.innerHTML=h;
+}
+
+// ═══════════════ RELOCATE
+function renderRelocate(){
+  const bd=document.getElementById('rel-body');
+  const mRev=D.rev.reduce((s,r)=>s+(r.amount||0),0);
+  const fam=FAMS.find(p=>p.id===D.fam)||FAMS[0];
+  const data=COL.map(c=>{const mc=colTot(c,D.fam);const at=mRev*(1-(c.tax||0)/100);const sur=at-mc;
+    return{...c,mc,at,sur,ok:sur>=0,_r:Math.round(c.rent*fam.rentMul),_f:Math.round(c.food*(fam.persons*.65+.35)),_t:Math.round(c.transport*(fam.persons*.65+.35)),_u:Math.round(c.utilities*fam.utilMul),_h:Math.round(c.health*fam.persons),_o:Math.round(c.other*(fam.persons*.65+.35))}}).sort((a,b)=>b.sur-a.sur);
+  const aff=data.filter(c=>c.ok),naf=data.filter(c=>!c.ok);
+  function cityRow(c){const s=c.sur;const exp=D.relExp===c.code;
+    let h=`<div class="c cr" style="opacity:${c.ok?1:.7};border-color:${exp?'var(--acc)':'var(--brd)'}" data-city="${c.code}">
+    <div style="display:flex;justify-content:space-between;align-items:center">
+      <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="font-size:15px;flex-shrink:0">${c.flag}</span><span style="font-weight:600;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.city}</span><span style="font-size:10px;color:var(--mut);flex-shrink:0">${c.country}</span></div>
+      <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
+        <span style="font-family:var(--mo);font-size:12px;font-weight:600;color:var(--mut)">$${c.mc.toLocaleString()}<span style="font-size:9px;font-weight:400">/mo</span></span>
+        ${c.tax>0?`<span style="font-family:var(--mo);font-size:9px;padding:1px 5px;border-radius:3px;background:#fef3c7;color:#92400e">${c.tax}% tax</span>`:''}
+        <span style="font-family:var(--mo);font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:${s>=0?'var(--grn-bg)':'var(--red-bg)'};color:${s>=0?'var(--grn)':'var(--red)'};min-width:52px;text-align:right">${s>=0?'+':''}${fm(s)}</span>
+      </div></div>`;
+    if(exp){const cats=[['Rent',c._r,'#6366f1'],['Food',c._f,'#059669'],['Transport',c._t,'#d97706'],['Utilities',c._u,'#dc2626'],['Health',c._h,'#f59e0b'],['Other',c._o,'#8b5cf6']];
+      h+=`<div class="ce"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 12px;font-size:11px;margin-bottom:6px">`;
+      cats.forEach(([l,v,co])=>{h+=`<div style="display:flex;justify-content:space-between;padding:1px 0"><span style="color:var(--mut)"><span style="display:inline-block;width:6px;height:6px;border-radius:2px;background:${co};opacity:.7;margin-right:4px"></span>${l}</span><span style="font-family:var(--mo);font-weight:600">$${v.toLocaleString()}</span></div>`});
+      h+=`</div><div style="display:flex;gap:8px;margin-bottom:4px">
+        <div class="mt" style="background:var(--acc-lt)"><div class="ml">After-tax income</div><div class="mv" style="color:var(--acc)">${fm(c.at)}/mo</div></div>
+        <div class="mt" style="background:${s>=0?'var(--grn-bg)':'var(--red-bg)'}"><div class="ml">Monthly surplus</div><div class="mv" style="color:${s>=0?'var(--grn)':'var(--red)'}">${s>=0?'+':''}${fm(s)}</div></div>
+        <div class="mt" style="background:#fef3c7"><div class="ml">Local inflation</div><div class="mv" style="color:#92400e">${c.inf}%/yr</div></div>
+      </div><p style="font-size:10px;font-style:italic;color:var(--mut);opacity:.8;margin:0">${c.notes}</p></div>`}
+    h+=`</div>`;return h}
+  let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px">
+    <div style="display:flex;gap:3px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo);margin-right:4px">Household:</span>`;
+  FAMS.forEach(f=>{h+=`<button class="fb" style="border:1px solid ${D.fam===f.id?'var(--acc)':'var(--brd)'};background:${D.fam===f.id?'var(--acc-lt)':'transparent'};color:${D.fam===f.id?'var(--acc)':'var(--mut)'};font-weight:${D.fam===f.id?700:400}" data-fam="${f.id}">${f.label}</button>`});
+  h+=`</div><span style="font-size:10px;color:var(--mut);font-family:var(--mo)">income ${fm(mRev)}/mo</span></div>`;
+  if(aff.length){h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--grn);font-family:var(--mo)">✓ Can afford (${aff.length})</span><div style="flex:1;height:1px;background:var(--grn);opacity:.2"></div></div>`;h+=aff.map(cityRow).join('')}
+  if(aff.length&&naf.length){h+=`<div style="display:flex;align-items:center;margin:10px 0 6px"><div style="flex:1;height:2px;background:linear-gradient(90deg,rgba(5,150,105,.2),rgba(220,38,38,.2))"></div><span style="font-size:9px;font-family:var(--mo);color:var(--mut);padding:0 10px;white-space:nowrap">affordability line</span><div style="flex:1;height:2px;background:rgba(220,38,38,.2)"></div></div>`}
+  if(naf.length){h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-family:var(--mo)">✗ Can't afford (${naf.length})</span><div style="flex:1;height:1px;background:var(--red);opacity:.2"></div></div>`;h+=naf.map(cityRow).join('')}
+  h+=`<p style="font-size:9px;color:var(--mut);margin-top:10px;text-align:center;opacity:.5">Estimates, single person. Tax = effective rate on remote income. Numbeo / AffordWhere 2026.</p>`;
+  bd.innerHTML=h;
+  // Event delegation for city clicks and fam buttons
+  bd.querySelectorAll('[data-city]').forEach(el=>{el.addEventListener('click',()=>{D.relExp=D.relExp===el.dataset.city?null:el.dataset.city;renderRelocate()})});
+  bd.querySelectorAll('[data-fam]').forEach(el=>{el.addEventListener('click',e=>{e.stopPropagation();D.fam=el.dataset.fam;persist();renderRelocate();updateView()})});
+}
+
+// ═══════════════ RELOCATE TOGGLE
+document.getElementById('rel-hd').addEventListener('click',()=>{
+  D.relOpen=!D.relOpen;
+  const bd=document.getElementById('rel-body'),arr=document.getElementById('rel-arr');
+  bd.style.display=D.relOpen?'block':'none';
+  arr.style.transform=D.relOpen?'rotate(180deg)':'none';
+  if(D.relOpen)renderRelocate();
+});
+
+// ═══════════════ SECTIONS (editable lists — rebuilt on add/remove/edit)
+function linkOpts(sel){
+  let h=`<option value="">🔗</option>`;
+  D.ill.forEach(a=>{h+=`<option value="${a.id}"${sel===a.id?' selected':''}>${esc(a.name||'?')}</option>`});
+  D.eev.filter(e=>e.type==='buy'&&e.name).forEach(e=>{h+=`<option value="${e.id}"${sel===e.id?' selected':''}>${esc(e.name)}</option>`});
+  return h;
+}
+function sellOpts(sel){
+  let h=`<option value="">— pick asset —</option><optgroup label="Illiquid assets">`;
+  D.ill.forEach(a=>{h+=`<option value="${a.id}"${sel===a.id?' selected':''}>${esc(a.name||'Unnamed')} (${fm(a.value)})</option>`});
+  h+=`</optgroup>`;const bght=D.eev.filter(e=>e.type==='buy'&&e.name);
+  if(bght.length){h+=`<optgroup label="Bought assets">`;bght.forEach(e=>{const v='bought_'+e.id;h+=`<option value="${v}"${sel===v?' selected':''}>${esc(e.name)} (${fm(e.amount)})</option>`});h+=`</optgroup>`}
+  return h;
+}
+function secHd(title,color,addFn,rightHtml,hint){
+  return`<div class="c cp"><div class="sh"${hint?' style="margin-bottom:4px"':''}>
+  <span class="st" style="color:${color}">${title}</span>
+  <div style="display:flex;gap:6px;align-items:center">${rightHtml||''}${addFn?`<button class="ba" onclick="${addFn}">+ Add</button>`:''}</div>
+  </div>${hint?`<p class="hn">${hint}</p>`:''}`;
+}
+
+function renderSections(){
+  const mRev=D.rev.reduce((s,r)=>s+(r.amount||0),0);
+  const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
+  const tLiq=D.liq.reduce((s,a)=>s+(a.value||0),0);
+  let h='';
+  // LIQUID ASSETS
+  h+=secHd('Liquid Assets','var(--acc)','addLiq()',`<span class="sr" style="color:var(--acc)">${fm(tLiq)}</span>`,'Each asset compounds at its own rate. The <b>primary</b> account receives all income. Expenses deduct from primary first — if depleted, they cascade to the next asset down.');
+  D.liq.forEach((a,i)=>{
+    const isPrimary=i===0;
+    const rowCls=isPrimary?'rw rw-primary':'rw';
+    const tipText=isPrimary?'title="Primary account — receives all income and returns. Expenses deduct here first, then cascade to assets below if depleted."':'';
+    h+=`<div class="${rowCls}" ${tipText} style="margin-left:${isPrimary?'12px':'0'}">
+    ${isPrimary?`<span class="primary-badge">Primary</span>`:''}
+    <input class="sm" value="${esc(a.name)}" placeholder="Name" style="flex:1 1 100px;min-width:60px" data-arr="liq" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="liq" data-idx="${i}" data-fld="value" data-num="1"></div>
+    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.returnRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="liq" data-idx="${i}" data-fld="returnRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <div class="reorder-wrap">${i>0?`<button class="reorder-btn" data-move="liq" data-idx="${i}" data-dir="-1" title="Move up">▲</button>`:'<div style="width:22px;height:11px"></div>'}${i<D.liq.length-1?`<button class="reorder-btn" data-move="liq" data-idx="${i}" data-dir="1" title="Move down">▼</button>`:'<div style="width:22px;height:11px"></div>'}</div>
+    <button class="bd" data-del="liq" data-idx="${i}">×</button></div>`});
+  h+=`</div>`;
+  // ILLIQUID ASSETS
+  h+=secHd('Illiquid Assets','var(--prp)','addIll()',`<span class="sr" style="color:var(--prp)">${fm(D.ill.reduce((s,a)=>s+(a.value||0),0))}</span>`,'Real estate, vehicles — things that take time to sell.');
+  D.ill.forEach((a,i)=>{h+=`<div class="rw">
+    <input class="sm" value="${esc(a.name)}" placeholder="Name" style="flex:1 1 100px;min-width:60px" data-arr="ill" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="ill" data-idx="${i}" data-fld="value" data-num="1"></div>
+    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="ill" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <button class="bd" data-del="ill" data-idx="${i}">×</button></div>`});
+  h+=`</div>`;
+  // MONTHLY REVENUE
+  h+=secHd('Monthly Revenue','var(--grn)','addRev()',`<span class="sr" style="color:var(--grn)">+${fm(mRev)}/mo</span>`);
+  D.rev.forEach((r,i)=>{h+=`<div class="rw">
+    <input class="sm" value="${esc(r.name)}" placeholder="Name" style="flex:1 1 80px;min-width:50px" data-arr="rev" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${r.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="rev" data-idx="${i}" data-fld="amount" data-num="1"></div>
+    <div style="position:relative;flex:0 0 58px"><input class="sm" type="number" value="${r.appRate??''}" step="0.5" placeholder="0" title="Annual growth %" style="text-align:right;width:100%;padding-right:18px" data-arr="rev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <select class="sm ls" style="color:${r.linkedAssetId?'var(--prp)':'var(--mut)'}" data-arr="rev" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(r.linkedAssetId)}</select>
+    <input class="sm" type="date" value="${r.from||''}" style="flex:0 0 120px" data-arr="rev" data-idx="${i}" data-fld="from">
+    <input class="sm" type="date" value="${r.to||''}" style="flex:0 0 120px" data-arr="rev" data-idx="${i}" data-fld="to">
+    <button class="bd" data-del="rev" data-idx="${i}">×</button></div>`});
+  h+=`</div>`;
+  // MONTHLY COSTS
+  h+=secHd('Monthly Living Costs','var(--red)','addCst()',`<span class="sr" style="color:var(--red)">-${fm(mCost)}/mo</span>`);
+  D.cst.forEach((c,i)=>{h+=`<div class="rw">
+    <input class="sm" value="${esc(c.name)}" placeholder="Name" style="flex:1 1 80px;min-width:50px" data-arr="cst" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${c.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="cst" data-idx="${i}" data-fld="amount" data-num="1"></div>
+    <div style="position:relative;flex:0 0 58px"><input class="sm" type="number" value="${c.appRate??''}" step="0.5" placeholder="0" title="Annual inflation %" style="text-align:right;width:100%;padding-right:18px" data-arr="cst" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <select class="sm ls" style="color:${c.linkedAssetId?'var(--prp)':'var(--mut)'}" data-arr="cst" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(c.linkedAssetId)}</select>
+    <input class="sm" type="date" value="${c.from||''}" style="flex:0 0 120px" data-arr="cst" data-idx="${i}" data-fld="from">
+    <input class="sm" type="date" value="${c.to||''}" style="flex:0 0 120px" data-arr="cst" data-idx="${i}" data-fld="to">
+    <button class="bd" data-del="cst" data-idx="${i}">×</button></div>`});
+  h+=`</div>`;
+  // INCOME EVENTS
+  h+=secHd('Income Events','var(--grn)','addIev()','','One-time cash income, or sell an owned asset at its appreciated value.');
+  D.iev.forEach((ev,i)=>{h+=`<div class="rw">
+    <select class="sm" style="flex:0 0 70px;width:70px" data-arr="iev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="cash"${ev.type==='cash'?' selected':''}>Cash</option><option value="sell"${ev.type==='sell'?' selected':''}>Sell</option></select>`;
+    if(ev.type==='cash'){h+=`<input class="sm" value="${esc(ev.name)}" placeholder="Name" style="flex:1 1 80px;min-width:50px" data-arr="iev" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="amount" data-num="1"></div>`}
+    else{h+=`<select class="sm" style="flex:1 1 120px" data-arr="iev" data-idx="${i}" data-fld="sellAssetId">${sellOpts(ev.sellAssetId)}</select>`}
+    h+=`<input class="sm" type="date" value="${ev.date||''}" style="flex:0 0 120px" data-arr="iev" data-idx="${i}" data-fld="date">
+    <button class="bd" data-del="iev" data-idx="${i}">×</button></div>`});
+  if(!D.iev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">None yet</p>`;
+  h+=`</div>`;
+  // EXPENSE EVENTS
+  h+=secHd('Expense Events','var(--red)','addEev()','','One-time expenses, or buy an asset that appreciates/depreciates.');
+  D.eev.forEach((ev,i)=>{h+=`<div class="rw">
+    <select class="sm" style="flex:0 0 72px;width:72px" data-arr="eev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="expense"${ev.type==='expense'?' selected':''}>Spend</option><option value="buy"${ev.type==='buy'?' selected':''}>Buy</option></select>
+    <input class="sm" value="${esc(ev.name)}" placeholder="${ev.type==='buy'?'Asset name':'Name'}" style="flex:1 1 80px;min-width:50px" data-arr="eev" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="amount" data-num="1"></div>`;
+    if(ev.type==='buy'){h+=`<div style="position:relative;flex:0 0 62px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.5" placeholder="0" title="Annual %/yr" style="text-align:right;width:100%;padding-right:20px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>`}
+    h+=`<input class="sm" type="date" value="${ev.date||''}" style="flex:0 0 120px" data-arr="eev" data-idx="${i}" data-fld="date">
+    <button class="bd" data-del="eev" data-idx="${i}">×</button></div>`});
+  if(!D.eev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">None yet</p>`;
+  h+=`</div>`;
+
+  document.getElementById('secs').innerHTML=h;
+  bindSections();
+}
+
+// ═══════════════ EVENT DELEGATION FOR SECTIONS
+const ARRS={liq:D.liq,ill:D.ill,rev:D.rev,cst:D.cst,iev:D.iev,eev:D.eev};
+function bindSections(){
+  const secs=document.getElementById('secs');
+  // Input changes
+  secs.querySelectorAll('input[data-arr],select[data-arr]').forEach(el=>{
+    el.addEventListener('change',()=>{
+      const arr=ARRS[el.dataset.arr],idx=+el.dataset.idx,fld=el.dataset.fld;
+      if(!arr||!arr[idx])return;
+      arr[idx][fld]=el.dataset.num?parseFloat(el.value)||0:el.value;
+      persist();
+      if(el.dataset.rebuild){runFC();renderSections();updateView()}
+      else{runFC();updateView();/* Update section totals without full rebuild */
+        renderSectionTotals()}
+    });
+  });
+  // Delete buttons
+  secs.querySelectorAll('[data-del]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const arr=ARRS[el.dataset.del],idx=+el.dataset.idx;
+      if(arr)arr.splice(idx,1);
+      persist();fullUpdate();
+    });
+  });
+  // Reorder buttons — animate swap then rebuild
+  secs.querySelectorAll('[data-move]').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const arrKey=el.dataset.move,idx=+el.dataset.idx,dir=+el.dataset.dir;
+      const arr=ARRS[arrKey];
+      const newIdx=idx+dir;
+      if(!arr||newIdx<0||newIdx>=arr.length)return;
+
+      // Find the two rows to swap in current DOM
+      const section=el.closest('.c');
+      const allRows=[...section.querySelectorAll('.rw')];
+      const rowA=allRows[idx],rowB=allRows[newIdx];
+      if(!rowA||!rowB){
+        // Fallback: just swap without animation
+        const tmp=arr[idx];arr[idx]=arr[newIdx];arr[newIdx]=tmp;
+        persist();fullUpdate();return;
+      }
+
+      // Get positions before swap
+      const rectA=rowA.getBoundingClientRect();
+      const rectB=rowB.getBoundingClientRect();
+      const dy=rectB.top-rectA.top;
+
+      // Animate both rows sliding past each other
+      rowA.style.transition='none';
+      rowB.style.transition='none';
+      rowA.style.transform=`translateY(0)`;
+      rowB.style.transform=`translateY(0)`;
+      rowA.style.position='relative';
+      rowB.style.position='relative';
+      rowA.style.zIndex='5';
+      rowB.style.zIndex='1';
+      // Force reflow
+      rowA.offsetHeight;
+
+      rowA.style.transition='transform 0.28s cubic-bezier(0.22,0.68,0.31,1.0)';
+      rowB.style.transition='transform 0.28s cubic-bezier(0.22,0.68,0.31,1.0)';
+      rowA.style.transform=`translateY(${dy}px)`;
+      rowB.style.transform=`translateY(${-dy}px)`;
+
+      // After animation completes, do the actual data swap and rebuild
+      rowA.addEventListener('transitionend',function handler(){
+        rowA.removeEventListener('transitionend',handler);
+        const tmp=arr[idx];arr[idx]=arr[newIdx];arr[newIdx]=tmp;
+        persist();fullUpdate();
+      });
+    });
+  });
+}
+function renderSectionTotals(){
+  // We could surgically update totals, but sections are cheap to rebuild
+  // since the user isn't dragging during typing. Just rebuild.
+  renderSections();
+}
+
+// ═══════════════ ADD FUNCTIONS (global, called from onclick)
+function addLiq(){D.liq.push({id:uid(),name:'',value:0,returnRate:0});persist();fullUpdate()}
+function addIll(){D.ill.push({id:uid(),name:'',value:0,appRate:0});persist();fullUpdate()}
+function addRev(){D.rev.push({id:uid(),name:'',amount:0,from:DF,to:DT,appRate:0,linkedAssetId:''});persist();fullUpdate()}
+function addCst(){D.cst.push({id:uid(),name:'',amount:0,from:DF,to:DT,appRate:0,linkedAssetId:''});persist();fullUpdate()}
+function addIev(){D.iev.push({id:uid(),type:'cash',name:'',amount:0,date:DF,sellAssetId:''});persist();fullUpdate()}
+function addEev(){D.eev.push({id:uid(),type:'expense',name:'',amount:0,date:DF,appRate:0});persist();fullUpdate()}
+
+// ═══════════════ FULL UPDATE (recalc + render everything)
+function fullUpdate(){
+  runFC();
+  renderSections();
+  updateView();
+}
+
+// ═══════════════ INIT
+runFC();
+initSlider();
+renderSections();
+updateView();
+window.addEventListener('resize',()=>drawChart());
+</script>
+
+<noscript>
+<div style="max-width:860px;margin:40px auto;padding:20px;font-family:'Outfit',sans-serif;color:#1c1917">
+  <h1 style="font-size:28px;margin-bottom:12px">NetWorthCast</h1>
+  <p style="font-size:16px;color:#8c857d;margin-bottom:16px">Track Your Net Worth. Forecast Your Future.</p>
+  <p>NetWorthCast is a free web application that helps you track your assets, forecast your financial future, calculate your FIRE number, and compare cost of living across 44 cities worldwide.</p>
+  <h2 style="margin-top:20px">Features</h2>
+  <ul style="margin:8px 0 16px 20px;line-height:1.8">
+    <li>Track liquid assets (cash, deposits, stocks, crypto) with individual return rates</li>
+    <li>Track illiquid assets (real estate, vehicles) with appreciation and depreciation</li>
+    <li>30-year net worth forecasting with compound growth projections</li>
+    <li>FIRE calculator — find your financial independence number and timeline</li>
+    <li>Cost of living comparison across Lisbon, Berlin, Bangkok, Tbilisi, Bali, Dubai, New York, and 37 more cities</li>
+    <li>Relocation affordability calculator with local tax rates and family size scaling</li>
+  </ul>
+  <p>Please enable JavaScript to use NetWorthCast.</p>
+</div>
+</noscript>
+
+<footer style="max-width:860px;margin:0 auto;padding:0 16px 24px;text-align:center;font-size:10px;color:#8c857d;font-family:'Outfit',sans-serif">
+  <p>&copy; 2026 NetWorthCast. All data stored locally in your browser. Nothing is sent to any server.</p>
+</footer>
+
+</body>
+</html>
