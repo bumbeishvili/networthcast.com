@@ -1,0 +1,230 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <defs>
+    <!-- Background gradient -->
+    <linearGradient id="bg" x1="0" y1="0" x2="0.3" y2="1">
+      <stop offset="0%" stop-color="#0f1729"/>
+      <stop offset="100%" stop-color="#0a0f1a"/>
+    </linearGradient>
+
+    <!-- Top accent bar gradient -->
+    <linearGradient id="accent" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="50%" stop-color="#06b6d4"/>
+      <stop offset="100%" stop-color="#059669"/>
+    </linearGradient>
+
+    <!-- Logo gradient -->
+    <linearGradient id="logo-grad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#2563eb"/>
+      <stop offset="100%" stop-color="#06d6a0"/>
+    </linearGradient>
+
+    <!-- Chart line gradient -->
+    <linearGradient id="line-grad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#3b82f6"/>
+      <stop offset="60%" stop-color="#60a5fa"/>
+      <stop offset="100%" stop-color="#93c5fd"/>
+    </linearGradient>
+
+    <!-- Chart fill gradient -->
+    <linearGradient id="fill-grad" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#3b82f6" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#3b82f6" stop-opacity="0.02"/>
+    </linearGradient>
+
+    <!-- Glow filter for chart line -->
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="6" result="blur"/>
+      <feFlood flood-color="#3b82f6" flood-opacity="0.4"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Glow for the endpoint dot -->
+    <filter id="dot-glow" x="-100%" y="-100%" width="300%" height="300%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="8" result="blur"/>
+      <feFlood flood-color="#60a5fa" flood-opacity="0.5"/>
+      <feComposite in2="blur" operator="in"/>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+
+    <!-- Subtle glow behind hero text -->
+    <filter id="text-glow">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30"/>
+    </filter>
+
+    <!-- Card glass effect -->
+    <filter id="card-blur">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="1"/>
+    </filter>
+
+    <!-- Clip for chart area fill -->
+    <clipPath id="chart-clip">
+      <rect x="680" y="140" width="460" height="320" rx="14"/>
+    </clipPath>
+
+    <!-- Grid pattern -->
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+
+  <!-- Grid overlay -->
+  <rect width="1200" height="630" fill="url(#grid)"/>
+
+  <!-- Top accent bar -->
+  <rect width="1200" height="4" fill="url(#accent)"/>
+
+  <!-- Ambient glow behind chart -->
+  <ellipse cx="900" cy="350" rx="320" ry="250" fill="#2563eb" opacity="0.06"/>
+  <ellipse cx="850" cy="300" rx="180" ry="140" fill="#06b6d4" opacity="0.04"/>
+
+  <!-- ═══ LOGO ═══ -->
+  <rect x="60" y="46" width="44" height="44" rx="11" fill="url(#logo-grad)"/>
+  <text x="82" y="79" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="26" font-weight="800" fill="white" text-anchor="middle" dominant-baseline="middle">N</text>
+  <text x="118" y="74" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="24" font-weight="700" fill="rgba(255,255,255,0.92)" letter-spacing="-0.5">NetWorthCast</text>
+
+  <!-- ═══ HERO TEXT ═══ -->
+  <!-- Glow behind text for depth -->
+  <text x="60" y="192" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="56" font-weight="800" fill="#2563eb" opacity="0.15" filter="url(#text-glow)">Track Your Net Worth.</text>
+
+  <text x="60" y="192" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="56" font-weight="800" fill="rgba(255,255,255,0.95)" letter-spacing="-1.5">Track Your Net Worth.</text>
+  <text x="60" y="262" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="56" font-weight="800" fill="#60a5fa" letter-spacing="-1.5">Forecast Your Future.</text>
+
+  <!-- Subtitle -->
+  <text x="60" y="316" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="18" fill="rgba(148,163,184,0.9)" letter-spacing="0.2">The all-in-one net worth tracker with financial forecasting,</text>
+  <text x="60" y="342" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Helvetica Neue', sans-serif" font-size="18" fill="rgba(148,163,184,0.9)" letter-spacing="0.2">FIRE planning, and cost of living comparison across 44 cities.</text>
+
+  <!-- ═══ FEATURE PILLS ═══ -->
+  <!-- Net Worth Tracking -->
+  <rect x="60" y="385" width="160" height="32" rx="8" fill="rgba(37,99,235,0.15)" stroke="rgba(37,99,235,0.3)" stroke-width="1"/>
+  <text x="140" y="406" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="13" font-weight="600" fill="rgba(96,165,250,0.95)" text-anchor="middle">Net Worth Tracking</text>
+
+  <!-- Forecasting -->
+  <rect x="230" y="385" width="118" height="32" rx="8" fill="rgba(6,182,212,0.12)" stroke="rgba(6,182,212,0.3)" stroke-width="1"/>
+  <text x="289" y="406" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="13" font-weight="600" fill="rgba(34,211,238,0.9)" text-anchor="middle">Forecasting</text>
+
+  <!-- FIRE Calculator -->
+  <rect x="358" y="385" width="138" height="32" rx="8" fill="rgba(245,158,11,0.12)" stroke="rgba(245,158,11,0.3)" stroke-width="1"/>
+  <text x="427" y="406" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="13" font-weight="600" fill="rgba(251,191,36,0.95)" text-anchor="middle">FIRE Calculator</text>
+
+  <!-- Cost of Living -->
+  <rect x="506" y="385" width="130" height="32" rx="8" fill="rgba(124,58,237,0.12)" stroke="rgba(124,58,237,0.3)" stroke-width="1"/>
+  <text x="571" y="406" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="13" font-weight="600" fill="rgba(167,139,250,0.95)" text-anchor="middle">Cost of Living</text>
+
+  <!-- ═══ CHART CARD ═══ -->
+  <!-- Glass card background -->
+  <rect x="680" y="56" width="470" height="480" rx="16" fill="rgba(255,255,255,0.04)" stroke="rgba(255,255,255,0.08)" stroke-width="1"/>
+
+  <!-- Chart title inside card -->
+  <text x="710" y="90" font-family="'SF Mono', 'Fira Code', monospace" font-size="11" font-weight="600" fill="rgba(148,163,184,0.7)" letter-spacing="1.5" text-transform="uppercase">NET WORTH PROJECTION</text>
+
+  <!-- Y-axis labels -->
+  <text x="708" y="130" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.6)">$2.5M</text>
+  <text x="708" y="210" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.6)">$2.0M</text>
+  <text x="708" y="290" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.6)">$1.5M</text>
+  <text x="708" y="370" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.6)">$1.0M</text>
+  <text x="708" y="450" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.6)">$500k</text>
+  <text x="722" y="510" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.6)">$0</text>
+
+  <!-- Grid lines -->
+  <line x1="750" y1="126" x2="1120" y2="126" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="750" y1="206" x2="1120" y2="206" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="750" y1="286" x2="1120" y2="286" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="750" y1="366" x2="1120" y2="366" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="750" y1="446" x2="1120" y2="446" stroke="rgba(255,255,255,0.04)" stroke-width="0.5"/>
+  <line x1="750" y1="510" x2="1120" y2="510" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+
+  <!-- X-axis labels -->
+  <text x="755" y="530" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.5)">2026</text>
+  <text x="815" y="530" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.5)">2031</text>
+  <text x="878" y="530" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.5)">2036</text>
+  <text x="940" y="530" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.5)">2041</text>
+  <text x="1000" y="530" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.5)">2046</text>
+  <text x="1062" y="530" font-family="'SF Mono', monospace" font-size="10" fill="rgba(100,116,139,0.5)">2051</text>
+
+  <!-- ═══ FIRE threshold dashed line ═══ -->
+  <line x1="750" y1="286" x2="1120" y2="286" stroke="#059669" stroke-width="1.5" stroke-dasharray="6 4" opacity="0.6"/>
+  <!-- FIRE badge -->
+  <rect x="1035" y="268" width="80" height="20" rx="4" fill="rgba(5,150,105,0.2)" stroke="rgba(5,150,105,0.4)" stroke-width="0.5"/>
+  <text x="1075" y="282" font-family="'SF Mono', monospace" font-size="10" font-weight="600" fill="#34d399" text-anchor="middle">FIRE $1.5M</text>
+
+  <!-- ═══ CHART: exponential growth curve ═══ -->
+  <!-- Area fill under curve -->
+  <path d="M 755 505
+           C 790 503, 810 500, 830 496
+           C 860 490, 880 482, 900 470
+           C 920 455, 940 435, 955 415
+           C 970 395, 985 368, 1000 340
+           C 1015 308, 1030 270, 1045 235
+           C 1060 200, 1075 165, 1090 135
+           L 1110 115
+           L 1110 510
+           L 755 510 Z"
+        fill="url(#fill-grad)" opacity="0.8"/>
+
+  <!-- Main chart line with glow -->
+  <path d="M 755 505
+           C 790 503, 810 500, 830 496
+           C 860 490, 880 482, 900 470
+           C 920 455, 940 435, 955 415
+           C 970 395, 985 368, 1000 340
+           C 1015 308, 1030 270, 1045 235
+           C 1060 200, 1075 165, 1090 135
+           L 1110 115"
+        fill="none" stroke="url(#line-grad)" stroke-width="3" stroke-linecap="round" filter="url(#glow)"/>
+
+  <!-- Endpoint dot with glow -->
+  <circle cx="1110" cy="115" r="12" fill="#60a5fa" opacity="0.2" filter="url(#dot-glow)"/>
+  <circle cx="1110" cy="115" r="5" fill="white" opacity="0.9"/>
+  <circle cx="1110" cy="115" r="3" fill="#60a5fa"/>
+
+  <!-- Value tooltip at endpoint -->
+  <rect x="1078" y="86" width="64" height="24" rx="6" fill="rgba(37,99,235,0.85)"/>
+  <polygon points="1110,112 1105,106 1115,106" fill="rgba(37,99,235,0.85)"/>
+  <text x="1110" y="103" font-family="'SF Mono', monospace" font-size="12" font-weight="700" fill="white" text-anchor="middle">$2.4M</text>
+
+  <!-- FIRE intersection marker -->
+  <circle cx="1000" cy="286" r="7" fill="#059669" opacity="0.15"/>
+  <circle cx="1000" cy="286" r="4" fill="white" opacity="0.8"/>
+  <circle cx="1000" cy="286" r="2.5" fill="#34d399"/>
+
+  <!-- Mini data points along the curve for texture -->
+  <circle cx="830" cy="496" r="1.5" fill="rgba(96,165,250,0.4)"/>
+  <circle cx="900" cy="470" r="1.5" fill="rgba(96,165,250,0.4)"/>
+  <circle cx="955" cy="415" r="1.5" fill="rgba(96,165,250,0.5)"/>
+
+  <!-- ═══ BOTTOM BAR ═══ -->
+  <rect x="0" y="586" width="1200" height="44" fill="rgba(0,0,0,0.5)"/>
+  <line x1="0" y1="586" x2="1200" y2="586" stroke="rgba(255,255,255,0.06)" stroke-width="0.5"/>
+  <text x="60" y="614" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="15" font-weight="600" fill="rgba(255,255,255,0.8)">networthcast.com</text>
+  <text x="1140" y="614" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif" font-size="13" fill="rgba(148,163,184,0.6)" text-anchor="end">Free  ·  No signup  ·  Privacy-first</text>
+
+  <!-- ═══ NUMBERS / STATS ROW (between pills and bottom) ═══ -->
+  <!-- Small stats for credibility -->
+  <text x="60" y="465" font-family="'SF Mono', monospace" font-size="28" font-weight="700" fill="rgba(255,255,255,0.85)">44</text>
+  <text x="60" y="483" font-family="-apple-system, sans-serif" font-size="11" fill="rgba(148,163,184,0.6)">Cities tracked</text>
+
+  <text x="180" y="465" font-family="'SF Mono', monospace" font-size="28" font-weight="700" fill="rgba(255,255,255,0.85)">30yr</text>
+  <text x="180" y="483" font-family="-apple-system, sans-serif" font-size="11" fill="rgba(148,163,184,0.6)">Forecast range</text>
+
+  <text x="320" y="465" font-family="'SF Mono', monospace" font-size="28" font-weight="700" fill="rgba(255,255,255,0.85)">11</text>
+  <text x="320" y="483" font-family="-apple-system, sans-serif" font-size="11" fill="rgba(148,163,184,0.6)">World regions</text>
+
+  <text x="440" y="465" font-family="'SF Mono', monospace" font-size="28" font-weight="700" fill="rgba(96,165,250,0.9)">$0</text>
+  <text x="440" y="483" font-family="-apple-system, sans-serif" font-size="11" fill="rgba(148,163,184,0.6)">Forever free</text>
+
+  <!-- Divider dots between stats -->
+  <circle cx="155" cy="468" r="2" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="298" cy="468" r="2" fill="rgba(255,255,255,0.1)"/>
+  <circle cx="418" cy="468" r="2" fill="rgba(255,255,255,0.1)"/>
+</svg>

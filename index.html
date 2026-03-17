@@ -1,11 +1,32 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XJ1P981CGQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-XJ1P981CGQ');
+</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>NetWorthCast — Track Your Net Worth & Forecast Your Financial Future</title>
 <meta name="description" content="Track your assets, forecast your net worth, plan for FIRE, and discover where your money goes further. The all-in-one net worth tracker with financial forecasting and cost of living comparison.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large, max-video-preview:-1">
+<meta name="author" content="NetWorthCast">
+<meta name="keywords" content="net worth tracker, net worth app, net worth calculator, FIRE calculator, financial independence, retire early, cost of living comparison, net worth forecast, track net worth, financial planning, Coast FIRE, Lean FIRE, geographic arbitrage, where to live calculator">
+<meta name="theme-color" content="#2563eb">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="NetWorthCast">
+<meta name="application-name" content="NetWorthCast">
 <link rel="canonical" href="https://networthcast.com/">
+<link rel="manifest" href="/manifest.json">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/icon-96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/icon-72.png">
 
 <!-- Open Graph -->
 <meta property="og:type" content="website">
@@ -13,19 +34,52 @@
 <meta property="og:title" content="NetWorthCast — Net Worth Tracker + Financial Forecasting">
 <meta property="og:description" content="Track assets, forecast your net worth, calculate your FIRE number, and compare cost of living across cities. Free to start.">
 <meta property="og:site_name" content="NetWorthCast">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://networthcast.com/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="NetWorthCast — Track your net worth, forecast your financial future, and plan for FIRE">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="NetWorthCast — Net Worth Tracker + Financial Forecasting">
 <meta name="twitter:description" content="Track assets, forecast your net worth, calculate your FIRE number, and compare cost of living across cities. Free to start.">
+<meta name="twitter:image" content="https://networthcast.com/og-image.png">
+<meta name="twitter:image:alt" content="NetWorthCast — Track your net worth, forecast your financial future, and plan for FIRE">
 
 <!-- Schema.org Structured Data -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "NetWorthCast",
+  "url": "https://networthcast.com",
+  "description": "Track your net worth, forecast your financial future, plan for FIRE, and compare cost of living across cities worldwide.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": "https://networthcast.com/?q={search_term_string}",
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "NetWorthCast",
+  "url": "https://networthcast.com",
+  "logo": "https://networthcast.com/og-image.png",
+  "description": "The all-in-one net worth tracker with financial forecasting, FIRE calculator, and cost of living comparison.",
+  "sameAs": []
+}
+</script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "SoftwareApplication",
   "name": "NetWorthCast",
   "applicationCategory": "FinanceApplication",
+  "applicationSubCategory": "Net Worth Tracker",
   "operatingSystem": "Web",
   "url": "https://networthcast.com",
   "description": "Track your net worth, forecast financial growth, plan for FIRE (Financial Independence, Retire Early), and compare cost of living across 44 cities worldwide.",
@@ -37,13 +91,15 @@
   "featureList": [
     "Net worth tracking with liquid and illiquid assets",
     "30-year financial forecasting with compound growth",
-    "FIRE calculator with multiple FIRE variants",
+    "FIRE calculator with multiple FIRE variants (Coast FIRE, Lean FIRE, Fat FIRE)",
     "Cost of living comparison across 44 cities in 11 regions",
     "Relocation affordability calculator with tax rates",
     "Family size scaling for household planning",
     "Revenue and expense tracking with annual growth rates",
     "One-time income and expense event scheduling",
-    "Asset linking for income tied to property or investments"
+    "Asset linking for income tied to property or investments",
+    "Geographic arbitrage analysis for financial independence",
+    "Interactive 30-year net worth projection chart"
   ]
 }
 </script>
@@ -75,12 +131,55 @@
         "@type": "Answer",
         "text": "NetWorthCast compares your current income against the cost of living in 44 cities across 11 world regions. It factors in local tax rates on remote income, scales costs for your household size, and shows which cities you can afford to live in comfortably."
       }
+    },
+    {
+      "@type": "Question",
+      "name": "What is Coast FIRE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Coast FIRE is a milestone where you have enough invested that compound growth alone will grow your portfolio to your full FIRE number by traditional retirement age, even if you never invest another dollar. NetWorthCast helps you calculate when you'll reach Coast FIRE based on your current assets and return rates."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the difference between Lean FIRE and Fat FIRE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Lean FIRE means reaching financial independence with a minimalist budget (typically under $40,000/year in expenses), while Fat FIRE targets a more comfortable lifestyle (usually $100,000+ per year). NetWorthCast lets you model both scenarios by adjusting your monthly costs and seeing how timelines change."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I calculate my net worth?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Your net worth is the total value of everything you own (assets) minus everything you owe (liabilities). Add up liquid assets like cash, savings, stocks, and crypto, plus illiquid assets like real estate and vehicles. NetWorthCast tracks all of these automatically with individual growth rates for accurate projections."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is geographic arbitrage for FIRE?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Geographic arbitrage means moving to a location with a lower cost of living to accelerate your path to financial independence. By earning in a strong currency and spending in a cheaper location, your savings rate increases dramatically. NetWorthCast compares 44 cities across 11 regions to help you find where your money goes furthest."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is the 4% rule for retirement?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The 4% rule (also called the safe withdrawal rate) states that you can withdraw 4% of your investment portfolio annually in retirement with a very low risk of running out of money over 30 years. This means your FIRE number is 25 times your annual expenses. NetWorthCast uses this rule to calculate your FIRE target."
+      }
     }
   ]
 }
 </script>
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#f6f5f2;--card:#fff;--brd:#e5e2dc;--txt:#1c1917;--mut:#8c857d;--acc:#2563eb;--acc-lt:#dbeafe;--grn:#059669;--grn-bg:#ecfdf5;--red:#dc2626;--red-bg:#fef2f2;--ylw:#d97706;--prp:#7c3aed;--prp-bg:#f5f3ff;--fn:'Outfit',sans-serif;--mo:'IBM Plex Mono',monospace;--rad:12px;--shd:0 1px 3px rgba(0,0,0,.05)}
@@ -140,7 +239,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .reorder-wrap{display:flex;flex-direction:column;gap:1px;flex-shrink:0}
 @keyframes swapFlash{0%{background:rgba(37,99,235,.15)}100%{background:transparent}}
 .rw-swapped{animation:swapFlash .5s ease-out}
-.seo-only{position:absolute;left:-9999px;height:1px;overflow:hidden}
+.seo-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .col-hdr{display:flex;gap:6px;align-items:center;padding:0 0 4px;flex-wrap:nowrap}
 .col-hdr span{font-size:9px;color:var(--mut);font-family:var(--mo);text-transform:uppercase;letter-spacing:.5px}
 .ym{display:flex;gap:2px;align-items:center;flex:0 0 96px}
@@ -203,22 +302,37 @@ input,select{font-family:var(--fn);color:var(--txt)}
 <div class="seo-only" aria-hidden="true">
   <h1>Track Your Net Worth. Forecast Your Future.</h1>
   <h2>See your complete financial picture</h2>
-  <p>NetWorthCast is a free net worth tracker and financial forecasting tool. Track liquid assets like cash, deposits, stocks, and crypto alongside illiquid assets like real estate and vehicles. Each asset compounds at its own rate for accurate projections up to 30 years.</p>
+  <p>NetWorthCast is the best free net worth tracker and financial forecasting app. Track liquid assets like cash, deposits, stocks, and crypto alongside illiquid assets like real estate and vehicles. Each asset compounds at its own rate for accurate projections up to 30 years. Whether you want to track your net worth, calculate your total net worth for free, or see your net worth by age compared to benchmarks, NetWorthCast gives you a complete financial dashboard.</p>
   <h2>Know when you'll reach financial independence</h2>
-  <p>Calculate your FIRE number automatically based on your monthly expenses and the 4% safe withdrawal rate. See exactly when your net worth crosses the financial independence threshold with our interactive timeline.</p>
+  <p>Calculate your FIRE number automatically based on your monthly expenses and the 4% safe withdrawal rate. See exactly when your net worth crosses the financial independence threshold with our interactive timeline. Our free FIRE calculator supports multiple FIRE variants including Coast FIRE, Lean FIRE, Fat FIRE, and Barista FIRE. Answer the question "when can I retire early?" with real projections based on your actual financial data.</p>
   <h2>Discover where your money goes further</h2>
-  <p>Compare cost of living across 44 cities in 11 world regions including Lisbon, Berlin, Bangkok, Tbilisi, Mexico City, Bali, Dubai, and more. Factor in local tax rates on remote income and scale costs for your household size to find where you can live comfortably.</p>
+  <p>Compare cost of living across 44 cities in 11 world regions including Lisbon, Berlin, Bangkok, Tbilisi, Mexico City, Bali, Dubai, and more. Factor in local tax rates on remote income and scale costs for your household size to find where you can live comfortably. Our cost of living comparison tool helps digital nomads, expats, and remote workers find the cheapest countries to retire and the best places to live for financial independence.</p>
   <h2>Net Worth Calculator Features</h2>
-  <p>Multiple liquid asset accounts with individual return rates. Cascade expense logic draws from primary account first, then reserves. Revenue and cost tracking with annual growth rates. One-time income and expense events. Buy and sell assets with appreciation tracking. Asset-linked income that stops when the asset is sold.</p>
+  <p>Multiple liquid asset accounts with individual return rates. Cascade expense logic draws from primary account first, then reserves. Revenue and cost tracking with annual growth rates. One-time income and expense events. Buy and sell assets with appreciation tracking. Asset-linked income that stops when the asset is sold. Track assets online from any device with data stored securely in your browser.</p>
+  <h2>FIRE Calculator — Financial Independence, Retire Early</h2>
+  <p>Use the NetWorthCast FIRE calculator to find your FIRE number and retirement age. Based on the 4% rule and safe withdrawal rate, our early retirement calculator shows exactly when your investments can cover your expenses forever. Plan for Coast FIRE (stop saving and let compound growth do the work), Lean FIRE (minimalist retirement), or Fat FIRE (comfortable early retirement). The best FIRE calculator that integrates with real net worth tracking data.</p>
+  <h2>Net Worth Forecast — Project Your Financial Growth</h2>
+  <p>NetWorthCast's net worth forecast engine projects your financial growth over time with compound interest calculations for each individual asset. See how your net worth grows month by month for 30 years. Model different scenarios by adjusting income, expenses, and return rates. The most accurate way to forecast net worth and project net worth growth over time.</p>
+  <h2>Cost of Living Comparison Tool</h2>
+  <p>Our cost of living comparison tool lets you compare cities and countries worldwide. See detailed breakdowns of rent, food, transport, utilities, healthcare, and miscellaneous costs. Compare cities like New York vs Lisbon, Bangkok vs Berlin, or Dubai vs Tbilisi. Perfect for planning geographic arbitrage — moving to a lower cost of living area to reach financial independence faster. Find out where to live to maximize your savings rate and accelerate your FIRE timeline.</p>
+  <h2>Geographic Arbitrage for FIRE</h2>
+  <p>Geographic arbitrage is the strategy of earning in a strong currency while living in a location with a lower cost of living. NetWorthCast is the first tool to combine net worth tracking, FIRE forecasting, and relocation analysis in one platform. See how relocating from New York to Lisbon, or from San Francisco to Chiang Mai, can cut years off your path to financial independence. Compare tax rates, visa programs, and total monthly costs across 44 cities.</p>
+  <h2>Best Net Worth Tracker App</h2>
+  <p>NetWorthCast is the best app to track net worth because it combines four essential financial tools in one: net worth tracking, financial forecasting, FIRE retirement planning, and cost of living comparison. Unlike Empower (formerly Personal Capital) which only tracks, or ProjectionLab which only simulates, NetWorthCast does both and adds relocation analysis. Free to use, no account required, and all data stays private in your browser. The best net worth tracking app for people pursuing financial independence.</p>
 </div>
 
 <div class="w" id="app">
   <!-- Header -->
-  <header style="display:flex;align-items:center;gap:8px;margin-bottom:2px">
-    <div style="width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#2563eb,#059669);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px">N</div>
-    <span style="font-weight:800;font-size:17px;letter-spacing:-.5px">NetWorthCast</span>
-    <span style="font-size:11px;color:var(--mut);margin-left:4px">Net Worth · Forecast · Relocate</span>
+  <header style="display:flex;align-items:center;gap:8px;margin-bottom:2px" role="banner">
+    <a href="https://networthcast.com/" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit" aria-label="NetWorthCast — Net Worth Tracker">
+      <div style="width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#2563eb,#059669);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px" role="img" aria-label="NetWorthCast logo">N</div>
+      <span style="font-weight:800;font-size:17px;letter-spacing:-.5px">NetWorthCast</span>
+    </a>
+    <nav aria-label="Product pillars">
+      <span style="font-size:11px;color:var(--mut);margin-left:4px">Net Worth · Forecast · Relocate</span>
+    </nav>
   </header>
+  <main role="main">
 
   <!-- Hero -->
   <div class="c" style="padding:20px 20px 14px" id="hero">
@@ -258,6 +372,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 
   <!-- Editable sections -->
   <div id="secs"></div>
+  </main>
 </div>
 
 <script>
@@ -459,11 +574,14 @@ function drawChart(){
   const ctx=cv.getContext('2d');ctx.scale(2,2);ctx.clearRect(0,0,W,H);
   const ei=Math.max(6,Math.min(D.sl||6,FC.length-1));
   const vis=FC.slice(0,ei+1),len=vis.length;
-  const p={t:16,r:12,b:32,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
-  const vals=vis.map(d=>d.value);
+  const p={t:16,r:62,b:32,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const vTotal=vis.map(d=>d.value);
+  const vLiq=vis.map(d=>d.cash);
+  const vIll=vis.map(d=>d.assetTotal);
   const fN=mCost>0?(mCost*12)/.04:null;
   let fI=-1;if(fN>0)for(let i=0;i<len;i++)if(vis[i].cash>=fN){fI=i;break}
-  let mn=Math.min(...vals,0),mx=Math.max(...vals,1);
+  const allVals=[...vTotal,...vLiq,...vIll];
+  let mn=Math.min(...allVals,0),mx=Math.max(...allVals,1);
   if(fN>0&&fN<mx*1.6)mx=Math.max(mx,fN*1.08);
   const rng=mx-mn||1;
   const xO=i=>p.l+(i/Math.max(len-1,1))*cw;
@@ -480,13 +598,54 @@ function drawChart(){
   if(mn<0){ctx.save();ctx.strokeStyle='#dc262640';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(p.l,yO(0));ctx.lineTo(W-p.r,yO(0));ctx.stroke();ctx.restore()}
   // FIRE line
   if(fN>0&&fN>=mn&&fN<=mx*1.1){const fy=yO(fN);ctx.save();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(p.l,fy);ctx.lineTo(W-p.r,fy);ctx.stroke();ctx.restore();ctx.fillStyle='#f59e0b';ctx.font=`bold 9px ${MO}`;ctx.textAlign='right';ctx.fillText('🔥 FIRE '+fm(fN),W-p.r,fy-5)}
-  // Area
-  ctx.beginPath();ctx.moveTo(xO(0),yO(0));for(let i=0;i<len;i++)ctx.lineTo(xO(i),yO(vis[i].value));ctx.lineTo(xO(len-1),yO(0));ctx.closePath();
-  const gr=ctx.createLinearGradient(0,p.t,0,p.t+ch);gr.addColorStop(0,'rgba(37,99,235,.10)');gr.addColorStop(1,'rgba(37,99,235,.01)');ctx.fillStyle=gr;ctx.fill();
-  // Line
-  ctx.beginPath();for(let i=0;i<len;i++){const x=xO(i),y=yO(vis[i].value);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}ctx.strokeStyle='#2563eb';ctx.lineWidth=2;ctx.lineJoin='round';ctx.stroke();
-  // FIRE point
-  if(fI>=0&&fI<len){const fx=xO(fI),fy=yO(vis[fI].value),fd=vis[fI].date,fv=vis[fI].value;const yrs=Math.floor(fI/12),mos=fI%12;const ts=yrs>0?(mos>0?`${yrs} yr ${mos} mo`:`${yrs} yr`):`${mos} mo`;
+
+  // Helper: draw area + line + end dot for a series
+  function drawSeries(vals,color,fillAlpha,lineW){
+    // Area fill
+    ctx.beginPath();ctx.moveTo(xO(0),yO(0));
+    for(let i=0;i<len;i++)ctx.lineTo(xO(i),yO(vals[i]));
+    ctx.lineTo(xO(len-1),yO(0));ctx.closePath();
+    const gr=ctx.createLinearGradient(0,p.t,0,p.t+ch);
+    gr.addColorStop(0,color.replace(')',`,${fillAlpha})`).replace('rgb','rgba'));
+    gr.addColorStop(1,color.replace(')',',0.01)').replace('rgb','rgba'));
+    ctx.fillStyle=gr;ctx.fill();
+    // Line
+    ctx.beginPath();
+    for(let i=0;i<len;i++){const x=xO(i),y=yO(vals[i]);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+    ctx.strokeStyle=color;ctx.lineWidth=lineW;ctx.lineJoin='round';ctx.stroke();
+    // End dot
+    const ex=xO(len-1),ey=yO(vals[len-1]);
+    ctx.beginPath();ctx.arc(ex,ey,lineW+2,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+  }
+
+  // Draw series back-to-front: illiquid, liquid, total
+  const hasIll=vIll.some(v=>v>0);
+  const hasLiq=vLiq.some(v=>v>0);
+  if(hasIll)drawSeries(vIll,'rgb(234,88,12)',0.06,1.5);
+  if(hasLiq)drawSeries(vLiq,'rgb(5,150,105)',0.06,1.5);
+  drawSeries(vTotal,'rgb(37,99,235)',0.10,2);
+
+  // End-of-line labels (right side, aligned to where each line ends)
+  const endX=xO(len-1)+10;
+  ctx.font=`bold 9px ${MO}`;ctx.textAlign='left';
+  // Collect label positions, then nudge to avoid overlap
+  const labels=[];
+  labels.push({label:'Total',color:'#2563eb',y:yO(vTotal[len-1])});
+  if(hasLiq)labels.push({label:'Liquid',color:'#059669',y:yO(vLiq[len-1])});
+  if(hasIll)labels.push({label:'Illiquid',color:'#ea580c',y:yO(vIll[len-1])});
+  // Sort by y position and nudge overlapping labels apart
+  labels.sort((a,b)=>a.y-b.y);
+  const minGap=11;
+  for(let i=1;i<labels.length;i++){
+    if(labels[i].y-labels[i-1].y<minGap)labels[i].y=labels[i-1].y+minGap;
+  }
+  for(const lb of labels){
+    ctx.fillStyle=lb.color;
+    ctx.fillText(lb.label,endX,lb.y+3);
+  }
+
+  // FIRE point — placed where liquid line intersects FIRE threshold
+  if(fI>=0&&fI<len){const fx=xO(fI),fy=yO(fN),fd=vis[fI].date,fv=vis[fI].cash;const yrs=Math.floor(fI/12),mos=fI%12;const ts=yrs>0?(mos>0?`${yrs} yr ${mos} mo`:`${yrs} yr`):`${mos} mo`;
     ctx.beginPath();ctx.arc(fx,fy,12,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,.12)';ctx.fill();
     ctx.beginPath();ctx.arc(fx,fy,7,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,.22)';ctx.fill();
     ctx.beginPath();ctx.arc(fx,fy,4.5,0,Math.PI*2);ctx.fillStyle='#f59e0b';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
@@ -497,8 +656,6 @@ function drawChart(){
     ctx.fillStyle='rgba(254,243,199,.95)';ctx.beginPath();const rr=6;ctx.moveTo(px+rr,ap);ctx.lineTo(px+pw-rr,ap);ctx.arcTo(px+pw,ap,px+pw,ap+rr,rr);ctx.lineTo(px+pw,ap+ph-rr);ctx.arcTo(px+pw,ap+ph,px+pw-rr,ap+ph,rr);ctx.lineTo(px+rr,ap+ph);ctx.arcTo(px,ap+ph,px,ap+ph-rr,rr);ctx.lineTo(px,ap+rr);ctx.arcTo(px,ap,px+rr,ap,rr);ctx.closePath();ctx.fill();ctx.strokeStyle='#f59e0b55';ctx.lineWidth=1;ctx.stroke();
     ctx.fillStyle='#92400e';ctx.font=`bold 10px ${MO}`;ctx.textAlign='center';ctx.fillText(l1,px+pw/2,ap+13);
     ctx.font=`9px ${MO}`;ctx.fillStyle='#b45309';ctx.fillText(l2,px+pw/2,ap+26)}
-  // End dot
-  const ex=xO(len-1),ey=yO(vis[len-1].value);ctx.beginPath();ctx.arc(ex,ey,5,0,Math.PI*2);ctx.fillStyle='#2563eb';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
 }
 
 // ═══════════════ SLIDER (persistent DOM — never rebuilt)
@@ -1003,28 +1160,74 @@ initSlider();
 renderSections();
 updateView();
 window.addEventListener('resize',()=>drawChart());
+
+// ═══════════════ SERVICE WORKER
+if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
 </script>
 
 <noscript>
 <div style="max-width:860px;margin:40px auto;padding:20px;font-family:'Outfit',sans-serif;color:#1c1917">
-  <h1 style="font-size:28px;margin-bottom:12px">NetWorthCast</h1>
-  <p style="font-size:16px;color:#8c857d;margin-bottom:16px">Track Your Net Worth. Forecast Your Future.</p>
-  <p>NetWorthCast is a free web application that helps you track your assets, forecast your financial future, calculate your FIRE number, and compare cost of living across 44 cities worldwide.</p>
-  <h2 style="margin-top:20px">Features</h2>
+  <h1 style="font-size:28px;margin-bottom:12px">NetWorthCast — Track Your Net Worth & Forecast Your Financial Future</h1>
+  <p style="font-size:16px;color:#8c857d;margin-bottom:16px">The all-in-one net worth tracker with FIRE calculator, financial forecasting, and cost of living comparison.</p>
+
+  <h2 style="margin-top:20px">Net Worth Tracker</h2>
+  <p>Track your complete financial picture in one place. Add liquid assets like cash, savings accounts, 401(k), stocks, and crypto with individual return rates. Track illiquid assets like real estate and vehicles with appreciation or depreciation. See your total net worth update in real time.</p>
+
+  <h2 style="margin-top:20px">Net Worth Forecast</h2>
+  <p>Project your net worth growth up to 30 years into the future. Each asset compounds at its own rate. Factor in recurring income and expenses with annual growth rates, plus one-time events like bonuses, property purchases, or major expenses. The most accurate way to forecast your financial future.</p>
+
+  <h2 style="margin-top:20px">FIRE Calculator — Financial Independence, Retire Early</h2>
+  <p>Calculate your FIRE number based on the 4% safe withdrawal rate. See exactly when your investments can cover your expenses forever. Supports Coast FIRE, Lean FIRE, and Fat FIRE scenarios. Answer the question: when can I retire early?</p>
+
+  <h2 style="margin-top:20px">Cost of Living Comparison</h2>
+  <p>Compare cost of living across 44 cities in 11 world regions. Detailed breakdowns include rent, food, transport, utilities, healthcare, and miscellaneous costs. Cities include:</p>
   <ul style="margin:8px 0 16px 20px;line-height:1.8">
-    <li>Track liquid assets (cash, deposits, stocks, crypto) with individual return rates</li>
-    <li>Track illiquid assets (real estate, vehicles) with appreciation and depreciation</li>
-    <li>30-year net worth forecasting with compound growth projections</li>
-    <li>FIRE calculator — find your financial independence number and timeline</li>
-    <li>Cost of living comparison across Lisbon, Berlin, Bangkok, Tbilisi, Bali, Dubai, New York, and 37 more cities</li>
-    <li>Relocation affordability calculator with local tax rates and family size scaling</li>
+    <li><strong>Western Europe:</strong> Lisbon, Barcelona, Berlin, Amsterdam, Paris, Zurich, Dublin, Milan, Split</li>
+    <li><strong>Eastern Europe:</strong> Warsaw, Budapest, Sofia, Bucharest, Prague, Tallinn, Belgrade</li>
+    <li><strong>North America:</strong> New York, Austin, Miami, Vancouver, Toronto</li>
+    <li><strong>Latin America:</strong> Mexico City, Medellin, Buenos Aires, Sao Paulo, Playa del Carmen</li>
+    <li><strong>Southeast Asia:</strong> Bangkok, Chiang Mai, Bali, Da Nang, Ho Chi Minh, Kuala Lumpur</li>
+    <li><strong>East Asia:</strong> Tokyo, Seoul, Taipei</li>
+    <li><strong>Middle East:</strong> Dubai, Istanbul</li>
+    <li><strong>South Asia:</strong> Bangalore, Goa</li>
+    <li><strong>Central Asia:</strong> Tbilisi, Yerevan, Almaty</li>
+    <li><strong>Oceania:</strong> Sydney, Auckland</li>
+    <li><strong>Africa:</strong> Cape Town</li>
   </ul>
-  <p>Please enable JavaScript to use NetWorthCast.</p>
+
+  <h2 style="margin-top:20px">Key Features</h2>
+  <ul style="margin:8px 0 16px 20px;line-height:1.8">
+    <li>Free net worth tracker — no account required</li>
+    <li>30-year financial forecasting with compound growth</li>
+    <li>FIRE calculator with Coast FIRE, Lean FIRE, Fat FIRE</li>
+    <li>Cost of living comparison across 44 cities worldwide</li>
+    <li>Geographic arbitrage analysis for financial independence</li>
+    <li>Family size scaling for household cost estimates</li>
+    <li>Local tax rates on remote income for each city</li>
+    <li>All data stored locally — nothing sent to any server</li>
+  </ul>
+
+  <h2 style="margin-top:20px">Frequently Asked Questions</h2>
+  <h3>What is a FIRE number?</h3>
+  <p>Your FIRE number is 25 times your annual expenses (based on the 4% safe withdrawal rate). Once your net worth reaches this amount, your investment returns can cover your living costs indefinitely.</p>
+  <h3>How do I calculate my net worth?</h3>
+  <p>Add up all your assets (cash, investments, property) and subtract any liabilities (loans, mortgages). NetWorthCast does this automatically and projects growth over time.</p>
+  <h3>What is geographic arbitrage?</h3>
+  <p>Geographic arbitrage means moving to a lower cost of living area while maintaining your income. This dramatically increases your savings rate and accelerates your path to financial independence.</p>
+
+  <p style="margin-top:20px">Please enable JavaScript to use the interactive NetWorthCast application.</p>
 </div>
 </noscript>
 
-<footer style="max-width:860px;margin:0 auto;padding:0 16px 24px;text-align:center;font-size:10px;color:#8c857d;font-family:'Outfit',sans-serif">
+<footer style="max-width:860px;margin:0 auto;padding:16px 16px 24px;text-align:center;font-size:10px;color:#8c857d;font-family:'Outfit',sans-serif" role="contentinfo">
+  <div style="margin-bottom:10px;line-height:2">
+    <span style="font-weight:600">NetWorthCast</span> — Free Net Worth Tracker · FIRE Calculator · Net Worth Forecast · Cost of Living Comparison
+  </div>
+  <div style="margin-bottom:8px;line-height:1.8">
+    Track your net worth · Calculate your FIRE number · Forecast financial growth · Compare cost of living across 44 cities · Coast FIRE calculator · Lean FIRE vs Fat FIRE · Geographic arbitrage · Where to live calculator · Early retirement planning · 4% rule calculator
+  </div>
   <p>&copy; 2026 NetWorthCast. All data stored locally in your browser. Nothing is sent to any server.</p>
+  <p style="margin-top:4px">NetWorthCast is the all-in-one net worth tracking app with financial forecasting and relocation analysis. Your wealth. Your timeline. Your move.</p>
 </footer>
 
 </body>
