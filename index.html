@@ -462,7 +462,7 @@ function drawChart(){
   const p={t:16,r:12,b:32,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
   const vals=vis.map(d=>d.value);
   const fN=mCost>0?(mCost*12)/.04:null;
-  let fI=-1;if(fN>0)for(let i=0;i<len;i++)if(vis[i].value>=fN){fI=i;break}
+  let fI=-1;if(fN>0)for(let i=0;i<len;i++)if(vis[i].cash>=fN){fI=i;break}
   let mn=Math.min(...vals,0),mx=Math.max(...vals,1);
   if(fN>0&&fN<mx*1.6)mx=Math.max(mx,fN*1.08);
   const rng=mx-mn||1;
@@ -553,7 +553,7 @@ function updateSliderPos(){
   // Compute FIRE month
   const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
   const fireNum=mCost>0?(mCost*12)/.04:0;
-  const fireMonth=fireNum>0?FC.findIndex(p=>p.value>=fireNum):-1;
+  const fireMonth=fireNum>0?FC.findIndex(p=>p.cash>=fireNum):-1;
   // Rebuild button HTML only when FIRE month changes
   if(fireMonth!==_lastFireMonth){
     _lastFireMonth=fireMonth;
@@ -599,8 +599,8 @@ function updateView(){
   // FIRE
   const hf=document.getElementById('h-fire');
   if(mCost>0){
-    const fN=(mCost*12)/.04;const fM=FC.findIndex(p=>p.value>=fN);const reached=cur.value>=fN;
-    hf.innerHTML=`<span style="font-size:13px">🔥</span>`+(fM>=0?`<span style="color:${reached?'#f59e0b':'var(--mut)'}">FIRE at ${fm(fN)}${reached?' <span style="color:var(--grn);font-weight:700"> — reached!</span>':' — '+fmT(fM)}</span>`:`<span style="color:var(--mut)">FIRE target: ${fm(fN)} — not reached in 30 yr</span>`);
+    const fN=(mCost*12)/.04;const fM=FC.findIndex(p=>p.cash>=fN);const reached=cur.cash>=fN;
+    hf.innerHTML=`<span style="font-size:13px">🔥</span>`+(fM>=0?`<span style="color:${reached?'#f59e0b':'var(--mut)'}">FIRE at ${fm(fN)} (liquid)${reached?' <span style="color:var(--grn);font-weight:700"> — reached!</span>':' — '+fmT(fM)}</span>`:`<span style="color:var(--mut)">FIRE target: ${fm(fN)} (liquid) — not reached in 30 yr</span>`);
   }else hf.innerHTML='';
   // Slider position
   updateSliderPos();
@@ -624,22 +624,62 @@ function tg(label,bg,col){return`<span class="tg" style="background:${bg};color:
 function renderBreakdown(){
   const el=document.getElementById('bkdn');
   if(D.sl<=0){el.innerHTML='';return}
-  const cur=FC[Math.min(D.sl,FC.length-1)];
+  const mi=Math.min(D.sl,FC.length-1);
+  const cur=FC[mi];
+  const prev1=mi>=1?FC[mi-1]:null;   // 1 month ago
+  const prev12=mi>=12?FC[mi-12]:null; // 12 months ago
   const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
+
+  // Helpers: get delta between two snapshots for a cumulative field
+  function d1(cur,prev,id,map){return prev?((cur[map]||{})[id]||0)-((prev[map]||{})[id]||0):(cur[map]||{})[id]||0}
+  function dF(cur,prev,field){return prev?(cur[field]||0)-(prev[field]||0):(cur[field]||0)}
+
+  // Total money in/out at current slider
   const totalIn=D.rev.reduce((s,r)=>s+(cur.revCum[r.id]||0),0)+D.iev.filter(e=>cur.evtTriggered[e.id]).reduce((s,e)=>s+(cur.evtTriggered[e.id]?.value||0),0)+cur.cumReturns;
   const totalOut=D.cst.reduce((s,c)=>s+(cur.costCum[c.id]||0),0)+D.eev.filter(e=>cur.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0);
+
+  // Compute money in/out for last month and last year
+  const inM=prev1?totalIn-(D.rev.reduce((s,r)=>s+(prev1.revCum[r.id]||0),0)+D.iev.filter(e=>prev1.evtTriggered[e.id]).reduce((s,e)=>s+(prev1.evtTriggered[e.id]?.value||0),0)+prev1.cumReturns):totalIn;
+  const inY=prev12?totalIn-(D.rev.reduce((s,r)=>s+(prev12.revCum[r.id]||0),0)+D.iev.filter(e=>prev12.evtTriggered[e.id]).reduce((s,e)=>s+(prev12.evtTriggered[e.id]?.value||0),0)+prev12.cumReturns):totalIn;
+  const outM=prev1?totalOut-(D.cst.reduce((s,c)=>s+(prev1.costCum[c.id]||0),0)+D.eev.filter(e=>prev1.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0)):totalOut;
+  const outY=prev12?totalOut-(D.cst.reduce((s,c)=>s+(prev12.costCum[c.id]||0),0)+D.eev.filter(e=>prev12.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0)):totalOut;
+
   const hO=D.ill.filter(a=>!cur.soldAssets.has(a.id)).reduce((s,a)=>s+(cur.assetValues[a.id]||0),0);
   const hB=Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).reduce((s,[k])=>s+(cur.boughtValues[k]||0),0);
   const tH=hO+hB;
+
+  // Helper: 3-column value row
+  const vMut='color:var(--mut);font-size:10px;font-weight:500';
+  function vals3(total,lastYr,lastMo,color,prefix){
+    return`<span style="display:flex;gap:8px;align-items:baseline;flex-shrink:0;font-family:var(--mo)">
+      <span style="font-weight:600;color:${color}">${prefix}${fm(total)}</span>
+      ${mi>=12?`<span style="${vMut}" title="Last 12 months">${prefix}${fm(lastYr)}/yr</span>`:''}
+      ${mi>=1?`<span style="${vMut}" title="Last month">${prefix}${fm(lastMo)}/mo</span>`:''}
+    </span>`}
+
   let h=`<div class="c cp" style="padding:14px 18px">
   <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);font-family:var(--mo);margin-bottom:4px">By ${cur.date.toLocaleDateString('en',{month:'short',year:'numeric'})} — ${fmT(D.sl)}</div>
-  <div class="bh"><span class="bhl" style="color:var(--grn)">Money in</span><span class="bhr" style="color:var(--grn);opacity:.45">Σ +${fm(totalIn)}</span></div>`;
-  D.rev.filter(r=>(cur.revCum[r.id]||0)>0).forEach(r=>{h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">↑ ${esc(r.name||'Income')}${tg('income','var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.revCum[r.id])}</span></div>`});
-  D.iev.filter(e=>cur.evtTriggered[e.id]).forEach(e=>{h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">◆ ${esc(cur.evtTriggered[e.id].name||'Event')}${e.type==='sell'?tg('sold','#fef3c7','#92400e'):tg('income','var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.evtTriggered[e.id].value)}</span></div>`});
-  if(cur.cumReturns>0)h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">◎ Investment returns${tg('returns','var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">+${fm(cur.cumReturns)}</span></div>`;
-  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--red)">Money out</span><span class="bhr" style="color:var(--red);opacity:.45">Σ -${fm(totalOut)}</span></div>`;
-  D.cst.filter(c=>(cur.costCum[c.id]||0)>0).forEach(c=>{h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">↓ ${esc(c.name||'Expense')}${tg('expense','var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(cur.costCum[c.id])}</span></div>`});
-  D.eev.filter(e=>cur.expTriggered[e.id]).forEach(e=>{h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">◆ ${esc(e.name||'Expense')}${e.type==='buy'?tg('bought','var(--prp-bg)','var(--prp)'):tg('spent','var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(e.amount)}</span></div>`});
+  <div class="bh"><span class="bhl" style="color:var(--grn)">Money in</span><span class="bhr" style="color:var(--grn);opacity:.45">${fm(totalIn)}${mi>=12?' · '+fm(inY)+'/yr':''}${mi>=1?' · '+fm(inM)+'/mo':''}</span></div>`;
+
+  D.rev.filter(r=>(cur.revCum[r.id]||0)>0).forEach(r=>{
+    const t=cur.revCum[r.id]||0;const lm=d1(cur,prev1,r.id,'revCum');const ly=d1(cur,prev12,r.id,'revCum');
+    h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center;min-width:0;overflow:hidden">↑ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.name||'Income')}</span>${tg('income','var(--grn-bg)','var(--grn)')}</span>${vals3(t,ly,lm,'var(--grn)','+')}</div>`});
+
+  D.iev.filter(e=>cur.evtTriggered[e.id]).forEach(e=>{
+    h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">◆ ${esc(cur.evtTriggered[e.id].name||'Event')}${e.type==='sell'?tg('sold','#fef3c7','#92400e'):tg('income','var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.evtTriggered[e.id].value)}</span></div>`});
+
+  if(cur.cumReturns>0){const lm=dF(cur,prev1,'cumReturns');const ly=dF(cur,prev12,'cumReturns');
+    h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">◎ Investment returns${tg('returns','var(--acc-lt)','var(--acc)')}</span>${vals3(cur.cumReturns,ly,lm,'var(--acc)','+')}</div>`}
+
+  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--red)">Money out</span><span class="bhr" style="color:var(--red);opacity:.45">${fm(totalOut)}${mi>=12?' · '+fm(outY)+'/yr':''}${mi>=1?' · '+fm(outM)+'/mo':''}</span></div>`;
+
+  D.cst.filter(c=>(cur.costCum[c.id]||0)>0).forEach(c=>{
+    const t=cur.costCum[c.id]||0;const lm=d1(cur,prev1,c.id,'costCum');const ly=d1(cur,prev12,c.id,'costCum');
+    h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center;min-width:0;overflow:hidden">↓ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(c.name||'Expense')}</span>${tg('expense','var(--red-bg)','var(--red)')}</span>${vals3(t,ly,lm,'var(--red)','-')}</div>`});
+
+  D.eev.filter(e=>cur.expTriggered[e.id]).forEach(e=>{
+    h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">◆ ${esc(e.name||'Expense')}${e.type==='buy'?tg('bought','var(--prp-bg)','var(--prp)'):tg('spent','var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(e.amount)}</span></div>`});
+
   // Liquid assets
   h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--acc)">Liquid assets</span><span class="bhr" style="color:var(--acc);opacity:.45">Σ ${fm(cur.cash)}</span></div>`;
   D.liq.forEach(a=>{h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">▪ ${esc(a.name)}${a.returnRate?` <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.returnRate>0?'+':''}${a.returnRate}%/yr)</span>`:''}${tg('liquid','var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">${fm(cur.liqValues[a.id]||0)}</span></div>`});
@@ -686,7 +726,7 @@ function renderRelocate(){
       <div style="display:flex;gap:3px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo);margin-right:2px">Household:</span>`;
   FAMS.forEach(f=>{h+=`<button class="fb" style="border:1px solid ${D.fam===f.id?'var(--acc)':'var(--brd)'};background:${D.fam===f.id?'var(--acc-lt)':'transparent'};color:${D.fam===f.id?'var(--acc)':'var(--mut)'};font-weight:${D.fam===f.id?700:400}" data-fam="${f.id}">${f.label}</button>`});
   h+=`</div>
-      <div style="display:flex;gap:4px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo)">Your tax:</span>
+      <div style="display:flex;gap:4px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo)">Your current tax:</span>
         <div style="position:relative;width:62px"><input class="sm" type="number" id="cur-tax-input" value="${D.curTax}" min="0" max="60" step="1" style="text-align:right;width:100%;padding-right:22px;font-weight:600;font-size:13px"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px;font-family:var(--mo)">%</span></div>
       </div>
     </div>
