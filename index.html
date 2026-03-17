@@ -120,6 +120,9 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .sth.on{width:20px;height:20px;box-shadow:0 0 0 5px rgba(37,99,235,.13),0 2px 8px rgba(0,0,0,.18)}
 .qb{display:flex;justify-content:center;gap:5px;margin-top:6px}
 .qb button{padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;font-family:var(--mo);cursor:pointer}
+.qb button[data-fire]{position:relative}
+.qb button[data-fire]::after{content:'FIRE = Financial Independence, Retire Early. When your net worth hits 25× annual expenses (4% rule), investment returns cover your costs forever.';position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:260px;padding:8px 10px;border-radius:8px;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.4;text-align:left;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.qb button[data-fire]:hover::after,.qb button[data-fire]:focus::after{opacity:1}
 .cr{padding:8px 14px;cursor:pointer;transition:border-color .15s}
 .cr:hover{border-color:var(--acc)!important}
 .ce{margin-top:8px;padding-top:8px;border-top:1px solid var(--brd)}
@@ -630,19 +633,19 @@ function renderBreakdown(){
   const tH=hO+hB;
   let h=`<div class="c cp" style="padding:14px 18px">
   <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);font-family:var(--mo);margin-bottom:4px">By ${cur.date.toLocaleDateString('en',{month:'short',year:'numeric'})} — ${fmT(D.sl)}</div>
-  <div class="bh"><span class="bhl" style="color:var(--grn)">Money in</span><span class="bhr" style="color:var(--grn)">+${fm(totalIn)}</span></div>`;
+  <div class="bh"><span class="bhl" style="color:var(--grn)">Money in</span><span class="bhr" style="color:var(--grn);opacity:.45">Σ +${fm(totalIn)}</span></div>`;
   D.rev.filter(r=>(cur.revCum[r.id]||0)>0).forEach(r=>{h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">↑ ${esc(r.name||'Income')}${tg('income','var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.revCum[r.id])}</span></div>`});
   D.iev.filter(e=>cur.evtTriggered[e.id]).forEach(e=>{h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">◆ ${esc(cur.evtTriggered[e.id].name||'Event')}${e.type==='sell'?tg('sold','#fef3c7','#92400e'):tg('income','var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.evtTriggered[e.id].value)}</span></div>`});
   if(cur.cumReturns>0)h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">◎ Investment returns${tg('returns','var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">+${fm(cur.cumReturns)}</span></div>`;
-  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--red)">Money out</span><span class="bhr" style="color:var(--red)">-${fm(totalOut)}</span></div>`;
+  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--red)">Money out</span><span class="bhr" style="color:var(--red);opacity:.45">Σ -${fm(totalOut)}</span></div>`;
   D.cst.filter(c=>(cur.costCum[c.id]||0)>0).forEach(c=>{h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">↓ ${esc(c.name||'Expense')}${tg('expense','var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(cur.costCum[c.id])}</span></div>`});
   D.eev.filter(e=>cur.expTriggered[e.id]).forEach(e=>{h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">◆ ${esc(e.name||'Expense')}${e.type==='buy'?tg('bought','var(--prp-bg)','var(--prp)'):tg('spent','var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(e.amount)}</span></div>`});
   // Liquid assets
-  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--acc)">Liquid assets</span><span class="bhr" style="color:var(--acc)">${fm(cur.cash)}</span></div>`;
+  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--acc)">Liquid assets</span><span class="bhr" style="color:var(--acc);opacity:.45">Σ ${fm(cur.cash)}</span></div>`;
   D.liq.forEach(a=>{h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">▪ ${esc(a.name)}${a.returnRate?` <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.returnRate>0?'+':''}${a.returnRate}%/yr)</span>`:''}${tg('liquid','var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">${fm(cur.liqValues[a.id]||0)}</span></div>`});
   // Illiquid
   if(hO>0||hB>0){
-    h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--prp)">Illiquid assets</span><span class="bhr" style="color:var(--prp)">${fm(tH)}</span></div>`;
+    h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--prp)">Illiquid assets</span><span class="bhr" style="color:var(--prp);opacity:.45">Σ ${fm(tH)}</span></div>`;
     D.ill.filter(a=>!cur.soldAssets.has(a.id)).forEach(a=>{h+=`<div class="br"><span style="color:var(--prp);display:flex;align-items:center">▪ ${esc(a.name)} <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.appRate>0?'+':''}${a.appRate}%/yr)</span>${tg('owned','var(--prp-bg)','var(--prp)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--prp)">${fm(cur.assetValues[a.id])}</span></div>`});
     Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).forEach(([k,b])=>{h+=`<div class="br"><span style="color:var(--prp);display:flex;align-items:center">▪ ${esc(b.name)} <span style="font-size:10px;color:var(--mut);margin-left:4px">(${b.appRate>0?'+':''}${b.appRate}%/yr)</span>${tg('bought','var(--prp-bg)','var(--prp)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--prp)">${fm(cur.boughtValues[k])}</span></div>`});
   }
