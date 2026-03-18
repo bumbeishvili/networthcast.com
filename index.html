@@ -23,6 +23,39 @@
 <meta name="apple-mobile-web-app-title" content="NetWorthCast">
 <meta name="application-name" content="NetWorthCast">
 <link rel="canonical" href="https://networthcast.com/">
+
+<!-- Hreflang: language variants -->
+<link rel="alternate" hreflang="en" href="https://networthcast.com/">
+<link rel="alternate" hreflang="x-default" href="https://networthcast.com/">
+<link rel="alternate" hreflang="es" href="https://networthcast.com/?lang=es">
+<link rel="alternate" hreflang="pt" href="https://networthcast.com/?lang=pt">
+<link rel="alternate" hreflang="ar" href="https://networthcast.com/?lang=ar">
+<link rel="alternate" hreflang="hi" href="https://networthcast.com/?lang=hi">
+<link rel="alternate" hreflang="ko" href="https://networthcast.com/?lang=ko">
+<link rel="alternate" hreflang="tr" href="https://networthcast.com/?lang=tr">
+<link rel="alternate" hreflang="fr" href="https://networthcast.com/?lang=fr">
+<link rel="alternate" hreflang="de" href="https://networthcast.com/?lang=de">
+<link rel="alternate" hreflang="it" href="https://networthcast.com/?lang=it">
+<link rel="alternate" hreflang="zh" href="https://networthcast.com/?lang=zh">
+<link rel="alternate" hreflang="nl" href="https://networthcast.com/?lang=nl">
+<link rel="alternate" hreflang="fi" href="https://networthcast.com/?lang=fi">
+<link rel="alternate" hreflang="et" href="https://networthcast.com/?lang=et">
+<link rel="alternate" hreflang="pl" href="https://networthcast.com/?lang=pl">
+<link rel="alternate" hreflang="cs" href="https://networthcast.com/?lang=cs">
+<link rel="alternate" hreflang="sv" href="https://networthcast.com/?lang=sv">
+<link rel="alternate" hreflang="no" href="https://networthcast.com/?lang=no">
+<link rel="alternate" hreflang="da" href="https://networthcast.com/?lang=da">
+<link rel="alternate" hreflang="el" href="https://networthcast.com/?lang=el">
+<link rel="alternate" hreflang="ka" href="https://networthcast.com/?lang=ka">
+<link rel="alternate" hreflang="bn" href="https://networthcast.com/?lang=bn">
+<link rel="alternate" hreflang="uk" href="https://networthcast.com/?lang=uk">
+<link rel="alternate" hreflang="ja" href="https://networthcast.com/?lang=ja">
+<link rel="alternate" hreflang="ru" href="https://networthcast.com/?lang=ru">
+<link rel="alternate" hreflang="th" href="https://networthcast.com/?lang=th">
+<link rel="alternate" hreflang="vi" href="https://networthcast.com/?lang=vi">
+<link rel="alternate" hreflang="id" href="https://networthcast.com/?lang=id">
+<link rel="alternate" hreflang="ms" href="https://networthcast.com/?lang=ms">
+
 <link rel="manifest" href="/manifest.json">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <link rel="icon" type="image/png" sizes="32x32" href="/icon-96.png">
@@ -220,7 +253,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .qb{display:flex;justify-content:center;gap:5px;margin-top:6px}
 .qb button{padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;font-family:var(--mo);cursor:pointer}
 .qb button[data-fire]{position:relative}
-.qb button[data-fire]::after{content:'FIRE = Financial Independence, Retire Early. When your net worth hits 25× annual expenses (4% rule), investment returns cover your costs forever.';position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:260px;padding:8px 10px;border-radius:8px;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.4;text-align:left;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,.2)}
+.qb button[data-fire]::after{content:'Coast = growth alone reaches FIRE. Lean = 60% expenses × 25. FIRE = expenses × 25 (4% rule). Fat = 150% expenses × 25.';position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:260px;padding:8px 10px;border-radius:8px;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.4;text-align:left;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,.2)}
 .qb button[data-fire]:hover::after,.qb button[data-fire]:focus::after{opacity:1}
 .cr{padding:8px 14px;cursor:pointer;transition:border-color .15s}
 .cr:hover{border-color:var(--acc)!important}
@@ -329,7 +362,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
       <span style="font-weight:800;font-size:17px;letter-spacing:-.5px">NetWorthCast</span>
     </a>
     <nav aria-label="Product pillars">
-      <span style="font-size:11px;color:var(--mut);margin-left:4px">Net Worth · Forecast · Relocate</span>
+      <span style="font-size:11px;color:var(--mut);margin-left:4px" id="nav-pillars">Net Worth · Forecast · Relocate</span>
     </nav>
   </header>
   <main role="main">
@@ -361,7 +394,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
   <!-- Relocate -->
   <div class="c" style="overflow:hidden" id="reloc">
     <div id="rel-hd" style="padding:12px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
-      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">🌍</span><div><span style="font-weight:700;font-size:13px">Where can you afford to live?</span><span id="rel-cnt" style="font-size:11px;color:var(--mut);margin-left:8px"></span></div></div>
+      <div style="display:flex;align-items:center;gap:8px"><span style="font-size:16px">🌍</span><div><span style="font-weight:700;font-size:13px" id="rel-title">Where can you afford to live?</span><span id="rel-cnt" style="font-size:11px;color:var(--mut);margin-left:8px"></span></div></div>
       <span id="rel-arr" style="font-size:14px;color:var(--mut);transition:transform .2s">▾</span>
     </div>
     <div id="rel-body" style="display:none;padding:0 18px 14px"></div>
@@ -455,6 +488,32 @@ function fm(n){if(n==null||isNaN(n))return'$0';const s=n<0?'-':'',a=Math.abs(n);
 function fmF(n){if(n==null||isNaN(n))return'$0';return(n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString()}
 function fmT(m){if(m<=0)return'now';const y=Math.floor(m/12),mo=m%12;if(!y)return`in ${mo} mo`;if(!mo)return y===1?'in 1 yr':`in ${y} yr`;return y===1?`in 1 yr ${mo} mo`:`in ${y} yr ${mo} mo`}
 const SK='networthcast_v2';
+// ═══════════════ i18n
+const LANG=(new URLSearchParams(location.search).get('lang')||'en').toLowerCase();
+const I18N={
+en:{pillars:'Net Worth · Forecast · Relocate',relocHd:'Where can you afford to live?',liqHd:'Liquid Assets',illHd:'Illiquid Assets',revHd:'Monthly Revenue',costHd:'Monthly Living Costs',ievHd:'Income Events',eevHd:'Expense Events',liqHint:'Each asset compounds at its own rate. The <b>primary</b> account receives all income. Expenses deduct from primary first — if depleted, they cascade to the next asset down.',illHint:'Real estate, vehicles — things that take time to sell.',ievHint:'One-time cash income, or sell an owned asset at its appreciated value.',eevHint:'One-time expenses, or buy an asset that appreciates/depreciates.',none:'None yet',now:'now',inMo:'in {m} mo',inYr:'in {y} yr',inYrMo:'in {y} yr {m} mo',curNet:'Current Net Worth',netIn:'Net Worth in',liquid:'Liquid',illiquid:'Illiquid',total:'Total',family:'Family',taxRate:'Your tax rate',region:'Region',afford:'cities you can afford',mo:'/mo',rent:'Rent',food:'Food',transport:'Transport',util:'Utilities',health:'Health',other:'Other',tax:'Tax',inf:'Inflation',primary:'PRIMARY',add:'+ Add',del:'×',name:'Name',value:'Value',returnRate:'Return %',appRate:'App %',amount:'Amount',from:'From',to:'To',growth:'Growth %',linked:'Link',type:'Type',date:'Date',sell:'Sell asset',cash:'Cash',expense:'Expense',buy:'Buy asset',solo:'Solo',couple:'Couple'},
+es:{pillars:'Patrimonio · Pronóstico · Reubicación',relocHd:'¿Dónde puedes vivir?',liqHd:'Activos Líquidos',illHd:'Activos Ilíquidos',revHd:'Ingresos Mensuales',costHd:'Gastos Mensuales',ievHd:'Eventos de Ingreso',eevHd:'Eventos de Gasto',liqHint:'Cada activo crece a su propia tasa. La cuenta <b>principal</b> recibe todos los ingresos.',illHint:'Inmuebles, vehículos — bienes difíciles de vender rápido.',ievHint:'Ingreso único o venta de un activo.',eevHint:'Gasto único o compra de un activo.',none:'Ninguno',now:'ahora',inMo:'en {m} mes',inYr:'en {y} año',inYrMo:'en {y} año {m} mes',curNet:'Patrimonio Actual',netIn:'Patrimonio en',liquid:'Líquido',illiquid:'Ilíquido',total:'Total',family:'Familia',taxRate:'Tu tasa impositiva',region:'Región',afford:'ciudades accesibles',mo:'/mes',rent:'Alquiler',food:'Comida',transport:'Transporte',util:'Servicios',health:'Salud',other:'Otros',tax:'Impuesto',inf:'Inflación',primary:'PRINCIPAL',add:'+ Añadir',del:'×',name:'Nombre',value:'Valor',returnRate:'Retorno %',appRate:'Aprec %',amount:'Monto',from:'Desde',to:'Hasta',growth:'Crec %',linked:'Vincular',type:'Tipo',date:'Fecha',sell:'Vender activo',cash:'Efectivo',expense:'Gasto',buy:'Comprar activo',solo:'Solo',couple:'Pareja'},
+fr:{pillars:'Patrimoine · Prévision · Relocalisation',relocHd:'Où pouvez-vous vivre?',liqHd:'Actifs Liquides',illHd:'Actifs Illiquides',revHd:'Revenus Mensuels',costHd:'Dépenses Mensuelles',ievHd:'Événements de Revenu',eevHd:'Événements de Dépense',liqHint:'Chaque actif croît à son propre taux. Le compte <b>principal</b> reçoit tous les revenus.',illHint:'Immobilier, véhicules — actifs difficiles à vendre rapidement.',ievHint:'Revenu ponctuel ou vente d\'un actif.',eevHint:'Dépense ponctuelle ou achat d\'un actif.',none:'Aucun',now:'maintenant',inMo:'dans {m} mois',inYr:'dans {y} an',inYrMo:'dans {y} an {m} mois',curNet:'Patrimoine Actuel',netIn:'Patrimoine dans',liquid:'Liquide',illiquid:'Illiquide',total:'Total',family:'Famille',taxRate:'Votre taux d\'imposition',region:'Région',afford:'villes accessibles',mo:'/mois',rent:'Loyer',food:'Nourriture',transport:'Transport',util:'Services',health:'Santé',other:'Autres',tax:'Impôt',inf:'Inflation',primary:'PRINCIPAL',add:'+ Ajouter',del:'×',name:'Nom',value:'Valeur',returnRate:'Rend %',appRate:'Appr %',amount:'Montant',from:'De',to:'À',growth:'Crois %',linked:'Lier',type:'Type',date:'Date',sell:'Vendre actif',cash:'Espèces',expense:'Dépense',buy:'Acheter actif',solo:'Solo',couple:'Couple'},
+de:{pillars:'Vermögen · Prognose · Umzug',relocHd:'Wo können Sie leben?',liqHd:'Liquide Vermögenswerte',illHd:'Illiquide Vermögenswerte',revHd:'Monatliche Einnahmen',costHd:'Monatliche Lebenshaltungskosten',ievHd:'Einmalige Einnahmen',eevHd:'Einmalige Ausgaben',liqHint:'Jedes Asset wächst mit eigener Rate. Das <b>Hauptkonto</b> empfängt alle Einnahmen.',illHint:'Immobilien, Fahrzeuge — schwer schnell zu verkaufen.',ievHint:'Einmaliges Einkommen oder Verkauf eines Assets.',eevHint:'Einmalige Ausgabe oder Kauf eines Assets.',none:'Keine',now:'jetzt',inMo:'in {m} Mon.',inYr:'in {y} Jahr',inYrMo:'in {y} J. {m} Mon.',curNet:'Aktuelles Vermögen',netIn:'Vermögen in',liquid:'Liquide',illiquid:'Illiquide',total:'Gesamt',family:'Familie',taxRate:'Ihr Steuersatz',region:'Region',afford:'leistbare Städte',mo:'/Mon.',rent:'Miete',food:'Essen',transport:'Transport',util:'Nebenkosten',health:'Gesundheit',other:'Sonstiges',tax:'Steuer',inf:'Inflation',primary:'HAUPT',add:'+ Hinzufügen',del:'×',name:'Name',value:'Wert',returnRate:'Rendite %',appRate:'Wertzuwachs %',amount:'Betrag',from:'Von',to:'Bis',growth:'Wachstum %',linked:'Verknüpfen',type:'Typ',date:'Datum',sell:'Asset verkaufen',cash:'Bargeld',expense:'Ausgabe',buy:'Asset kaufen',solo:'Allein',couple:'Paar'},
+pt:{pillars:'Patrimônio · Previsão · Realocação',relocHd:'Onde você pode morar?',liqHd:'Ativos Líquidos',illHd:'Ativos Ilíquidos',revHd:'Receita Mensal',costHd:'Custos Mensais',ievHd:'Eventos de Receita',eevHd:'Eventos de Despesa',liqHint:'Cada ativo cresce a sua própria taxa. A conta <b>principal</b> recebe toda a renda.',illHint:'Imóveis, veículos — bens difíceis de vender rapidamente.',ievHint:'Renda única ou venda de um ativo.',eevHint:'Despesa única ou compra de um ativo.',none:'Nenhum',now:'agora',inMo:'em {m} mês',inYr:'em {y} ano',inYrMo:'em {y} ano {m} mês',curNet:'Patrimônio Atual',netIn:'Patrimônio em',liquid:'Líquido',illiquid:'Ilíquido',total:'Total',family:'Família',taxRate:'Sua taxa de imposto',region:'Região',afford:'cidades acessíveis',mo:'/mês',rent:'Aluguel',food:'Comida',transport:'Transporte',util:'Utilidades',health:'Saúde',other:'Outros',tax:'Imposto',inf:'Inflação',primary:'PRINCIPAL',add:'+ Adicionar',del:'×',name:'Nome',value:'Valor',returnRate:'Retorno %',appRate:'Valoriz %',amount:'Valor',from:'De',to:'Até',growth:'Cresc %',linked:'Vincular',type:'Tipo',date:'Data',sell:'Vender ativo',cash:'Dinheiro',expense:'Despesa',buy:'Comprar ativo',solo:'Solo',couple:'Casal'},
+ja:{pillars:'純資産 · 予測 · 移住',relocHd:'どこに住めますか？',liqHd:'流動資産',illHd:'非流動資産',revHd:'月収',costHd:'月間生活費',ievHd:'収入イベント',eevHd:'支出イベント',liqHint:'各資産は独自のレートで成長します。<b>メイン</b>口座がすべての収入を受け取ります。',illHint:'不動産、車両 — すぐに売れない資産。',ievHint:'一時的な収入または資産の売却。',eevHint:'一時的な支出または資産の購入。',none:'なし',now:'現在',inMo:'{m}ヶ月後',inYr:'{y}年後',inYrMo:'{y}年{m}ヶ月後',curNet:'現在の純資産',netIn:'純資産（',liquid:'流動',illiquid:'非流動',total:'合計',family:'家族',taxRate:'税率',region:'地域',afford:'住める都市',mo:'/月',rent:'家賃',food:'食費',transport:'交通',util:'光熱費',health:'医療',other:'その他',tax:'税金',inf:'インフレ',primary:'メイン',add:'+ 追加',del:'×',name:'名前',value:'金額',returnRate:'利回り%',appRate:'増価%',amount:'金額',from:'開始',to:'終了',growth:'成長%',linked:'リンク',type:'種類',date:'日付',sell:'資産売却',cash:'現金',expense:'支出',buy:'資産購入',solo:'一人',couple:'二人'},
+zh:{pillars:'净资产 · 预测 · 搬迁',relocHd:'你能住在哪里？',liqHd:'流动资产',illHd:'非流动资产',revHd:'月收入',costHd:'月生活成本',ievHd:'收入事件',eevHd:'支出事件',liqHint:'每项资产以自己的利率增长。<b>主</b>账户接收所有收入。',illHint:'房产、车辆 — 不易快速出售的资产。',ievHint:'一次性收入或出售资产。',eevHint:'一次性支出或购买资产。',none:'暂无',now:'现在',inMo:'{m}个月后',inYr:'{y}年后',inYrMo:'{y}年{m}个月后',curNet:'当前净资产',netIn:'净资产（',liquid:'流动',illiquid:'非流动',total:'总计',family:'家庭',taxRate:'你的税率',region:'地区',afford:'个可负担城市',mo:'/月',rent:'房租',food:'食物',transport:'交通',util:'水电',health:'医疗',other:'其他',tax:'税',inf:'通胀',primary:'主要',add:'+ 添加',del:'×',name:'名称',value:'金额',returnRate:'回报%',appRate:'增值%',amount:'金额',from:'从',to:'至',growth:'增长%',linked:'关联',type:'类型',date:'日期',sell:'出售资产',cash:'现金',expense:'支出',buy:'购买资产',solo:'单身',couple:'情侣'},
+ko:{pillars:'순자산 · 예측 · 이주',relocHd:'어디서 살 수 있나요?',liqHd:'유동 자산',illHd:'비유동 자산',revHd:'월 수입',costHd:'월 생활비',ievHd:'수입 이벤트',eevHd:'지출 이벤트',liqHint:'각 자산은 고유한 수익률로 성장합니다. <b>기본</b> 계좌가 모든 수입을 받습니다.',illHint:'부동산, 차량 — 빨리 팔기 어려운 자산.',ievHint:'일시적 수입 또는 자산 매각.',eevHint:'일시적 지출 또는 자산 구매.',none:'없음',now:'현재',inMo:'{m}개월 후',inYr:'{y}년 후',inYrMo:'{y}년 {m}개월 후',curNet:'현재 순자산',netIn:'순자산 (',liquid:'유동',illiquid:'비유동',total:'합계',family:'가족',taxRate:'세율',region:'지역',afford:'거주 가능 도시',mo:'/월',rent:'임대료',food:'식비',transport:'교통',util:'공과금',health:'의료',other:'기타',tax:'세금',inf:'인플레이션',primary:'기본',add:'+ 추가',del:'×',name:'이름',value:'금액',returnRate:'수익률%',appRate:'감정%',amount:'금액',from:'시작',to:'종료',growth:'성장%',linked:'연결',type:'유형',date:'날짜',sell:'자산 매각',cash:'현금',expense:'지출',buy:'자산 구매',solo:'1인',couple:'2인'},
+tr:{pillars:'Net Değer · Tahmin · Taşınma',relocHd:'Nerede yaşayabilirsiniz?',liqHd:'Likit Varlıklar',illHd:'Likit Olmayan Varlıklar',revHd:'Aylık Gelir',costHd:'Aylık Yaşam Giderleri',ievHd:'Gelir Olayları',eevHd:'Gider Olayları',liqHint:'Her varlık kendi oranında büyür. <b>Ana</b> hesap tüm geliri alır.',illHint:'Gayrimenkul, araçlar — hızlı satılamayan varlıklar.',ievHint:'Tek seferlik gelir veya varlık satışı.',eevHint:'Tek seferlik gider veya varlık alımı.',none:'Henüz yok',now:'şimdi',inMo:'{m} ay sonra',inYr:'{y} yıl sonra',inYrMo:'{y} yıl {m} ay sonra',curNet:'Mevcut Net Değer',netIn:'Net Değer',liquid:'Likit',illiquid:'Likit Olmayan',total:'Toplam',family:'Aile',taxRate:'Vergi oranınız',region:'Bölge',afford:'yaşanabilir şehir',mo:'/ay',rent:'Kira',food:'Yemek',transport:'Ulaşım',util:'Faturalar',health:'Sağlık',other:'Diğer',tax:'Vergi',inf:'Enflasyon',primary:'ANA',add:'+ Ekle',del:'×',name:'Ad',value:'Değer',returnRate:'Getiri %',appRate:'Değerlenme %',amount:'Tutar',from:'Başlangıç',to:'Bitiş',growth:'Büyüme %',linked:'Bağla',type:'Tür',date:'Tarih',sell:'Varlık sat',cash:'Nakit',expense:'Gider',buy:'Varlık al',solo:'Tek',couple:'Çift'},
+ar:{pillars:'الثروة · التوقعات · الانتقال',relocHd:'أين يمكنك العيش؟',liqHd:'أصول سائلة',illHd:'أصول غير سائلة',revHd:'الدخل الشهري',costHd:'تكاليف المعيشة الشهرية',ievHd:'أحداث الدخل',eevHd:'أحداث النفقات',liqHint:'كل أصل ينمو بمعدله الخاص. الحساب <b>الرئيسي</b> يستقبل كل الدخل.',illHint:'عقارات، مركبات — أصول يصعب بيعها بسرعة.',ievHint:'دخل لمرة واحدة أو بيع أصل.',eevHint:'نفقة لمرة واحدة أو شراء أصل.',none:'لا يوجد',now:'الآن',inMo:'خلال {m} شهر',inYr:'خلال {y} سنة',inYrMo:'خلال {y} سنة {m} شهر',curNet:'صافي الثروة الحالي',netIn:'صافي الثروة في',liquid:'سائل',illiquid:'غير سائل',total:'الإجمالي',family:'الأسرة',taxRate:'معدل الضريبة',region:'المنطقة',afford:'مدن ميسورة',mo:'/شهر',rent:'إيجار',food:'طعام',transport:'مواصلات',util:'مرافق',health:'صحة',other:'أخرى',tax:'ضريبة',inf:'تضخم',primary:'رئيسي',add:'+ إضافة',del:'×',name:'الاسم',value:'القيمة',returnRate:'العائد%',appRate:'التقدير%',amount:'المبلغ',from:'من',to:'إلى',growth:'النمو%',linked:'ربط',type:'النوع',date:'التاريخ',sell:'بيع أصل',cash:'نقد',expense:'مصروف',buy:'شراء أصل',solo:'فردي',couple:'زوجين'},
+hi:{pillars:'संपत्ति · पूर्वानुमान · स्थानांतरण',relocHd:'आप कहाँ रह सकते हैं?',liqHd:'तरल संपत्ति',illHd:'अतरल संपत्ति',revHd:'मासिक आय',costHd:'मासिक जीवन लागत',ievHd:'आय घटनाएँ',eevHd:'व्यय घटनाएँ',liqHint:'प्रत्येक संपत्ति अपनी दर से बढ़ती है। <b>प्राथमिक</b> खाता सभी आय प्राप्त करता है।',illHint:'अचल संपत्ति, वाहन — जल्दी बेचना कठिन।',ievHint:'एकमुश्त आय या संपत्ति बिक्री।',eevHint:'एकमुश्त खर्च या संपत्ति खरीद।',none:'कोई नहीं',now:'अभी',inMo:'{m} महीने में',inYr:'{y} साल में',inYrMo:'{y} साल {m} महीने में',curNet:'वर्तमान कुल संपत्ति',netIn:'कुल संपत्ति',liquid:'तरल',illiquid:'अतरल',total:'कुल',family:'परिवार',taxRate:'कर दर',region:'क्षेत्र',afford:'किफायती शहर',mo:'/माह',rent:'किराया',food:'भोजन',transport:'परिवहन',util:'उपयोगिताएँ',health:'स्वास्थ्य',other:'अन्य',tax:'कर',inf:'मुद्रास्फीति',primary:'प्राथमिक',add:'+ जोड़ें',del:'×',name:'नाम',value:'मूल्य',returnRate:'रिटर्न%',appRate:'मूल्यवृद्धि%',amount:'राशि',from:'से',to:'तक',growth:'वृद्धि%',linked:'लिंक',type:'प्रकार',date:'तारीख',sell:'संपत्ति बेचें',cash:'नकद',expense:'खर्च',buy:'संपत्ति खरीदें',solo:'अकेला',couple:'जोड़ा'},
+ru:{pillars:'Капитал · Прогноз · Переезд',relocHd:'Где вы можете жить?',liqHd:'Ликвидные активы',illHd:'Неликвидные активы',revHd:'Ежемесячный доход',costHd:'Ежемесячные расходы',ievHd:'Разовые доходы',eevHd:'Разовые расходы',liqHint:'Каждый актив растёт по своей ставке. <b>Основной</b> счёт получает весь доход.',illHint:'Недвижимость, транспорт — то, что сложно быстро продать.',ievHint:'Разовый доход или продажа актива.',eevHint:'Разовый расход или покупка актива.',none:'Пока нет',now:'сейчас',inMo:'через {m} мес.',inYr:'через {y} г.',inYrMo:'через {y} г. {m} мес.',curNet:'Текущий капитал',netIn:'Капитал через',liquid:'Ликвидный',illiquid:'Неликвидный',total:'Итого',family:'Семья',taxRate:'Ваша ставка налога',region:'Регион',afford:'доступных городов',mo:'/мес.',rent:'Аренда',food:'Еда',transport:'Транспорт',util:'Коммунальные',health:'Здоровье',other:'Другое',tax:'Налог',inf:'Инфляция',primary:'ОСНОВНОЙ',add:'+ Добавить',del:'×',name:'Название',value:'Стоимость',returnRate:'Доход %',appRate:'Рост %',amount:'Сумма',from:'С',to:'По',growth:'Рост %',linked:'Связать',type:'Тип',date:'Дата',sell:'Продать актив',cash:'Наличные',expense:'Расход',buy:'Купить актив',solo:'Один',couple:'Пара'},
+ka:{pillars:'კაპიტალი · პროგნოზი · გადასახლება',relocHd:'სად შეგიძლიათ ცხოვრება?',liqHd:'ლიკვიდური აქტივები',illHd:'არალიკვიდური აქტივები',revHd:'ყოველთვიური შემოსავალი',costHd:'ყოველთვიური ხარჯები',ievHd:'შემოსავლის მოვლენები',eevHd:'ხარჯის მოვლენები',liqHint:'თითოეული აქტივი იზრდება საკუთარი განაკვეთით.',illHint:'უძრავი ქონება, ტრანსპორტი.',ievHint:'ერთჯერადი შემოსავალი ან აქტივის გაყიდვა.',eevHint:'ერთჯერადი ხარჯი ან აქტივის შეძენა.',none:'ჯერ არ არის',now:'ახლა',inMo:'{m} თვეში',inYr:'{y} წელში',inYrMo:'{y} წ. {m} თვეში',curNet:'მიმდინარე კაპიტალი',netIn:'კაპიტალი',liquid:'ლიკვიდური',illiquid:'არალიკვიდური',total:'ჯამი',family:'ოჯახი',taxRate:'გადასახადის განაკვეთი',region:'რეგიონი',afford:'ხელმისაწვდომი ქალაქი',mo:'/თვე',rent:'ქირა',food:'საკვები',transport:'ტრანსპორტი',util:'კომუნალური',health:'ჯანმრთელობა',other:'სხვა',tax:'გადასახადი',inf:'ინფლაცია',primary:'მთავარი',add:'+ დამატება',del:'×',name:'სახელი',value:'ღირებულება',returnRate:'შემოსავალი%',appRate:'ზრდა%',amount:'თანხა',from:'დან',to:'მდე',growth:'ზრდა%',linked:'დაკავშირება',type:'ტიპი',date:'თარიღი',sell:'აქტივის გაყიდვა',cash:'ნაღდი',expense:'ხარჯი',buy:'აქტივის ყიდვა',solo:'მარტო',couple:'წყვილი'},
+uk:{pillars:'Капітал · Прогноз · Переїзд',relocHd:'Де ви можете жити?',liqHd:'Ліквідні активи',illHd:'Неліквідні активи',revHd:'Щомісячний дохід',costHd:'Щомісячні витрати',ievHd:'Разові доходи',eevHd:'Разові витрати',liqHint:'Кожен актив зростає за своєю ставкою.',illHint:'Нерухомість, транспорт — те, що складно швидко продати.',ievHint:'Разовий дохід або продаж активу.',eevHint:'Разова витрата або купівля активу.',none:'Поки немає',now:'зараз',inMo:'через {m} міс.',inYr:'через {y} р.',inYrMo:'через {y} р. {m} міс.',curNet:'Поточний капітал',netIn:'Капітал через',liquid:'Ліквідний',illiquid:'Неліквідний',total:'Всього',family:'Сім\'я',taxRate:'Ваша ставка податку',region:'Регіон',afford:'доступних міст',mo:'/міс.',rent:'Оренда',food:'Їжа',transport:'Транспорт',util:'Комунальні',health:'Здоров\'я',other:'Інше',tax:'Податок',inf:'Інфляція',primary:'ОСНОВНИЙ',add:'+ Додати',del:'×',name:'Назва',value:'Вартість',returnRate:'Дохід%',appRate:'Зростання%',amount:'Сума',from:'З',to:'По',growth:'Зростання%',linked:'Зв\'язати',type:'Тип',date:'Дата',sell:'Продати актив',cash:'Готівка',expense:'Витрата',buy:'Купити актив',solo:'Один',couple:'Пара'}
+};
+// Fallback to English for unsupported languages
+const T=I18N[LANG]||I18N.en;
+function t(key){return T[key]||I18N.en[key]||key}
+// Set HTML lang attribute
+if(LANG!=='en')document.documentElement.lang=LANG;
+// RTL support for Arabic
+if(LANG==='ar')document.documentElement.dir='rtl';
+
 function load(){try{const r=localStorage.getItem(SK);return r?JSON.parse(r):null}catch{return null}}
 function persist(){try{localStorage.setItem(SK,JSON.stringify({liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam,curTax:D.curTax}))}catch{}}
 const NOW=new Date(),MX=360,DF=NOW.toISOString().slice(0,10);
@@ -578,11 +637,24 @@ function drawChart(){
   const vTotal=vis.map(d=>d.value);
   const vLiq=vis.map(d=>d.cash);
   const vIll=vis.map(d=>d.assetTotal);
+  // FIRE variants: Lean (60% expenses), Regular, Fat (150%), Coast (present value at 7% over 20yr)
   const fN=mCost>0?(mCost*12)/.04:null;
-  let fI=-1;if(fN>0)for(let i=0;i<len;i++)if(vis[i].cash>=fN){fI=i;break}
+  const leanN=fN?fN*0.6:null;
+  const fatN=fN?fN*1.5:null;
+  // Coast FIRE: how much you need now so 7% growth reaches fN in 20 years
+  const coastN=fN?fN/Math.pow(1.07,20):null;
+  // Find crossing indices for each (liquid assets)
+  function findCross(target){if(!target||target<=0)return -1;for(let i=0;i<len;i++)if(vis[i].cash>=target)return i;return -1}
+  const fireTypes=[
+    {id:'coast',label:'Coast',num:coastN,color:'#0891b2',bg:'rgba(8,145,178,',idx:findCross(coastN)},
+    {id:'lean',label:'Lean',num:leanN,color:'#16a34a',bg:'rgba(22,163,74,',idx:findCross(leanN)},
+    {id:'fire',label:'FIRE',num:fN,color:'#f59e0b',bg:'rgba(245,158,11,',idx:findCross(fN)},
+    {id:'fat',label:'Fat',num:fatN,color:'#dc2626',bg:'rgba(220,38,38,',idx:findCross(fatN)}
+  ];
   const allVals=[...vTotal,...vLiq,...vIll];
   let mn=Math.min(...allVals,0),mx=Math.max(...allVals,1);
-  if(fN>0&&fN<mx*1.6)mx=Math.max(mx,fN*1.08);
+  // Ensure chart y-range includes visible FIRE lines
+  for(const ft of fireTypes){if(ft.num>0&&ft.num<mx*1.6)mx=Math.max(mx,ft.num*1.05)}
   const rng=mx-mn||1;
   const xO=i=>p.l+(i/Math.max(len-1,1))*cw;
   const yO=v=>p.t+ch-((v-mn)/rng)*ch;
@@ -596,8 +668,8 @@ function drawChart(){
   else{const ys=ei<=48?1:ei<=120?2:5;for(let yr=0;yr<=ei/12+.01;yr+=ys){const mi=Math.round(yr*12);if(mi>=len)break;ctx.fillText(mi===0?'now':`in ${Math.round(yr)} yr`,xO(mi),H-p.b+14)}}
   // Zero line
   if(mn<0){ctx.save();ctx.strokeStyle='#dc262640';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(p.l,yO(0));ctx.lineTo(W-p.r,yO(0));ctx.stroke();ctx.restore()}
-  // FIRE line
-  if(fN>0&&fN>=mn&&fN<=mx*1.1){const fy=yO(fN);ctx.save();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(p.l,fy);ctx.lineTo(W-p.r,fy);ctx.stroke();ctx.restore();ctx.fillStyle='#f59e0b';ctx.font=`bold 9px ${MO}`;ctx.textAlign='right';ctx.fillText('🔥 FIRE '+fm(fN),W-p.r,fy-5)}
+  // FIRE dashed line (only for main FIRE)
+  if(fN>0&&fN>=mn&&fN<=mx*1.1){const fy=yO(fN);ctx.save();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(p.l,fy);ctx.lineTo(W-p.r,fy);ctx.stroke();ctx.restore();ctx.fillStyle='#f59e0b';ctx.font=`bold 8px ${MO}`;ctx.textAlign='left';ctx.fillText('FIRE '+fm(fN),p.l+4,fy-4)}
 
   // Helper: draw area + line + end dot for a series
   function drawSeries(vals,color,fillAlpha,lineW){
@@ -630,9 +702,9 @@ function drawChart(){
   ctx.font=`bold 9px ${MO}`;ctx.textAlign='left';
   // Collect label positions, then nudge to avoid overlap
   const labels=[];
-  labels.push({label:'Total',color:'#2563eb',y:yO(vTotal[len-1])});
-  if(hasLiq)labels.push({label:'Liquid',color:'#059669',y:yO(vLiq[len-1])});
-  if(hasIll)labels.push({label:'Illiquid',color:'#ea580c',y:yO(vIll[len-1])});
+  labels.push({label:t('total'),color:'#2563eb',y:yO(vTotal[len-1])});
+  if(hasLiq)labels.push({label:t('liquid'),color:'#059669',y:yO(vLiq[len-1])});
+  if(hasIll)labels.push({label:t('illiquid'),color:'#ea580c',y:yO(vIll[len-1])});
   // Sort by y position and nudge overlapping labels apart
   labels.sort((a,b)=>a.y-b.y);
   const minGap=11;
@@ -644,18 +716,48 @@ function drawChart(){
     ctx.fillText(lb.label,endX,lb.y+3);
   }
 
-  // FIRE point — placed where liquid line intersects FIRE threshold
-  if(fI>=0&&fI<len){const fx=xO(fI),fy=yO(fN),fd=vis[fI].date,fv=vis[fI].cash;const yrs=Math.floor(fI/12),mos=fI%12;const ts=yrs>0?(mos>0?`${yrs} yr ${mos} mo`:`${yrs} yr`):`${mos} mo`;
-    ctx.beginPath();ctx.arc(fx,fy,12,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,.12)';ctx.fill();
-    ctx.beginPath();ctx.arc(fx,fy,7,0,Math.PI*2);ctx.fillStyle='rgba(245,158,11,.22)';ctx.fill();
-    ctx.beginPath();ctx.arc(fx,fy,4.5,0,Math.PI*2);ctx.fillStyle='#f59e0b';ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=2;ctx.stroke();
-    const l1=`🔥 FIRE in ${ts}`,l2=`${fm(fv)} · ${fd.toLocaleDateString('en',{month:'short',year:'numeric'})}`;
-    ctx.font=`bold 10px ${MO}`;const tw1=ctx.measureText(l1).width;ctx.font=`9px ${MO}`;const tw2=ctx.measureText(l2).width;
-    const pw=Math.max(tw1,tw2)+16,ph=32;let px=fx-pw/2;if(px<p.l)px=p.l;if(px+pw>W-p.r)px=W-p.r-pw;
-    const above=fy-22-ph,ap=above<p.t?fy+14:above;
-    ctx.fillStyle='rgba(254,243,199,.95)';ctx.beginPath();const rr=6;ctx.moveTo(px+rr,ap);ctx.lineTo(px+pw-rr,ap);ctx.arcTo(px+pw,ap,px+pw,ap+rr,rr);ctx.lineTo(px+pw,ap+ph-rr);ctx.arcTo(px+pw,ap+ph,px+pw-rr,ap+ph,rr);ctx.lineTo(px+rr,ap+ph);ctx.arcTo(px,ap+ph,px,ap+ph-rr,rr);ctx.lineTo(px,ap+rr);ctx.arcTo(px,ap,px+rr,ap,rr);ctx.closePath();ctx.fill();ctx.strokeStyle='#f59e0b55';ctx.lineWidth=1;ctx.stroke();
-    ctx.fillStyle='#92400e';ctx.font=`bold 10px ${MO}`;ctx.textAlign='center';ctx.fillText(l1,px+pw/2,ap+13);
-    ctx.font=`9px ${MO}`;ctx.fillStyle='#b45309';ctx.fillText(l2,px+pw/2,ap+26)}
+  // FIRE crossing points — markers with time labels for all 4 types
+  const fireMarkers=[];
+  for(const ft of fireTypes){
+    if(ft.idx<0||ft.idx>=len||!ft.num||ft.num<=0)continue;
+    const fx=xO(ft.idx),fy=yO(ft.num);
+    const yrs=Math.floor(ft.idx/12),mos=ft.idx%12;
+    const ts=yrs>0?(mos>0?`${yrs}y ${mos}m`:`${yrs}y`):`${mos}m`;
+    // Glow + dot
+    ctx.beginPath();ctx.arc(fx,fy,8,0,Math.PI*2);ctx.fillStyle=ft.bg+'0.10)';ctx.fill();
+    ctx.beginPath();ctx.arc(fx,fy,4,0,Math.PI*2);ctx.fillStyle=ft.bg+'0.25)';ctx.fill();
+    ctx.beginPath();ctx.arc(fx,fy,3,0,Math.PI*2);ctx.fillStyle=ft.color;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
+    // Collect marker for label (avoid overlap)
+    fireMarkers.push({label:`${ft.label} ${ts}`,color:ft.color,x:fx,y:fy,id:ft.id});
+  }
+  // Draw labels above/below markers, nudge to avoid overlap
+  fireMarkers.sort((a,b)=>a.x-b.x);
+  for(let i=0;i<fireMarkers.length;i++){
+    const m=fireMarkers[i];
+    ctx.font=`bold 8px ${MO}`;
+    const tw=ctx.measureText(m.label).width;
+    let lx=m.x-tw/2,ly=m.y-10;
+    // Keep within bounds
+    if(lx<p.l)lx=p.l;if(lx+tw>W-p.r)lx=W-p.r-tw;
+    if(ly<p.t+4)ly=m.y+14;
+    // Check overlap with previous labels and nudge vertically
+    for(let j=0;j<i;j++){
+      const prev=fireMarkers[j];
+      if(prev._lx!==undefined&&Math.abs(lx-prev._lx)<tw&&Math.abs(ly-prev._ly)<10){
+        ly=prev._ly+11;
+      }
+    }
+    m._lx=lx;m._ly=ly;
+    // Small pill background
+    ctx.fillStyle='rgba(255,255,255,0.85)';
+    const pad=3;
+    ctx.beginPath();
+    ctx.roundRect(lx-pad,ly-9,tw+pad*2,12,3);
+    ctx.fill();
+    ctx.fillStyle=m.color;
+    ctx.textAlign='left';
+    ctx.fillText(m.label,lx,ly);
+  }
 }
 
 // ═══════════════ SLIDER (persistent DOM — never rebuilt)
@@ -696,7 +798,7 @@ function initSlider(){
   window.addEventListener('touchend',()=>{if(slDrag){slDrag=false;thumb.classList.remove('on');hideTip();persist()}});
 }
 
-let _lastFireMonth=-2; // cache to avoid rebuilding buttons on every drag frame
+let _lastFireKey=''; // cache to avoid rebuilding buttons on every drag frame
 function updateSliderPos(){
   const pct=(m2s(D.sl)/SS)*100;
   const cur=FC[Math.min(D.sl,FC.length-1)];
@@ -707,33 +809,51 @@ function updateSliderPos(){
   document.getElementById('thumb').style.transition=slDrag?'none':'all .15s';
   document.getElementById('tip').style.left=`clamp(44px,${pct}%,calc(100% - 44px))`;
   document.getElementById('tip-t').textContent=`${fmF(cur.value)}  ${fmT(D.sl)}`;
-  // Compute FIRE month
+  // Compute all FIRE months
   const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
   const fireNum=mCost>0?(mCost*12)/.04:0;
-  const fireMonth=fireNum>0?FC.findIndex(p=>p.cash>=fireNum):-1;
-  // Rebuild button HTML only when FIRE month changes
-  if(fireMonth!==_lastFireMonth){
-    _lastFireMonth=fireMonth;
+  const fireVariants=[
+    {id:'coast',label:'Coast',num:fireNum?fireNum/Math.pow(1.07,20):0,color:'#0891b2',bg:'#ecfeff'},
+    {id:'lean',label:'Lean',num:fireNum*0.6,color:'#16a34a',bg:'#f0fdf4'},
+    {id:'fire',label:'FIRE',num:fireNum,color:'#f59e0b',bg:'#fffbeb'},
+    {id:'fat',label:'Fat',num:fireNum*1.5,color:'#dc2626',bg:'#fef2f2'}
+  ];
+  const fireMonths=fireVariants.map(v=>({...v,month:v.num>0?FC.findIndex(p=>p.cash>=v.num):-1}));
+  const fireKey=fireMonths.map(f=>f.month).join(',');
+  // Rebuild button HTML only when any FIRE month changes
+  if(fireKey!==_lastFireKey){
+    _lastFireKey=fireKey;
     const timeBtns=[{l:'6 mo',m:6},{l:'1 yr',m:12},{l:'2 yr',m:24},{l:'5 yr',m:60},{l:'10 yr',m:120},{l:'20 yr',m:240},{l:'30 yr',m:360}];
-    let allBtns=timeBtns.map(b=>({...b,fire:false}));
-    if(fireMonth>0&&!timeBtns.some(b=>b.m===fireMonth)){
-      const fy=Math.floor(fireMonth/12),fmo=fireMonth%12;
-      const fLabel=fy>0?(fmo>0?`${fy} yr ${fmo} mo`:`${fy} yr`):`${fmo} mo`;
-      allBtns.push({l:`🔥 ${fLabel}`,m:fireMonth,fire:true});
-      allBtns.sort((a,b)=>a.m-b.m);
-    }else if(fireMonth>0){
-      allBtns=allBtns.map(b=>b.m===fireMonth?{...b,fire:true,l:`🔥 ${b.l}`}:b);
+    let allBtns=timeBtns.map(b=>({...b,fireId:null,fireColor:null,fireBg:null}));
+    // Add FIRE buttons
+    for(const fv of fireMonths){
+      if(fv.month<=0)continue;
+      const existing=allBtns.find(b=>b.m===fv.month);
+      if(existing){
+        // Merge with existing time button
+        existing.fireId=fv.id;existing.fireColor=fv.color;existing.fireBg=fv.bg;
+        existing.l=`🔥 ${fv.label} · ${existing.l}`;
+      }else{
+        const fy=Math.floor(fv.month/12),fmo=fv.month%12;
+        const fLabel=fy>0?(fmo>0?`${fy}y ${fmo}m`:`${fy}y`):`${fmo}m`;
+        allBtns.push({l:`🔥 ${fv.label} · ${fLabel}`,m:fv.month,fireId:fv.id,fireColor:fv.color,fireBg:fv.bg});
+      }
     }
-    let qH='';allBtns.forEach(b=>{qH+=`<button data-qm="${b.m}"${b.fire?' data-fire="1"':''}>${b.l}</button>`});
+    allBtns.sort((a,b)=>a.m-b.m);
+    let qH='';allBtns.forEach(b=>{
+      const attrs=b.fireId?` data-fire="${b.fireId}" data-fc="${b.fireColor}" data-fb="${b.fireBg}"`:'';
+      qH+=`<button data-qm="${b.m}"${attrs}>${b.l}</button>`;
+    });
     document.getElementById('qbtns').innerHTML=qH;
   }
   // Update button styles (cheap — no innerHTML)
   document.querySelectorAll('#qbtns button').forEach(b=>{
-    const m=+b.dataset.qm;const active=D.sl===m;const isFire=b.dataset.fire==='1';
-    if(isFire){
-      b.style.background=active?'#f59e0b':'#fffbeb';
-      b.style.border=(active?'1.5px':'1px')+' solid #f59e0b';
-      b.style.color=active?'#fff':'#92400e';
+    const m=+b.dataset.qm;const active=D.sl===m;
+    const fc=b.dataset.fc;const fb=b.dataset.fb;
+    if(fc){
+      b.style.background=active?fc:fb;
+      b.style.border=(active?'1.5px':'1px')+` solid ${fc}`;
+      b.style.color=active?'#fff':fc;
       b.style.fontWeight=active?'700':'600';
     }else{
       b.style.border=active?'1.5px solid var(--acc)':'1px solid var(--brd)';
@@ -749,15 +869,29 @@ function updateView(){
   const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
   // Hero
   const hl=document.getElementById('h-label');
-  hl.innerHTML=D.sl===0?'Net worth today':`${fmT(D.sl)}<span style="opacity:.5"> · ${cur.date.toLocaleDateString('en',{month:'short',year:'numeric'})}</span>`;
+  const dateLoc=LANG==='en'?'en':LANG;
+  hl.innerHTML=D.sl===0?t('curNet'):`${fmT(D.sl)}<span style="opacity:.5"> · ${cur.date.toLocaleDateString(dateLoc,{month:'short',year:'numeric'})}</span>`;
   const hv=document.getElementById('h-val');
   hv.textContent=fmF(cur.value);hv.style.color=cur.value>=0?'var(--grn)':'var(--red)';
-  document.getElementById('h-sub').textContent=`Liquid ${fm(cur.cash)} · Illiquid ${fm(cur.assetTotal)}`;
-  // FIRE
+  document.getElementById('h-sub').textContent=`${t('liquid')} ${fm(cur.cash)} · ${t('illiquid')} ${fm(cur.assetTotal)}`;
+  // FIRE (all 4 types)
   const hf=document.getElementById('h-fire');
   if(mCost>0){
-    const fN=(mCost*12)/.04;const fM=FC.findIndex(p=>p.cash>=fN);const reached=cur.cash>=fN;
-    hf.innerHTML=`<span style="font-size:13px">🔥</span>`+(fM>=0?`<span style="color:${reached?'#f59e0b':'var(--mut)'}">FIRE at ${fm(fN)} (liquid)${reached?' <span style="color:var(--grn);font-weight:700"> — reached!</span>':' — '+fmT(fM)}</span>`:`<span style="color:var(--mut)">FIRE target: ${fm(fN)} (liquid) — not reached in 30 yr</span>`);
+    const fN=(mCost*12)/.04;
+    const types=[
+      {label:'Coast',num:fN/Math.pow(1.07,20),color:'#0891b2'},
+      {label:'Lean',num:fN*0.6,color:'#16a34a'},
+      {label:'FIRE',num:fN,color:'#f59e0b'},
+      {label:'Fat',num:fN*1.5,color:'#dc2626'}
+    ];
+    let html='<span style="font-size:13px">🔥</span> ';
+    for(const t of types){
+      const idx=FC.findIndex(p=>p.cash>=t.num);
+      const reached=cur.cash>=t.num;
+      const ts=idx>=0?fmT(idx):'30yr+';
+      html+=`<span style="color:${reached?t.color:'var(--mut)'};margin:0 4px;font-size:10px">${t.label} ${fm(t.num)}${reached?' <b style="color:var(--grn)">✓</b>':` · ${ts}`}</span>`;
+    }
+    hf.innerHTML=html;
   }else hf.innerHTML='';
   // Slider position
   updateSliderPos();
@@ -950,7 +1084,7 @@ function renderSections(){
   const tLiq=D.liq.reduce((s,a)=>s+(a.value||0),0);
   let h='';
   // LIQUID ASSETS
-  h+=secHd('Liquid Assets','var(--acc)','addLiq()',`<span class="sr" style="color:var(--acc)">${fm(tLiq)}</span>`,'Each asset compounds at its own rate. The <b>primary</b> account receives all income. Expenses deduct from primary first — if depleted, they cascade to the next asset down.');
+  h+=secHd(t('liqHd'),'var(--acc)','addLiq()',`<span class="sr" style="color:var(--acc)">${fm(tLiq)}</span>`,t('liqHint'));
   if(D.liq.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">Name</span><span style="flex:0 0 100px;text-align:right">Value</span><span style="flex:0 0 72px;text-align:right">Return/yr</span><span style="flex:0 0 22px"></span><span style="flex:0 0 16px"></span></div>`;
   D.liq.forEach((a,i)=>{
     const isPrimary=i===0;
@@ -965,7 +1099,7 @@ function renderSections(){
     <button class="bd" data-del="liq" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // ILLIQUID ASSETS
-  h+=secHd('Illiquid Assets','var(--prp)','addIll()',`<span class="sr" style="color:var(--prp)">${fm(D.ill.reduce((s,a)=>s+(a.value||0),0))}</span>`,'Real estate, vehicles — things that take time to sell.');
+  h+=secHd(t('illHd'),'var(--prp)','addIll()',`<span class="sr" style="color:var(--prp)">${fm(D.ill.reduce((s,a)=>s+(a.value||0),0))}</span>`,t('illHint'));
   if(D.ill.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">Name</span><span style="flex:0 0 100px;text-align:right">Value</span><span style="flex:0 0 72px;text-align:right">Appr./yr</span><span style="flex:0 0 16px"></span></div>`;
   D.ill.forEach((a,i)=>{h+=`<div class="rw">
     <input class="sm" value="${esc(a.name)}" placeholder="Name" style="flex:1 1 100px;min-width:60px" data-arr="ill" data-idx="${i}" data-fld="name">
@@ -974,7 +1108,7 @@ function renderSections(){
     <button class="bd" data-del="ill" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // MONTHLY REVENUE
-  h+=secHd('Monthly Revenue','var(--grn)','addRev()',`<span class="sr" style="color:var(--grn)">+${fm(mRev)}/mo</span>`);
+  h+=secHd(t('revHd'),'var(--grn)','addRev()',`<span class="sr" style="color:var(--grn)">+${fm(mRev)}${t('mo')}</span>`);
   if(D.rev.length)h+=`<div class="col-hdr"><span style="flex:1 1 80px;min-width:50px">Name</span><span style="flex:0 0 90px;text-align:right">$/month</span><span style="flex:0 0 68px;text-align:right">Growth/yr</span><span style="flex:0 0 40px;text-align:center">Link</span><span style="flex:0 0 96px">Starts</span><span style="flex:0 0 96px">Ends</span><span style="flex:0 0 16px"></span></div>`;
   D.rev.forEach((r,i)=>{h+=`<div class="rw rw-rc">
     <div class="r1"><input class="sm" value="${esc(r.name)}" placeholder="Name" style="flex:1;min-width:50px" data-arr="rev" data-idx="${i}" data-fld="name"></div>
@@ -991,7 +1125,7 @@ function renderSections(){
   </div>`});
   h+=`</div>`;
   // MONTHLY COSTS
-  h+=secHd('Monthly Living Costs','var(--red)','addCst()',`<span class="sr" style="color:var(--red)">-${fm(mCost)}/mo</span>`);
+  h+=secHd(t('costHd'),'var(--red)','addCst()',`<span class="sr" style="color:var(--red)">-${fm(mCost)}${t('mo')}</span>`);
   if(D.cst.length)h+=`<div class="col-hdr"><span style="flex:1 1 80px;min-width:50px">Name</span><span style="flex:0 0 90px;text-align:right">$/month</span><span style="flex:0 0 68px;text-align:right">Inflation/yr</span><span style="flex:0 0 40px;text-align:center">Link</span><span style="flex:0 0 96px">Starts</span><span style="flex:0 0 96px">Ends</span><span style="flex:0 0 16px"></span></div>`;
   D.cst.forEach((c,i)=>{h+=`<div class="rw rw-rc">
     <div class="r1"><input class="sm" value="${esc(c.name)}" placeholder="Name" style="flex:1;min-width:50px" data-arr="cst" data-idx="${i}" data-fld="name"></div>
@@ -1008,7 +1142,7 @@ function renderSections(){
   </div>`});
   h+=`</div>`;
   // INCOME EVENTS
-  h+=secHd('Income Events','var(--grn)','addIev()','','One-time cash income, or sell an owned asset at its appreciated value.');
+  h+=secHd(t('ievHd'),'var(--grn)','addIev()','',t('ievHint'));
   if(D.iev.length)h+=`<div class="col-hdr"><span style="flex:0 0 70px">Type</span><span style="flex:1 1 80px">Name / Asset</span><span style="flex:0 0 90px;text-align:right">Amount</span><span style="flex:0 0 96px">When</span><span style="flex:0 0 16px"></span></div>`;
   D.iev.forEach((ev,i)=>{h+=`<div class="rw rw-ev">
     <div class="r1">
@@ -1022,10 +1156,10 @@ function renderSections(){
       <button class="bd" data-del="iev" data-idx="${i}">×</button>
     </div>
   </div>`});
-  if(!D.iev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">None yet</p>`;
+  if(!D.iev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
   h+=`</div>`;
   // EXPENSE EVENTS
-  h+=secHd('Expense Events','var(--red)','addEev()','','One-time expenses, or buy an asset that appreciates/depreciates.');
+  h+=secHd(t('eevHd'),'var(--red)','addEev()','',t('eevHint'));
   if(D.eev.length)h+=`<div class="col-hdr"><span style="flex:0 0 72px">Type</span><span style="flex:1 1 80px">Name</span><span style="flex:0 0 90px;text-align:right">Amount</span><span style="flex:0 0 72px;text-align:right">Appr./Depr.</span><span style="flex:0 0 96px">When</span><span style="flex:0 0 16px"></span></div>`;
   D.eev.forEach((ev,i)=>{h+=`<div class="rw rw-ev">
     <div class="r1">
@@ -1039,7 +1173,7 @@ function renderSections(){
       <button class="bd" data-del="eev" data-idx="${i}">×</button>
     </div>
   </div>`});
-  if(!D.eev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">None yet</p>`;
+  if(!D.eev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
   h+=`</div>`;
 
   document.getElementById('secs').innerHTML=h;
@@ -1155,6 +1289,11 @@ function fullUpdate(){
 }
 
 // ═══════════════ INIT
+// Apply i18n to static elements
+if(LANG!=='en'){
+  const np=document.getElementById('nav-pillars');if(np)np.textContent=t('pillars');
+  const rt=document.getElementById('rel-title');if(rt)rt.textContent=t('relocHd');
+}
 runFC();
 initSlider();
 renderSections();
