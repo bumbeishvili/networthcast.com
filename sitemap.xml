@@ -1,57 +1,1040 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://networthcast.com/</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/?lang=es"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/?lang=pt"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/?lang=ar"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/?lang=hi"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/?lang=ko"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/?lang=tr"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/?lang=fr"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/?lang=de"/>
+    <xhtml:link rel="alternate" hreflang="it" href="https://networthcast.com/?lang=it"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/?lang=zh"/>
+    <xhtml:link rel="alternate" hreflang="nl" href="https://networthcast.com/?lang=nl"/>
+    <xhtml:link rel="alternate" hreflang="fi" href="https://networthcast.com/?lang=fi"/>
+    <xhtml:link rel="alternate" hreflang="et" href="https://networthcast.com/?lang=et"/>
+    <xhtml:link rel="alternate" hreflang="pl" href="https://networthcast.com/?lang=pl"/>
+    <xhtml:link rel="alternate" hreflang="cs" href="https://networthcast.com/?lang=cs"/>
+    <xhtml:link rel="alternate" hreflang="sv" href="https://networthcast.com/?lang=sv"/>
+    <xhtml:link rel="alternate" hreflang="no" href="https://networthcast.com/?lang=no"/>
+    <xhtml:link rel="alternate" hreflang="da" href="https://networthcast.com/?lang=da"/>
+    <xhtml:link rel="alternate" hreflang="el" href="https://networthcast.com/?lang=el"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/?lang=ka"/>
+    <xhtml:link rel="alternate" hreflang="bn" href="https://networthcast.com/?lang=bn"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/?lang=uk"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/?lang=ja"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/?lang=ru"/>
+    <xhtml:link rel="alternate" hreflang="th" href="https://networthcast.com/?lang=th"/>
+    <xhtml:link rel="alternate" hreflang="vi" href="https://networthcast.com/?lang=vi"/>
+    <xhtml:link rel="alternate" hreflang="id" href="https://networthcast.com/?lang=id"/>
+    <xhtml:link rel="alternate" hreflang="ms" href="https://networthcast.com/?lang=ms"/>
   </url>
   <url>
     <loc>https://networthcast.com/fire-calculator</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/fire-calculator"/>
   </url>
   <url>
     <loc>https://networthcast.com/net-worth-calculator</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/net-worth-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/net-worth-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-calculator"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/net-worth-calculator"/>
   </url>
   <url>
     <loc>https://networthcast.com/net-worth-tracker</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/net-worth-tracker"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/net-worth-tracker</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-tracker"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/net-worth-tracker"/>
   </url>
   <url>
     <loc>https://networthcast.com/net-worth-forecast</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/net-worth-forecast"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/net-worth-forecast</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/net-worth-forecast"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/net-worth-forecast"/>
   </url>
   <url>
     <loc>https://networthcast.com/cost-of-living-comparison</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/cost-of-living-comparison"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/cost-of-living-comparison</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/cost-of-living-comparison"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/cost-of-living-comparison"/>
   </url>
   <url>
     <loc>https://networthcast.com/coast-fire-calculator</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/coast-fire-calculator"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/coast-fire-calculator</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/coast-fire-calculator"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/coast-fire-calculator"/>
   </url>
   <url>
     <loc>https://networthcast.com/where-to-live</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/where-to-live"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/where-to-live</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/where-to-live"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/where-to-live"/>
   </url>
   <url>
     <loc>https://networthcast.com/geographic-arbitrage</loc>
-    <lastmod>2026-03-17</lastmod>
+    <lastmod>2026-03-18</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/es/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="es" href="https://networthcast.com/es/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/fr/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="fr" href="https://networthcast.com/fr/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/de/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="de" href="https://networthcast.com/de/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/pt/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="pt" href="https://networthcast.com/pt/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ja/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ja" href="https://networthcast.com/ja/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/zh/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="zh" href="https://networthcast.com/zh/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ko/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ko" href="https://networthcast.com/ko/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/tr/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="tr" href="https://networthcast.com/tr/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ar/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ar" href="https://networthcast.com/ar/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/hi/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="hi" href="https://networthcast.com/hi/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ru/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ru" href="https://networthcast.com/ru/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/ka/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="ka" href="https://networthcast.com/ka/geographic-arbitrage"/>
+  </url>
+  <url>
+    <loc>https://networthcast.com/uk/geographic-arbitrage</loc>
+    <lastmod>2026-03-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.6</priority>
+    <xhtml:link rel="alternate" hreflang="en" href="https://networthcast.com/geographic-arbitrage"/>
+    <xhtml:link rel="alternate" hreflang="uk" href="https://networthcast.com/uk/geographic-arbitrage"/>
   </url>
 </urlset>
