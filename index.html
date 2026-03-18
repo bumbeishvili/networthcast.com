@@ -250,8 +250,8 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .sfl{position:absolute;left:0;height:5px;border-radius:3px}
 .sth{position:absolute;transform:translateX(-50%);border-radius:50%;background:#fff;border:3px solid var(--acc);z-index:2;transition:all .15s;width:16px;height:16px;box-shadow:0 1px 4px rgba(0,0,0,.15)}
 .sth.on{width:20px;height:20px;box-shadow:0 0 0 5px rgba(37,99,235,.13),0 2px 8px rgba(0,0,0,.18)}
-.qb{display:flex;justify-content:center;gap:5px;margin-top:6px}
-.qb button{padding:3px 10px;border-radius:5px;font-size:10px;font-weight:600;font-family:var(--mo);cursor:pointer}
+.qb{display:flex;justify-content:center;gap:3px;margin-top:6px}
+.qb button{padding:3px 6px;border-radius:5px;font-size:9px;font-weight:600;font-family:var(--mo);cursor:pointer;white-space:nowrap}
 .qb button[data-fire]{position:relative}
 .qb button[data-fire]::after{content:'Coast = growth alone reaches FIRE. Lean = 60% expenses × 25. FIRE = expenses × 25 (4% rule). Fat = 150% expenses × 25.';position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:260px;padding:8px 10px;border-radius:8px;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.4;text-align:left;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,.2)}
 .qb button[data-fire]:hover::after,.qb button[data-fire]:focus::after{opacity:1}
@@ -318,7 +318,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .ce>div[style*="display:flex;gap:8px"]{flex-wrap:wrap}
   .mt{min-width:80px;flex:1 1 45%!important}
   .qb{flex-wrap:wrap}
-  .qb button{padding:6px 12px!important;font-size:11px!important}
+  .qb button{padding:4px 8px!important;font-size:10px!important}
   .stb{font-size:10px!important;padding:3px 8px!important}
   #h-sub{font-size:10px!important}
 }
@@ -673,7 +673,7 @@ function drawChart(){
   const allVals=[...vTotal,...vLiq,...vIll];
   let mn=Math.min(...allVals,0),mx=Math.max(...allVals,1);
   // Ensure chart y-range includes visible FIRE lines
-  for(const ft of fireTypes){if(ft.num>0&&ft.num<mx*1.6)mx=Math.max(mx,ft.num*1.05)}
+  // FIRE lines appear naturally — no y-axis inflation
   const rng=mx-mn||1;
   const xO=i=>p.l+(i/Math.max(len-1,1))*cw;
   const yO=v=>p.t+ch-((v-mn)/rng)*ch;
@@ -842,20 +842,19 @@ function updateSliderPos(){
   // Rebuild button HTML only when any FIRE month changes
   if(fireKey!==_lastFireKey){
     _lastFireKey=fireKey;
-    const timeBtns=[{l:'6 mo',m:6},{l:'1 yr',m:12},{l:'2 yr',m:24},{l:'5 yr',m:60},{l:'10 yr',m:120},{l:'20 yr',m:240},{l:'30 yr',m:360}];
+    const timeBtns=[{l:'6m',m:6},{l:'1y',m:12},{l:'2y',m:24},{l:'5y',m:60},{l:'10y',m:120},{l:'20y',m:240},{l:'30y',m:360}];
     let allBtns=timeBtns.map(b=>({...b,fireId:null,fireColor:null,fireBg:null}));
     // Add FIRE buttons
     for(const fv of fireMonths){
       if(fv.month<=0)continue;
       const existing=allBtns.find(b=>b.m===fv.month);
+      const fy=Math.floor(fv.month/12),fmo=fv.month%12;
+      const fLabel=fy>0?(fmo>0?`${fy}y${fmo}m`:`${fy}y`):`${fmo}m`;
       if(existing){
-        // Merge with existing time button
         existing.fireId=fv.id;existing.fireColor=fv.color;existing.fireBg=fv.bg;
-        existing.l=`🔥 ${fv.label} · ${existing.l}`;
+        existing.l=`🔥${fv.label} ${existing.l}`;
       }else{
-        const fy=Math.floor(fv.month/12),fmo=fv.month%12;
-        const fLabel=fy>0?(fmo>0?`${fy}y ${fmo}m`:`${fy}y`):`${fmo}m`;
-        allBtns.push({l:`🔥 ${fv.label} · ${fLabel}`,m:fv.month,fireId:fv.id,fireColor:fv.color,fireBg:fv.bg});
+        allBtns.push({l:`🔥${fv.label} ${fLabel}`,m:fv.month,fireId:fv.id,fireColor:fv.color,fireBg:fv.bg});
       }
     }
     allBtns.sort((a,b)=>a.m-b.m);
