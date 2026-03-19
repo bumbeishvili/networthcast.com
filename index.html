@@ -262,12 +262,34 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .mv{font-size:13px;font-weight:700;font-family:var(--mo)}
 .ls{flex:0 0 40px;width:40px;padding:4px 2px;font-size:11px;text-align:center}
 .sr{font-size:11px;font-family:var(--mo);font-weight:600}
+.eye-btn{background:0;border:0;cursor:pointer;padding:2px;line-height:0;color:var(--acc);opacity:.4;transition:all .15s;flex-shrink:0}
+.eye-btn:hover{opacity:.8}
+.eye-btn.off{color:var(--mut);opacity:.25}
+.rw.disabled{opacity:.4}
+.rw.disabled input,.rw.disabled select{pointer-events:none;text-decoration:line-through}
+.more-wrap{position:relative;display:inline-block}
+.more-btn{background:0;border:1px solid var(--brd);border-radius:5px;cursor:pointer;color:var(--mut);font-size:14px;padding:2px 6px;line-height:1;font-family:var(--mo)}
+.more-btn:hover{background:var(--acc-lt);color:var(--acc);border-color:var(--acc)}
+.more-pop{display:none;position:absolute;right:-4px;bottom:calc(100% + 6px);z-index:30;background:var(--card);border:1px solid var(--brd);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.1);padding:10px 12px}
+.more-pop::before{content:'';position:absolute;bottom:-10px;right:0;left:0;height:12px;background:transparent}
+.more-pop::after{content:'';position:absolute;bottom:-4px;right:14px;width:8px;height:8px;background:var(--card);border-right:1px solid var(--brd);border-bottom:1px solid var(--brd);transform:rotate(45deg)}
+.more-wrap.open .more-pop{display:flex;flex-wrap:nowrap;gap:12px;align-items:flex-start}
+.more-pop label{font-size:7px;color:var(--mut);font-family:var(--mo);text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px;display:block}
+.more-pop>div{display:flex;flex-direction:column;flex-shrink:0}
+.more-pop .ym{gap:2px;flex:0 0 auto}
+.more-pop .ym select{width:auto;min-width:0;padding:4px 3px;font-size:11px}
+.more-pop .ls{width:auto!important;flex:none!important;padding:4px 6px;font-size:11px}
+.more-pop select,.more-pop input{font-size:11px;padding:4px 6px}
 .rw-primary{background:var(--acc-lt);border-left:3px solid var(--acc);border-bottom:1px solid #bfdbfe;padding-left:8px;border-radius:4px 0 0 4px;position:relative}
 .rw-primary::before{content:'★';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-size:9px;color:var(--acc)}
+.primary-tip{display:none;position:absolute;left:0;top:calc(100% + 8px);z-index:30;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.5;padding:10px 14px;border-radius:8px;width:280px;white-space:normal;text-transform:none;letter-spacing:0;box-shadow:0 4px 16px rgba(0,0,0,.2);pointer-events:none}
+.primary-tip::before{content:'';position:absolute;top:-5px;left:16px;width:10px;height:10px;background:var(--txt);transform:rotate(45deg)}
+.primary-badge:hover .primary-tip{display:block}
 .primary-badge{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:1px 5px;border-radius:3px;background:var(--acc);color:#fff;font-family:var(--mo);margin-left:6px;white-space:nowrap}
-.reorder-btn{background:none;border:1px solid var(--brd);border-radius:4px;cursor:pointer;color:var(--mut);font-size:11px;padding:2px 4px;line-height:1;display:flex;flex-direction:column;align-items:center;gap:0;flex-shrink:0}
-.reorder-btn:hover{background:var(--acc-lt);color:var(--acc);border-color:var(--acc)}
-.reorder-wrap{display:flex;flex-direction:column;gap:1px;flex-shrink:0}
+.drag-handle{cursor:grab;color:var(--mut);font-size:12px;padding:2px 4px;line-height:1;flex-shrink:0;opacity:.3;transition:opacity .15s;user-select:none}
+.drag-handle:hover{opacity:.7}
+.rw.dragging{opacity:.4;background:var(--acc-lt)}
+.rw.drag-over{border-top:2px solid var(--acc)!important}
 @keyframes swapFlash{0%{background:rgba(37,99,235,.15)}100%{background:transparent}}
 .rw-swapped{animation:swapFlash .5s ease-out}
 .seo-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
@@ -302,8 +324,6 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .ym{flex:0 0 auto!important}
   /* Delete + reorder buttons bigger tap target */
   .bd{font-size:20px!important;padding:4px 10px!important;min-height:38px;display:flex;align-items:center;justify-content:center}
-  .reorder-btn{padding:5px 7px!important;font-size:14px!important}
-  .reorder-wrap{flex-direction:row!important;gap:3px}
   .primary-badge{font-size:7px!important}
   .rw-primary{margin-left:6px!important}
   .sh{flex-wrap:wrap;gap:4px}
@@ -352,7 +372,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 
 <div class="w" id="app">
   <!-- Header -->
-  <header style="display:flex;align-items:center;gap:8px;margin-bottom:2px" role="banner">
+  <header style="display:flex;align-items:center;gap:8px;margin-bottom:14px" role="banner">
     <a href="https://networthcast.com/" style="display:flex;align-items:center;gap:8px;text-decoration:none;color:inherit" aria-label="NetWorthCast — Net Worth Tracker">
       <div style="width:26px;height:26px;border-radius:6px;background:linear-gradient(135deg,#2563eb,#059669);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:12px" role="img" aria-label="NetWorthCast logo">N</div>
       <span style="font-weight:800;font-size:17px;letter-spacing:-.5px">NetWorthCast</span>
@@ -420,12 +440,12 @@ const REGIONS=[
 {id:"ca",name:"Central Asia & Caucasus",emoji:"⛰"},{id:"oc",name:"Oceania",emoji:"🦘"},
 {id:"af",name:"Africa",emoji:"🌍"}];
 const FAMS=[
-{id:"solo",label:"Solo",persons:1,rentMul:1,utilMul:1},
-{id:"couple",label:"Couple",persons:2,rentMul:1.3,utilMul:1.2},
-{id:"fam1",label:"+1 kid",persons:3,rentMul:1.6,utilMul:1.3},
-{id:"fam2",label:"+2 kids",persons:4,rentMul:1.8,utilMul:1.4},
-{id:"fam3",label:"+3 kids",persons:5,rentMul:2.0,utilMul:1.5},
-{id:"fam4",label:"+4 kids",persons:6,rentMul:2.2,utilMul:1.6}];
+{id:"solo",lk:"solo",persons:1,rentMul:1,utilMul:1},
+{id:"couple",lk:"couple",persons:2,rentMul:1.3,utilMul:1.2},
+{id:"fam1",lk:"kid1",persons:3,rentMul:1.6,utilMul:1.3},
+{id:"fam2",lk:"kid2",persons:4,rentMul:1.8,utilMul:1.4},
+{id:"fam3",lk:"kid3",persons:5,rentMul:2.0,utilMul:1.5},
+{id:"fam4",lk:"kid4",persons:6,rentMul:2.2,utilMul:1.6}];
 function colTot(c,fam){const f=FAMS.find(p=>p.id===fam)||FAMS[0];return Math.round(c.rent*f.rentMul+(c.food+c.transport+c.other)*(f.persons*.65+.35)+c.utilities*f.utilMul+c.health*f.persons)}
 const COL=[
 {code:"LIS",city:"Lisbon",country:"Portugal",flag:"🇵🇹",region:"we",rent:1000,food:350,transport:60,utilities:130,health:50,other:200,inf:3.5,tax:20,notes:"D8 DN visa. NHR regime can lower tax."},
@@ -485,20 +505,20 @@ const SK='networthcast_v2';
 // ═══════════════ i18n
 const LANG=(new URLSearchParams(location.search).get('lang')||'en').toLowerCase();
 const I18N={
-en:{pillars:'Net Worth · Forecast · Relocate',relocHd:'Where can you afford to live?',liqHd:'Liquid Assets',illHd:'Illiquid Assets',revHd:'Monthly Revenue',costHd:'Monthly Living Costs',ievHd:'Income Events',eevHd:'Expense Events',liqHint:'Each asset compounds at its own rate. The <b>primary</b> account receives all income. Expenses deduct from primary first — if depleted, they cascade to the next asset down.',illHint:'Real estate, vehicles — things that take time to sell.',ievHint:'One-time cash income, or sell an owned asset at its appreciated value.',eevHint:'One-time expenses, or buy an asset that appreciates/depreciates.',none:'None yet',now:'now',inMo:'in {m} mo',inYr:'in {y} yr',inYrMo:'in {y} yr {m} mo',moS:'m',yrS:'y',curNet:'Current Net Worth',netIn:'Net Worth in',liquid:'Liquid',illiquid:'Illiquid',total:'Total',family:'Family',taxRate:'Your tax rate',region:'Region',afford:'cities you can afford',mo:'/mo',rent:'Rent',food:'Food',transport:'Transport',util:'Utilities',health:'Health',other:'Other',tax:'Tax',inf:'Inflation',primary:'PRIMARY',add:'+ Add',del:'×',name:'Name',value:'Value',returnYr:'Return/yr',appYr:'Appr./yr',perMo:'$/month',growthYr:'Growth/yr',infYr:'Inflation/yr',link:'Link',starts:'Starts',ends:'Ends',amount:'Amount',from:'From',to:'To',growth:'Growth %',linked:'Link',type:'Type',date:'Date',when:'When',nameAsset:'Name / Asset',apprDepr:'Appr./Depr.',sell:'Sell',sellAsset:'Sell asset',cash:'Cash',expense:'Expense',buy:'Buy',buyAsset:'Buy asset',solo:'Solo',couple:'Couple',moneyIn:'Money in',moneyOut:'Money out',invReturns:'Investment returns',returns:'returns',incomeTag:'income',soldTag:'sold',boughtTag:'bought',spentTag:'spent',ownedTag:'owned',liqAssets:'Liquid assets',illAssets:'Illiquid assets',by:'By'},
-es:{pillars:'Patrimonio · Pronóstico · Reubicación',relocHd:'¿Dónde puedes vivir?',liqHd:'Activos Líquidos',illHd:'Activos Ilíquidos',revHd:'Ingresos Mensuales',costHd:'Gastos Mensuales',ievHd:'Eventos de Ingreso',eevHd:'Eventos de Gasto',liqHint:'Cada activo crece a su propia tasa. La cuenta <b>principal</b> recibe todos los ingresos. Los gastos se deducen primero de la cuenta principal — si se agota, pasan al siguiente activo.',illHint:'Inmuebles, vehículos — bienes que tardan en venderse.',ievHint:'Ingreso único en efectivo, o vender un activo a su valor apreciado.',eevHint:'Gasto único, o comprar un activo que se aprecia/deprecia.',none:'Ninguno',now:'ahora',inMo:'en {m} mes',inYr:'en {y} año',inYrMo:'en {y} año {m} mes',moS:'m',yrS:'a',curNet:'Patrimonio Actual',netIn:'Patrimonio en',liquid:'Líquido',illiquid:'Ilíquido',total:'Total',family:'Familia',taxRate:'Tu tasa impositiva',region:'Región',afford:'ciudades accesibles',mo:'/mes',rent:'Alquiler',food:'Comida',transport:'Transporte',util:'Servicios',health:'Salud',other:'Otros',tax:'Impuesto',inf:'Inflación',primary:'PRINCIPAL',add:'+ Añadir',del:'×',name:'Nombre',value:'Valor',returnRate:'Retorno %',appRate:'Aprec %',amount:'Monto',from:'Desde',to:'Hasta',growth:'Crec %',linked:'Vincular',type:'Tipo',date:'Fecha',sell:'Vender activo',cash:'Efectivo',expense:'Gasto',buy:'Comprar activo',solo:'Solo',couple:'Pareja',returnYr:'Retorno/año',appYr:'Aprec./año',perMo:'$/mes',growthYr:'Crec./año',infYr:'Inflación/año',link:'Vincular',starts:'Inicio',ends:'Fin',when:'Cuándo',nameAsset:'Nombre / Activo',apprDepr:'Aprec./Depr.',sell:'Vender',buy:'Comprar',buyAsset:'Comprar activo',moneyIn:'Dinero entrante',moneyOut:'Dinero saliente',invReturns:'Rendimientos de inversión',returns:'rendimiento',incomeTag:'ingreso',soldTag:'vendido',boughtTag:'comprado',spentTag:'gastado',ownedTag:'propio',liqAssets:'Activos líquidos',illAssets:'Activos ilíquidos',by:'Para'},
-fr:{pillars:'Patrimoine · Prévision · Relocalisation',relocHd:'Où pouvez-vous vivre?',liqHd:'Actifs Liquides',illHd:'Actifs Illiquides',revHd:'Revenus Mensuels',costHd:'Dépenses Mensuelles',ievHd:'Événements de Revenu',eevHd:'Événements de Dépense',liqHint:'Chaque actif croît à son propre taux. Le compte <b>principal</b> reçoit tous les revenus. Les dépenses sont d\'abord déduites du compte principal — s\'il est épuisé, elles passent à l\'actif suivant.',illHint:'Immobilier, véhicules — actifs difficiles à vendre rapidement.',ievHint:'Revenu ponctuel ou vente d\'un actif.',eevHint:'Dépense ponctuelle ou achat d\'un actif.',none:'Aucun',now:'maintenant',inMo:'dans {m} mois',inYr:'dans {y} an',inYrMo:'dans {y} an {m} mois',moS:'m',yrS:'a',curNet:'Patrimoine Actuel',netIn:'Patrimoine dans',liquid:'Liquide',illiquid:'Illiquide',total:'Total',family:'Famille',taxRate:'Votre taux d\'imposition',region:'Région',afford:'villes accessibles',mo:'/mois',rent:'Loyer',food:'Nourriture',transport:'Transport',util:'Services',health:'Santé',other:'Autres',tax:'Impôt',inf:'Inflation',primary:'PRINCIPAL',add:'+ Ajouter',del:'×',name:'Nom',value:'Valeur',returnRate:'Rend %',appRate:'Appr %',amount:'Montant',from:'De',to:'À',growth:'Crois %',linked:'Lier',type:'Type',date:'Date',sell:'Vendre actif',cash:'Espèces',expense:'Dépense',buy:'Acheter actif',solo:'Solo',couple:'Couple',returnYr:'Rend./an',appYr:'Appr./an',perMo:'€/mois',growthYr:'Crois./an',infYr:'Inflation/an',link:'Lier',starts:'Début',ends:'Fin',when:'Quand',nameAsset:'Nom / Actif',apprDepr:'Appr./Dépr.',sell:'Vendre',buy:'Acheter',buyAsset:'Acheter actif',moneyIn:'Entrées',moneyOut:'Sorties',invReturns:'Rendements des investissements',returns:'rendement',incomeTag:'revenu',soldTag:'vendu',boughtTag:'acheté',spentTag:'dépensé',ownedTag:'détenu',liqAssets:'Actifs liquides',illAssets:'Actifs illiquides',by:'D\'ici'},
-de:{pillars:'Vermögen · Prognose · Umzug',relocHd:'Wo können Sie leben?',liqHd:'Liquide Vermögenswerte',illHd:'Illiquide Vermögenswerte',revHd:'Monatliche Einnahmen',costHd:'Monatliche Lebenshaltungskosten',ievHd:'Einmalige Einnahmen',eevHd:'Einmalige Ausgaben',liqHint:'Jedes Asset wächst mit eigener Rate. Das <b>Hauptkonto</b> empfängt alle Einnahmen. Ausgaben werden zuerst vom Hauptkonto abgezogen — ist es aufgebraucht, wird das nächste Asset belastet.',illHint:'Immobilien, Fahrzeuge — schwer schnell zu verkaufen.',ievHint:'Einmaliges Einkommen oder Verkauf eines Assets.',eevHint:'Einmalige Ausgabe oder Kauf eines Assets.',none:'Keine',now:'jetzt',inMo:'in {m} Mon.',inYr:'in {y} Jahr',inYrMo:'in {y} J. {m} Mon.',moS:'M',yrS:'J',curNet:'Aktuelles Vermögen',netIn:'Vermögen in',liquid:'Liquide',illiquid:'Illiquide',total:'Gesamt',family:'Familie',taxRate:'Ihr Steuersatz',region:'Region',afford:'leistbare Städte',mo:'/Mon.',rent:'Miete',food:'Essen',transport:'Transport',util:'Nebenkosten',health:'Gesundheit',other:'Sonstiges',tax:'Steuer',inf:'Inflation',primary:'HAUPT',add:'+ Hinzufügen',del:'×',name:'Name',value:'Wert',returnRate:'Rendite %',appRate:'Wertzuwachs %',amount:'Betrag',from:'Von',to:'Bis',growth:'Wachstum %',linked:'Verknüpfen',type:'Typ',date:'Datum',sell:'Asset verkaufen',cash:'Bargeld',expense:'Ausgabe',buy:'Asset kaufen',solo:'Allein',couple:'Paar',returnYr:'Rendite/J.',appYr:'Wertzuw./J.',perMo:'€/Mon.',growthYr:'Wachstum/J.',infYr:'Inflation/J.',link:'Verknüpfen',starts:'Start',ends:'Ende',when:'Wann',nameAsset:'Name / Asset',apprDepr:'Zuw./Abw.',sell:'Verkaufen',buy:'Kaufen',buyAsset:'Asset kaufen',moneyIn:'Einnahmen',moneyOut:'Ausgaben',invReturns:'Anlagerenditen',returns:'Rendite',incomeTag:'Einkommen',soldTag:'verkauft',boughtTag:'gekauft',spentTag:'ausgegeben',ownedTag:'besessen',liqAssets:'Liquide Mittel',illAssets:'Illiquide Mittel',by:'Bis'},
-pt:{pillars:'Patrimônio · Previsão · Realocação',relocHd:'Onde você pode morar?',liqHd:'Ativos Líquidos',illHd:'Ativos Ilíquidos',revHd:'Receita Mensal',costHd:'Custos Mensais',ievHd:'Eventos de Receita',eevHd:'Eventos de Despesa',liqHint:'Cada ativo cresce a sua própria taxa. A conta <b>principal</b> recebe toda a renda. As despesas são deduzidas primeiro da conta principal — se esgotada, passam para o próximo ativo.',illHint:'Imóveis, veículos — bens difíceis de vender rapidamente.',ievHint:'Renda única ou venda de um ativo.',eevHint:'Despesa única ou compra de um ativo.',none:'Nenhum',now:'agora',inMo:'em {m} mês',inYr:'em {y} ano',inYrMo:'em {y} ano {m} mês',moS:'m',yrS:'a',curNet:'Patrimônio Atual',netIn:'Patrimônio em',liquid:'Líquido',illiquid:'Ilíquido',total:'Total',family:'Família',taxRate:'Sua taxa de imposto',region:'Região',afford:'cidades acessíveis',mo:'/mês',rent:'Aluguel',food:'Comida',transport:'Transporte',util:'Utilidades',health:'Saúde',other:'Outros',tax:'Imposto',inf:'Inflação',primary:'PRINCIPAL',add:'+ Adicionar',del:'×',name:'Nome',value:'Valor',returnRate:'Retorno %',appRate:'Valoriz %',amount:'Valor',from:'De',to:'Até',growth:'Cresc %',linked:'Vincular',type:'Tipo',date:'Data',sell:'Vender ativo',cash:'Dinheiro',expense:'Despesa',buy:'Comprar ativo',solo:'Solo',couple:'Casal',returnYr:'Retorno/ano',appYr:'Valoriz./ano',perMo:'$/mês',growthYr:'Cresc./ano',infYr:'Inflação/ano',link:'Vincular',starts:'Início',ends:'Fim',when:'Quando',nameAsset:'Nome / Ativo',apprDepr:'Valoriz./Depr.',sell:'Vender',buy:'Comprar',buyAsset:'Comprar ativo',moneyIn:'Entradas',moneyOut:'Saídas',invReturns:'Rendimentos de investimento',returns:'rendimento',incomeTag:'receita',soldTag:'vendido',boughtTag:'comprado',spentTag:'gasto',ownedTag:'possuído',liqAssets:'Ativos líquidos',illAssets:'Ativos ilíquidos',by:'Até'},
-ja:{pillars:'純資産 · 予測 · 移住',relocHd:'どこに住めますか？',liqHd:'流動資産',illHd:'非流動資産',revHd:'月収',costHd:'月間生活費',ievHd:'収入イベント',eevHd:'支出イベント',liqHint:'各資産は独自のレートで成長します。<b>メイン</b>口座がすべての収入を受け取ります。支出はメイン口座から先に引かれ、残高がなくなると次の資産に移ります。',illHint:'不動産、車両 — すぐに売れない資産。',ievHint:'一時的な収入または資産の売却。',eevHint:'一時的な支出または資産の購入。',none:'なし',now:'現在',inMo:'{m}ヶ月後',inYr:'{y}年後',inYrMo:'{y}年{m}ヶ月後',moS:'月',yrS:'年',curNet:'現在の純資産',netIn:'純資産（',liquid:'流動',illiquid:'非流動',total:'合計',family:'家族',taxRate:'税率',region:'地域',afford:'住める都市',mo:'/月',rent:'家賃',food:'食費',transport:'交通',util:'光熱費',health:'医療',other:'その他',tax:'税金',inf:'インフレ',primary:'メイン',add:'+ 追加',del:'×',name:'名前',value:'金額',returnRate:'利回り%',appRate:'増価%',amount:'金額',from:'開始',to:'終了',growth:'成長%',linked:'リンク',type:'種類',date:'日付',sell:'資産売却',cash:'現金',expense:'支出',buy:'資産購入',solo:'一人',couple:'二人',returnYr:'利回り/年',appYr:'増価/年',perMo:'$/月',growthYr:'成長/年',infYr:'インフレ/年',link:'リンク',starts:'開始',ends:'終了',when:'時期',nameAsset:'名前 / 資産',apprDepr:'増価/減価',sell:'売却',buy:'購入',buyAsset:'資産購入',moneyIn:'収入',moneyOut:'支出',invReturns:'投資リターン',returns:'リターン',incomeTag:'収入',soldTag:'売却',boughtTag:'購入',spentTag:'支出',ownedTag:'保有',liqAssets:'流動資産',illAssets:'非流動資産',by:'まで'},
-zh:{pillars:'净资产 · 预测 · 搬迁',relocHd:'你能住在哪里？',liqHd:'流动资产',illHd:'非流动资产',revHd:'月收入',costHd:'月生活成本',ievHd:'收入事件',eevHd:'支出事件',liqHint:'每项资产以自己的利率增长。<b>主</b>账户接收所有收入。支出先从主账户扣除——如果用尽，会依次从下一个资产扣除。',illHint:'房产、车辆 — 不易快速出售的资产。',ievHint:'一次性收入或出售资产。',eevHint:'一次性支出或购买资产。',none:'暂无',now:'现在',inMo:'{m}个月后',inYr:'{y}年后',inYrMo:'{y}年{m}个月后',moS:'月',yrS:'年',curNet:'当前净资产',netIn:'净资产（',liquid:'流动',illiquid:'非流动',total:'总计',family:'家庭',taxRate:'你的税率',region:'地区',afford:'个可负担城市',mo:'/月',rent:'房租',food:'食物',transport:'交通',util:'水电',health:'医疗',other:'其他',tax:'税',inf:'通胀',primary:'主要',add:'+ 添加',del:'×',name:'名称',value:'金额',returnRate:'回报%',appRate:'增值%',amount:'金额',from:'从',to:'至',growth:'增长%',linked:'关联',type:'类型',date:'日期',sell:'出售资产',cash:'现金',expense:'支出',buy:'购买资产',solo:'单身',couple:'情侣',returnYr:'回报/年',appYr:'增值/年',perMo:'$/月',growthYr:'增长/年',infYr:'通胀/年',link:'关联',starts:'开始',ends:'结束',when:'时间',nameAsset:'名称 / 资产',apprDepr:'增值/贬值',sell:'出售',buy:'购买',buyAsset:'购买资产',moneyIn:'资金流入',moneyOut:'资金流出',invReturns:'投资收益',returns:'收益',incomeTag:'收入',soldTag:'已售',boughtTag:'已购',spentTag:'已支出',ownedTag:'持有',liqAssets:'流动资产',illAssets:'非流动资产',by:'截至'},
-ko:{pillars:'순자산 · 예측 · 이주',relocHd:'어디서 살 수 있나요?',liqHd:'유동 자산',illHd:'비유동 자산',revHd:'월 수입',costHd:'월 생활비',ievHd:'수입 이벤트',eevHd:'지출 이벤트',liqHint:'각 자산은 고유한 수익률로 성장합니다. <b>기본</b> 계좌가 모든 수입을 받습니다. 지출은 기본 계좌에서 먼저 차감되며, 잔액이 부족하면 다음 자산으로 넘어갑니다.',illHint:'부동산, 차량 — 빨리 팔기 어려운 자산.',ievHint:'일시적 수입 또는 자산 매각.',eevHint:'일시적 지출 또는 자산 구매.',none:'없음',now:'현재',inMo:'{m}개월 후',inYr:'{y}년 후',inYrMo:'{y}년 {m}개월 후',moS:'월',yrS:'년',curNet:'현재 순자산',netIn:'순자산 (',liquid:'유동',illiquid:'비유동',total:'합계',family:'가족',taxRate:'세율',region:'지역',afford:'거주 가능 도시',mo:'/월',rent:'임대료',food:'식비',transport:'교통',util:'공과금',health:'의료',other:'기타',tax:'세금',inf:'인플레이션',primary:'기본',add:'+ 추가',del:'×',name:'이름',value:'금액',returnRate:'수익률%',appRate:'감정%',amount:'금액',from:'시작',to:'종료',growth:'성장%',linked:'연결',type:'유형',date:'날짜',sell:'자산 매각',cash:'현금',expense:'지출',buy:'자산 구매',solo:'1인',couple:'2인',returnYr:'수익/년',appYr:'감정/년',perMo:'$/월',growthYr:'성장/년',infYr:'인플레이션/년',link:'연결',starts:'시작',ends:'종료',when:'시기',nameAsset:'이름 / 자산',apprDepr:'감정/감가',sell:'매각',buy:'구매',buyAsset:'자산 구매',moneyIn:'수입',moneyOut:'지출',invReturns:'투자 수익',returns:'수익',incomeTag:'소득',soldTag:'매각',boughtTag:'구매',spentTag:'지출',ownedTag:'보유',liqAssets:'유동 자산',illAssets:'비유동 자산',by:'까지'},
-tr:{pillars:'Net Değer · Tahmin · Taşınma',relocHd:'Nerede yaşayabilirsiniz?',liqHd:'Likit Varlıklar',illHd:'Likit Olmayan Varlıklar',revHd:'Aylık Gelir',costHd:'Aylık Yaşam Giderleri',ievHd:'Gelir Olayları',eevHd:'Gider Olayları',liqHint:'Her varlık kendi oranında büyür. <b>Ana</b> hesap tüm geliri alır. Harcamalar önce ana hesaptan düşülür — tükenirse sıradaki varlığa geçer.',illHint:'Gayrimenkul, araçlar — hızlı satılamayan varlıklar.',ievHint:'Tek seferlik gelir veya varlık satışı.',eevHint:'Tek seferlik gider veya varlık alımı.',none:'Henüz yok',now:'şimdi',inMo:'{m} ay sonra',inYr:'{y} yıl sonra',inYrMo:'{y} yıl {m} ay sonra',moS:'a',yrS:'y',curNet:'Mevcut Net Değer',netIn:'Net Değer',liquid:'Likit',illiquid:'Likit Olmayan',total:'Toplam',family:'Aile',taxRate:'Vergi oranınız',region:'Bölge',afford:'yaşanabilir şehir',mo:'/ay',rent:'Kira',food:'Yemek',transport:'Ulaşım',util:'Faturalar',health:'Sağlık',other:'Diğer',tax:'Vergi',inf:'Enflasyon',primary:'ANA',add:'+ Ekle',del:'×',name:'Ad',value:'Değer',returnRate:'Getiri %',appRate:'Değerlenme %',amount:'Tutar',from:'Başlangıç',to:'Bitiş',growth:'Büyüme %',linked:'Bağla',type:'Tür',date:'Tarih',sell:'Varlık sat',cash:'Nakit',expense:'Gider',buy:'Varlık al',solo:'Tek',couple:'Çift',returnYr:'Getiri/yıl',appYr:'Değerl./yıl',perMo:'$/ay',growthYr:'Büyüme/yıl',infYr:'Enflasyon/yıl',link:'Bağla',starts:'Başlangıç',ends:'Bitiş',when:'Ne zaman',nameAsset:'Ad / Varlık',apprDepr:'Değerl./Amo.',sell:'Sat',buy:'Al',buyAsset:'Varlık al',moneyIn:'Gelen para',moneyOut:'Giden para',invReturns:'Yatırım getirileri',returns:'getiri',incomeTag:'gelir',soldTag:'satıldı',boughtTag:'alındı',spentTag:'harcandı',ownedTag:'sahip',liqAssets:'Likit varlıklar',illAssets:'Likit olmayan varlıklar',by:'Tarihine kadar'},
-ar:{pillars:'الثروة · التوقعات · الانتقال',relocHd:'أين يمكنك العيش؟',liqHd:'أصول سائلة',illHd:'أصول غير سائلة',revHd:'الدخل الشهري',costHd:'تكاليف المعيشة الشهرية',ievHd:'أحداث الدخل',eevHd:'أحداث النفقات',liqHint:'كل أصل ينمو بمعدله الخاص. الحساب <b>الرئيسي</b> يستقبل كل الدخل. المصروفات تُخصم أولاً من الحساب الرئيسي — إذا نفد، تنتقل إلى الأصل التالي.',illHint:'عقارات، مركبات — أصول يصعب بيعها بسرعة.',ievHint:'دخل لمرة واحدة أو بيع أصل.',eevHint:'نفقة لمرة واحدة أو شراء أصل.',none:'لا يوجد',now:'الآن',inMo:'خلال {m} شهر',inYr:'خلال {y} سنة',inYrMo:'خلال {y} سنة {m} شهر',moS:'ش',yrS:'س',curNet:'صافي الثروة الحالي',netIn:'صافي الثروة في',liquid:'سائل',illiquid:'غير سائل',total:'الإجمالي',family:'الأسرة',taxRate:'معدل الضريبة',region:'المنطقة',afford:'مدن ميسورة',mo:'/شهر',rent:'إيجار',food:'طعام',transport:'مواصلات',util:'مرافق',health:'صحة',other:'أخرى',tax:'ضريبة',inf:'تضخم',primary:'رئيسي',add:'+ إضافة',del:'×',name:'الاسم',value:'القيمة',returnRate:'العائد%',appRate:'التقدير%',amount:'المبلغ',from:'من',to:'إلى',growth:'النمو%',linked:'ربط',type:'النوع',date:'التاريخ',sell:'بيع أصل',cash:'نقد',expense:'مصروف',buy:'شراء أصل',solo:'فردي',couple:'زوجين',returnYr:'العائد/سنة',appYr:'التقدير/سنة',perMo:'$/شهر',growthYr:'النمو/سنة',infYr:'التضخم/سنة',link:'ربط',starts:'بداية',ends:'نهاية',when:'متى',nameAsset:'الاسم / الأصل',apprDepr:'تقدير/إهلاك',sell:'بيع',buy:'شراء',buyAsset:'شراء أصل',moneyIn:'الأموال الواردة',moneyOut:'الأموال الصادرة',invReturns:'عوائد الاستثمار',returns:'عوائد',incomeTag:'دخل',soldTag:'مُباع',boughtTag:'مُشترى',spentTag:'مُنفق',ownedTag:'مملوك',liqAssets:'أصول سائلة',illAssets:'أصول غير سائلة',by:'بحلول'},
-hi:{pillars:'संपत्ति · पूर्वानुमान · स्थानांतरण',relocHd:'आप कहाँ रह सकते हैं?',liqHd:'तरल संपत्ति',illHd:'अतरल संपत्ति',revHd:'मासिक आय',costHd:'मासिक जीवन लागत',ievHd:'आय घटनाएँ',eevHd:'व्यय घटनाएँ',liqHint:'प्रत्येक संपत्ति अपनी दर से बढ़ती है। <b>प्राथमिक</b> खाता सभी आय प्राप्त करता है। खर्च पहले प्राथमिक खाते से काटे जाते हैं — यदि समाप्त हो जाए, तो अगली संपत्ति पर जाते हैं।',illHint:'अचल संपत्ति, वाहन — जल्दी बेचना कठिन।',ievHint:'एकमुश्त आय या संपत्ति बिक्री।',eevHint:'एकमुश्त खर्च या संपत्ति खरीद।',none:'कोई नहीं',now:'अभी',inMo:'{m} महीने में',inYr:'{y} साल में',inYrMo:'{y} साल {m} महीने में',moS:'म',yrS:'व',curNet:'वर्तमान कुल संपत्ति',netIn:'कुल संपत्ति',liquid:'तरल',illiquid:'अतरल',total:'कुल',family:'परिवार',taxRate:'कर दर',region:'क्षेत्र',afford:'किफायती शहर',mo:'/माह',rent:'किराया',food:'भोजन',transport:'परिवहन',util:'उपयोगिताएँ',health:'स्वास्थ्य',other:'अन्य',tax:'कर',inf:'मुद्रास्फीति',primary:'प्राथमिक',add:'+ जोड़ें',del:'×',name:'नाम',value:'मूल्य',returnRate:'रिटर्न%',appRate:'मूल्यवृद्धि%',amount:'राशि',from:'से',to:'तक',growth:'वृद्धि%',linked:'लिंक',type:'प्रकार',date:'तारीख',sell:'संपत्ति बेचें',cash:'नकद',expense:'खर्च',buy:'संपत्ति खरीदें',solo:'अकेला',couple:'जोड़ा',returnYr:'रिटर्न/वर्ष',appYr:'मूल्यवृद्धि/वर्ष',perMo:'$/माह',growthYr:'वृद्धि/वर्ष',infYr:'मुद्रास्फीति/वर्ष',link:'लिंक',starts:'शुरू',ends:'अंत',when:'कब',nameAsset:'नाम / संपत्ति',apprDepr:'मूल्यवृद्धि/ह्रास',sell:'बेचें',buy:'खरीदें',buyAsset:'संपत्ति खरीदें',moneyIn:'आय',moneyOut:'व्यय',invReturns:'निवेश रिटर्न',returns:'रिटर्न',incomeTag:'आय',soldTag:'बेचा',boughtTag:'खरीदा',spentTag:'खर्च',ownedTag:'स्वामित्व',liqAssets:'तरल संपत्ति',illAssets:'अतरल संपत्ति',by:'तक'},
-ru:{pillars:'Капитал · Прогноз · Переезд',relocHd:'Где вы можете жить?',liqHd:'Ликвидные активы',illHd:'Неликвидные активы',revHd:'Ежемесячный доход',costHd:'Ежемесячные расходы',ievHd:'Разовые доходы',eevHd:'Разовые расходы',liqHint:'Каждый актив растёт по своей ставке. <b>Основной</b> счёт получает весь доход. Расходы списываются сначала с основного счёта — если он исчерпан, списание переходит на следующий актив.',illHint:'Недвижимость, транспорт — то, что сложно быстро продать.',ievHint:'Разовый доход или продажа актива.',eevHint:'Разовый расход или покупка актива.',none:'Пока нет',now:'сейчас',inMo:'через {m} мес.',inYr:'через {y} г.',inYrMo:'через {y} г. {m} мес.',moS:'м',yrS:'г',curNet:'Текущий капитал',netIn:'Капитал через',liquid:'Ликвидный',illiquid:'Неликвидный',total:'Итого',family:'Семья',taxRate:'Ваша ставка налога',region:'Регион',afford:'доступных городов',mo:'/мес.',rent:'Аренда',food:'Еда',transport:'Транспорт',util:'Коммунальные',health:'Здоровье',other:'Другое',tax:'Налог',inf:'Инфляция',primary:'ОСНОВНОЙ',add:'+ Добавить',del:'×',name:'Название',value:'Стоимость',returnRate:'Доход %',appRate:'Рост %',amount:'Сумма',from:'С',to:'По',growth:'Рост %',linked:'Связать',type:'Тип',date:'Дата',sell:'Продать актив',cash:'Наличные',expense:'Расход',buy:'Купить актив',solo:'Один',couple:'Пара',returnYr:'Доход/год',appYr:'Рост/год',perMo:'$/мес.',growthYr:'Рост/год',infYr:'Инфляция/год',link:'Связать',starts:'Начало',ends:'Конец',when:'Когда',nameAsset:'Название / Актив',apprDepr:'Рост/Ам.',sell:'Продать',buy:'Купить',buyAsset:'Купить актив',moneyIn:'Поступления',moneyOut:'Расходы',invReturns:'Доход от инвестиций',returns:'доход',incomeTag:'доход',soldTag:'продано',boughtTag:'куплено',spentTag:'потрачено',ownedTag:'в собственности',liqAssets:'Ликвидные активы',illAssets:'Неликвидные активы',by:'К'},
-ka:{pillars:'კაპიტალი · პროგნოზი · გადასახლება',relocHd:'სად შეგიძლიათ ცხოვრება?',liqHd:'ლიკვიდური აქტივები',illHd:'არალიკვიდური აქტივები',revHd:'ყოველთვიური შემოსავალი',costHd:'ყოველთვიური ხარჯები',ievHd:'შემოსავლის მოვლენები',eevHd:'ხარჯის მოვლენები',liqHint:'თითოეული აქტივი იზრდება საკუთარი განაკვეთით. <b>მთავარი</b> ანგარიში იღებს ყველა შემოსავალს. ხარჯები ჯერ მთავარი ანგარიშიდან იჭრება — თუ ამოიწურა, გადადის შემდეგ აქტივზე.',illHint:'უძრავი ქონება, ტრანსპორტი.',ievHint:'ერთჯერადი შემოსავალი ან აქტივის გაყიდვა.',eevHint:'ერთჯერადი ხარჯი ან აქტივის შეძენა.',none:'ჯერ არ არის',now:'ახლა',inMo:'{m} თვეში',inYr:'{y} წელში',inYrMo:'{y} წ. {m} თვეში',moS:'თ',yrS:'წ',curNet:'მიმდინარე კაპიტალი',netIn:'კაპიტალი',liquid:'ლიკვიდური',illiquid:'არალიკვიდური',total:'ჯამი',family:'ოჯახი',taxRate:'გადასახადის განაკვეთი',region:'რეგიონი',afford:'ხელმისაწვდომი ქალაქი',mo:'/თვე',rent:'ქირა',food:'საკვები',transport:'ტრანსპორტი',util:'კომუნალური',health:'ჯანმრთელობა',other:'სხვა',tax:'გადასახადი',inf:'ინფლაცია',primary:'მთავარი',add:'+ დამატება',del:'×',name:'სახელი',value:'ღირებულება',returnRate:'შემოსავალი%',appRate:'ზრდა%',amount:'თანხა',from:'დან',to:'მდე',growth:'ზრდა%',linked:'დაკავშირება',type:'ტიპი',date:'თარიღი',sell:'აქტივის გაყიდვა',cash:'ნაღდი',expense:'ხარჯი',buy:'აქტივის ყიდვა',solo:'მარტო',couple:'წყვილი',returnYr:'შემოსავალი/წ.',appYr:'ზრდა/წ.',perMo:'$/თვე',growthYr:'ზრდა/წ.',infYr:'ინფლაცია/წ.',link:'დაკავშირება',starts:'დაწყება',ends:'დასრულება',when:'როდის',nameAsset:'სახელი / აქტივი',apprDepr:'ზრდა/კლება',sell:'გაყიდვა',buy:'ყიდვა',buyAsset:'აქტივის ყიდვა',moneyIn:'შემოსავალი',moneyOut:'გასავალი',invReturns:'საინვესტიციო შემოსავალი',returns:'შემოსავალი',incomeTag:'შემოსავალი',soldTag:'გაყიდული',boughtTag:'ნაყიდი',spentTag:'დახარჯული',ownedTag:'საკუთრებაში',liqAssets:'ლიკვიდური აქტივები',illAssets:'არალიკვიდური აქტივები',by:'მდე'},
-uk:{pillars:'Капітал · Прогноз · Переїзд',relocHd:'Де ви можете жити?',liqHd:'Ліквідні активи',illHd:'Неліквідні активи',revHd:'Щомісячний дохід',costHd:'Щомісячні витрати',ievHd:'Разові доходи',eevHd:'Разові витрати',liqHint:'Кожен актив зростає за своєю ставкою. <b>Основний</b> рахунок отримує весь дохід. Витрати спочатку списуються з основного рахунку — якщо він вичерпаний, переходять на наступний актив.',illHint:'Нерухомість, транспорт — те, що складно швидко продати.',ievHint:'Разовий дохід або продаж активу.',eevHint:'Разова витрата або купівля активу.',none:'Поки немає',now:'зараз',inMo:'через {m} міс.',inYr:'через {y} р.',inYrMo:'через {y} р. {m} міс.',moS:'м',yrS:'р',curNet:'Поточний капітал',netIn:'Капітал через',liquid:'Ліквідний',illiquid:'Неліквідний',total:'Всього',family:'Сім\'я',taxRate:'Ваша ставка податку',region:'Регіон',afford:'доступних міст',mo:'/міс.',rent:'Оренда',food:'Їжа',transport:'Транспорт',util:'Комунальні',health:'Здоров\'я',other:'Інше',tax:'Податок',inf:'Інфляція',primary:'ОСНОВНИЙ',add:'+ Додати',del:'×',name:'Назва',value:'Вартість',returnRate:'Дохід%',appRate:'Зростання%',amount:'Сума',from:'З',to:'По',growth:'Зростання%',linked:'Зв\'язати',type:'Тип',date:'Дата',sell:'Продати актив',cash:'Готівка',expense:'Витрата',buy:'Купити актив',solo:'Один',couple:'Пара',returnYr:'Дохід/рік',appYr:'Зрост./рік',perMo:'$/міс.',growthYr:'Зрост./рік',infYr:'Інфляція/рік',link:'Зв\'язати',starts:'Початок',ends:'Кінець',when:'Коли',nameAsset:'Назва / Актив',apprDepr:'Зрост./Ам.',sell:'Продати',buy:'Купити',buyAsset:'Купити актив',moneyIn:'Надходження',moneyOut:'Витрати',invReturns:'Інвестиційний дохід',returns:'дохід',incomeTag:'дохід',soldTag:'продано',boughtTag:'куплено',spentTag:'витрачено',ownedTag:'у власності',liqAssets:'Ліквідні активи',illAssets:'Неліквідні активи',by:'До'}
+en:{pillars:'Net Worth · Forecast · Relocate',relocHd:'Where can you afford to live?',liqHd:'Liquid Assets',illHd:'Illiquid Assets',revHd:'Monthly Revenue',costHd:'Monthly Living Costs',ievHd:'Income Events',eevHd:'Expense Events',liqHint:'Each asset compounds at its own rate. The <b>primary</b> account receives all income. Expenses deduct from primary first — if depleted, they cascade to the next asset down.',illHint:'Real estate, vehicles — things that take time to sell.',ievHint:'One-time cash income, or sell an owned asset at its appreciated value.',eevHint:'One-time expenses, or buy an asset that appreciates/depreciates.',none:'None yet',now:'now',inMo:'in {m} mo',inYr:'in {y} yr',inYrMo:'in {y} yr {m} mo',moS:'m',yrS:'y',curNet:'Current Net Worth',netIn:'Net Worth in',liquid:'Liquid',illiquid:'Illiquid',total:'Total',family:'Family',taxRate:'Your tax rate',region:'Region',afford:'cities you can afford',mo:'/mo',rent:'Rent',food:'Food',transport:'Transport',util:'Utilities',health:'Health',other:'Other',tax:'Tax',inf:'Inflation',primary:'PRIMARY',add:'+ Add',del:'×',name:'Name',value:'Value',returnYr:'Return/yr',appYr:'Appr./yr',perMo:'$/month',growthYr:'Growth/yr',infYr:'Inflation/yr',link:'Link',starts:'Starts',ends:'Ends',amount:'Amount',from:'From',to:'To',growth:'Growth %',linked:'Link',type:'Type',date:'Date',when:'When',nameAsset:'Name / Asset',apprDepr:'Appr./Depr.',sell:'Sell',sellAsset:'Sell asset',cash:'Cash',expense:'Expense',buy:'Buy',buyAsset:'Buy asset',solo:'Solo',couple:'Couple',moneyIn:'Money in',moneyOut:'Money out',invReturns:'Investment returns',returns:'returns',incomeTag:'income',soldTag:'sold',boughtTag:'bought',spentTag:'spent',ownedTag:'owned',liqAssets:'Liquid assets',illAssets:'Illiquid assets',by:'By',debt:'Debt',debtTag:'debt',balance:'Balance',rate:'Rate',pmtMo:'Payment/mo',debtRemain:'remaining',debts:'Debts',loanOut:'Loan out',loanOutTag:'receivable',receivables:'Receivables',household:'Household',kid1:'+1 kid',kid2:'+2 kids',kid3:'+3 kids',kid4:'+4 kids',yourTax:'Your current tax',incomeAfterTax:'income {inc}/mo → {aft}/mo after tax',canAfford:'Can afford',cantAfford:"Can't afford",affordLine:'affordability line',afterTaxInc:'After-tax income',taxSavings:'Tax savings',taxIncrease:'Tax increase',netSurplus:'Net surplus',localInf:'Local inflation',sameTax:'same',estimates:'Estimates. Tax = effective rate on gross income. Surplus = after-tax income − local costs.'},
+es:{pillars:'Patrimonio · Pronóstico · Reubicación',relocHd:'¿Dónde puedes vivir?',liqHd:'Activos Líquidos',illHd:'Activos Ilíquidos',revHd:'Ingresos Mensuales',costHd:'Gastos Mensuales',ievHd:'Eventos de Ingreso',eevHd:'Eventos de Gasto',liqHint:'Cada activo crece a su propia tasa. La cuenta <b>principal</b> recibe todos los ingresos. Los gastos se deducen primero de la cuenta principal — si se agota, pasan al siguiente activo.',illHint:'Inmuebles, vehículos — bienes que tardan en venderse.',ievHint:'Ingreso único en efectivo, o vender un activo a su valor apreciado.',eevHint:'Gasto único, o comprar un activo que se aprecia/deprecia.',none:'Ninguno',now:'ahora',inMo:'en {m} mes',inYr:'en {y} año',inYrMo:'en {y} año {m} mes',moS:'m',yrS:'a',curNet:'Patrimonio Actual',netIn:'Patrimonio en',liquid:'Líquido',illiquid:'Ilíquido',total:'Total',family:'Familia',taxRate:'Tu tasa impositiva',region:'Región',afford:'ciudades accesibles',mo:'/mes',rent:'Alquiler',food:'Comida',transport:'Transporte',util:'Servicios',health:'Salud',other:'Otros',tax:'Impuesto',inf:'Inflación',primary:'PRINCIPAL',add:'+ Añadir',del:'×',name:'Nombre',value:'Valor',returnRate:'Retorno %',appRate:'Aprec %',amount:'Monto',from:'Desde',to:'Hasta',growth:'Crec %',linked:'Vincular',type:'Tipo',date:'Fecha',sell:'Vender activo',cash:'Efectivo',expense:'Gasto',buy:'Comprar activo',solo:'Solo',couple:'Pareja',returnYr:'Retorno/año',appYr:'Aprec./año',perMo:'$/mes',growthYr:'Crec./año',infYr:'Inflación/año',link:'Vincular',starts:'Inicio',ends:'Fin',when:'Cuándo',nameAsset:'Nombre / Activo',apprDepr:'Aprec./Depr.',sell:'Vender',buy:'Comprar',buyAsset:'Comprar activo',moneyIn:'Dinero entrante',moneyOut:'Dinero saliente',invReturns:'Rendimientos de inversión',returns:'rendimiento',incomeTag:'ingreso',soldTag:'vendido',boughtTag:'comprado',spentTag:'gastado',ownedTag:'propio',liqAssets:'Activos líquidos',illAssets:'Activos ilíquidos',by:'Para',debt:'Deuda',debtTag:'deuda',balance:'Saldo',rate:'Tasa',pmtMo:'Pago/mes',debtRemain:'restante',debts:'Deudas',loanOut:'Préstamo',loanOutTag:'por cobrar',receivables:'Por cobrar',household:'Hogar',kid1:'+1 hijo',kid2:'+2 hijos',kid3:'+3 hijos',kid4:'+4 hijos',yourTax:'Tu impuesto actual',incomeAfterTax:'ingreso {inc}/mes → {aft}/mes después de impuestos',canAfford:'Accesible',cantAfford:'No accesible',affordLine:'línea de accesibilidad',afterTaxInc:'Ingreso neto',taxSavings:'Ahorro fiscal',taxIncrease:'Aumento fiscal',netSurplus:'Excedente neto',localInf:'Inflación local',sameTax:'igual',estimates:'Estimaciones. Impuesto = tasa efectiva sobre ingreso bruto. Excedente = ingreso neto − costos locales.'},
+fr:{pillars:'Patrimoine · Prévision · Relocalisation',relocHd:'Où pouvez-vous vivre?',liqHd:'Actifs Liquides',illHd:'Actifs Illiquides',revHd:'Revenus Mensuels',costHd:'Dépenses Mensuelles',ievHd:'Événements de Revenu',eevHd:'Événements de Dépense',liqHint:'Chaque actif croît à son propre taux. Le compte <b>principal</b> reçoit tous les revenus. Les dépenses sont d\'abord déduites du compte principal — s\'il est épuisé, elles passent à l\'actif suivant.',illHint:'Immobilier, véhicules — actifs difficiles à vendre rapidement.',ievHint:'Revenu ponctuel ou vente d\'un actif.',eevHint:'Dépense ponctuelle ou achat d\'un actif.',none:'Aucun',now:'maintenant',inMo:'dans {m} mois',inYr:'dans {y} an',inYrMo:'dans {y} an {m} mois',moS:'m',yrS:'a',curNet:'Patrimoine Actuel',netIn:'Patrimoine dans',liquid:'Liquide',illiquid:'Illiquide',total:'Total',family:'Famille',taxRate:'Votre taux d\'imposition',region:'Région',afford:'villes accessibles',mo:'/mois',rent:'Loyer',food:'Nourriture',transport:'Transport',util:'Services',health:'Santé',other:'Autres',tax:'Impôt',inf:'Inflation',primary:'PRINCIPAL',add:'+ Ajouter',del:'×',name:'Nom',value:'Valeur',returnRate:'Rend %',appRate:'Appr %',amount:'Montant',from:'De',to:'À',growth:'Crois %',linked:'Lier',type:'Type',date:'Date',sell:'Vendre actif',cash:'Espèces',expense:'Dépense',buy:'Acheter actif',solo:'Solo',couple:'Couple',returnYr:'Rend./an',appYr:'Appr./an',perMo:'€/mois',growthYr:'Crois./an',infYr:'Inflation/an',link:'Lier',starts:'Début',ends:'Fin',when:'Quand',nameAsset:'Nom / Actif',apprDepr:'Appr./Dépr.',sell:'Vendre',buy:'Acheter',buyAsset:'Acheter actif',moneyIn:'Entrées',moneyOut:'Sorties',invReturns:'Rendements des investissements',returns:'rendement',incomeTag:'revenu',soldTag:'vendu',boughtTag:'acheté',spentTag:'dépensé',ownedTag:'détenu',liqAssets:'Actifs liquides',illAssets:'Actifs illiquides',by:'D\'ici',debt:'Dette',debtTag:'dette',balance:'Solde',rate:'Taux',pmtMo:'Paiement/mois',debtRemain:'restant',debts:'Dettes',loanOut:'Prêt',loanOutTag:'créance',receivables:'Créances',household:'Foyer',kid1:'+1 enfant',kid2:'+2 enfants',kid3:'+3 enfants',kid4:'+4 enfants',yourTax:'Votre taux actuel',incomeAfterTax:'revenu {inc}/mois → {aft}/mois après impôt',canAfford:'Accessible',cantAfford:'Non accessible',affordLine:'seuil',afterTaxInc:'Revenu net',taxSavings:'Économie fiscale',taxIncrease:'Hausse fiscale',netSurplus:'Excédent net',localInf:'Inflation locale',sameTax:'identique',estimates:'Estimations. Impôt = taux effectif sur revenu brut. Excédent = revenu net − coûts locaux.'},
+de:{pillars:'Vermögen · Prognose · Umzug',relocHd:'Wo können Sie leben?',liqHd:'Liquide Vermögenswerte',illHd:'Illiquide Vermögenswerte',revHd:'Monatliche Einnahmen',costHd:'Monatliche Lebenshaltungskosten',ievHd:'Einmalige Einnahmen',eevHd:'Einmalige Ausgaben',liqHint:'Jedes Asset wächst mit eigener Rate. Das <b>Hauptkonto</b> empfängt alle Einnahmen. Ausgaben werden zuerst vom Hauptkonto abgezogen — ist es aufgebraucht, wird das nächste Asset belastet.',illHint:'Immobilien, Fahrzeuge — schwer schnell zu verkaufen.',ievHint:'Einmaliges Einkommen oder Verkauf eines Assets.',eevHint:'Einmalige Ausgabe oder Kauf eines Assets.',none:'Keine',now:'jetzt',inMo:'in {m} Mon.',inYr:'in {y} Jahr',inYrMo:'in {y} J. {m} Mon.',moS:'M',yrS:'J',curNet:'Aktuelles Vermögen',netIn:'Vermögen in',liquid:'Liquide',illiquid:'Illiquide',total:'Gesamt',family:'Familie',taxRate:'Ihr Steuersatz',region:'Region',afford:'leistbare Städte',mo:'/Mon.',rent:'Miete',food:'Essen',transport:'Transport',util:'Nebenkosten',health:'Gesundheit',other:'Sonstiges',tax:'Steuer',inf:'Inflation',primary:'HAUPT',add:'+ Hinzufügen',del:'×',name:'Name',value:'Wert',returnRate:'Rendite %',appRate:'Wertzuwachs %',amount:'Betrag',from:'Von',to:'Bis',growth:'Wachstum %',linked:'Verknüpfen',type:'Typ',date:'Datum',sell:'Asset verkaufen',cash:'Bargeld',expense:'Ausgabe',buy:'Asset kaufen',solo:'Allein',couple:'Paar',returnYr:'Rendite/J.',appYr:'Wertzuw./J.',perMo:'€/Mon.',growthYr:'Wachstum/J.',infYr:'Inflation/J.',link:'Verknüpfen',starts:'Start',ends:'Ende',when:'Wann',nameAsset:'Name / Asset',apprDepr:'Zuw./Abw.',sell:'Verkaufen',buy:'Kaufen',buyAsset:'Asset kaufen',moneyIn:'Einnahmen',moneyOut:'Ausgaben',invReturns:'Anlagerenditen',returns:'Rendite',incomeTag:'Einkommen',soldTag:'verkauft',boughtTag:'gekauft',spentTag:'ausgegeben',ownedTag:'besessen',liqAssets:'Liquide Mittel',illAssets:'Illiquide Mittel',by:'Bis',debt:'Schuld',debtTag:'Schuld',balance:'Saldo',rate:'Zins',pmtMo:'Zahlung/Mon.',debtRemain:'verbleibend',debts:'Schulden',loanOut:'Darlehen',loanOutTag:'Forderung',receivables:'Forderungen',household:'Haushalt',kid1:'+1 Kind',kid2:'+2 Kinder',kid3:'+3 Kinder',kid4:'+4 Kinder',yourTax:'Ihr Steuersatz',incomeAfterTax:'Einkommen {inc}/Mon. → {aft}/Mon. nach Steuer',canAfford:'Leistbar',cantAfford:'Nicht leistbar',affordLine:'Leistbarkeitsgrenze',afterTaxInc:'Nettoeinkommen',taxSavings:'Steuerersparnis',taxIncrease:'Steuermehrbelastung',netSurplus:'Nettoüberschuss',localInf:'Lokale Inflation',sameTax:'gleich',estimates:'Schätzungen. Steuer = effektiver Satz auf Bruttoeinkommen. Überschuss = Nettoeinkommen − lokale Kosten.'},
+pt:{pillars:'Patrimônio · Previsão · Realocação',relocHd:'Onde você pode morar?',liqHd:'Ativos Líquidos',illHd:'Ativos Ilíquidos',revHd:'Receita Mensal',costHd:'Custos Mensais',ievHd:'Eventos de Receita',eevHd:'Eventos de Despesa',liqHint:'Cada ativo cresce a sua própria taxa. A conta <b>principal</b> recebe toda a renda. As despesas são deduzidas primeiro da conta principal — se esgotada, passam para o próximo ativo.',illHint:'Imóveis, veículos — bens difíceis de vender rapidamente.',ievHint:'Renda única ou venda de um ativo.',eevHint:'Despesa única ou compra de um ativo.',none:'Nenhum',now:'agora',inMo:'em {m} mês',inYr:'em {y} ano',inYrMo:'em {y} ano {m} mês',moS:'m',yrS:'a',curNet:'Patrimônio Atual',netIn:'Patrimônio em',liquid:'Líquido',illiquid:'Ilíquido',total:'Total',family:'Família',taxRate:'Sua taxa de imposto',region:'Região',afford:'cidades acessíveis',mo:'/mês',rent:'Aluguel',food:'Comida',transport:'Transporte',util:'Utilidades',health:'Saúde',other:'Outros',tax:'Imposto',inf:'Inflação',primary:'PRINCIPAL',add:'+ Adicionar',del:'×',name:'Nome',value:'Valor',returnRate:'Retorno %',appRate:'Valoriz %',amount:'Valor',from:'De',to:'Até',growth:'Cresc %',linked:'Vincular',type:'Tipo',date:'Data',sell:'Vender ativo',cash:'Dinheiro',expense:'Despesa',buy:'Comprar ativo',solo:'Solo',couple:'Casal',returnYr:'Retorno/ano',appYr:'Valoriz./ano',perMo:'$/mês',growthYr:'Cresc./ano',infYr:'Inflação/ano',link:'Vincular',starts:'Início',ends:'Fim',when:'Quando',nameAsset:'Nome / Ativo',apprDepr:'Valoriz./Depr.',sell:'Vender',buy:'Comprar',buyAsset:'Comprar ativo',moneyIn:'Entradas',moneyOut:'Saídas',invReturns:'Rendimentos de investimento',returns:'rendimento',incomeTag:'receita',soldTag:'vendido',boughtTag:'comprado',spentTag:'gasto',ownedTag:'possuído',liqAssets:'Ativos líquidos',illAssets:'Ativos ilíquidos',by:'Até',debt:'Dívida',debtTag:'dívida',balance:'Saldo',rate:'Taxa',pmtMo:'Pagamento/mês',debtRemain:'restante',debts:'Dívidas',loanOut:'Empréstimo',loanOutTag:'a receber',receivables:'A receber',household:'Família',kid1:'+1 filho',kid2:'+2 filhos',kid3:'+3 filhos',kid4:'+4 filhos',yourTax:'Seu imposto atual',incomeAfterTax:'renda {inc}/mês → {aft}/mês após impostos',canAfford:'Acessível',cantAfford:'Não acessível',affordLine:'linha de acessibilidade',afterTaxInc:'Renda líquida',taxSavings:'Economia fiscal',taxIncrease:'Aumento fiscal',netSurplus:'Excedente líquido',localInf:'Inflação local',sameTax:'igual',estimates:'Estimativas. Imposto = taxa efetiva sobre renda bruta. Excedente = renda líquida − custos locais.'},
+ja:{pillars:'純資産 · 予測 · 移住',relocHd:'どこに住めますか？',liqHd:'流動資産',illHd:'非流動資産',revHd:'月収',costHd:'月間生活費',ievHd:'収入イベント',eevHd:'支出イベント',liqHint:'各資産は独自のレートで成長します。<b>メイン</b>口座がすべての収入を受け取ります。支出はメイン口座から先に引かれ、残高がなくなると次の資産に移ります。',illHint:'不動産、車両 — すぐに売れない資産。',ievHint:'一時的な収入または資産の売却。',eevHint:'一時的な支出または資産の購入。',none:'なし',now:'現在',inMo:'{m}ヶ月後',inYr:'{y}年後',inYrMo:'{y}年{m}ヶ月後',moS:'月',yrS:'年',curNet:'現在の純資産',netIn:'純資産（',liquid:'流動',illiquid:'非流動',total:'合計',family:'家族',taxRate:'税率',region:'地域',afford:'住める都市',mo:'/月',rent:'家賃',food:'食費',transport:'交通',util:'光熱費',health:'医療',other:'その他',tax:'税金',inf:'インフレ',primary:'メイン',add:'+ 追加',del:'×',name:'名前',value:'金額',returnRate:'利回り%',appRate:'増価%',amount:'金額',from:'開始',to:'終了',growth:'成長%',linked:'リンク',type:'種類',date:'日付',sell:'資産売却',cash:'現金',expense:'支出',buy:'資産購入',solo:'一人',couple:'二人',returnYr:'利回り/年',appYr:'増価/年',perMo:'$/月',growthYr:'成長/年',infYr:'インフレ/年',link:'リンク',starts:'開始',ends:'終了',when:'時期',nameAsset:'名前 / 資産',apprDepr:'増価/減価',sell:'売却',buy:'購入',buyAsset:'資産購入',moneyIn:'収入',moneyOut:'支出',invReturns:'投資リターン',returns:'リターン',incomeTag:'収入',soldTag:'売却',boughtTag:'購入',spentTag:'支出',ownedTag:'保有',liqAssets:'流動資産',illAssets:'非流動資産',by:'まで',debt:'借入',debtTag:'借入',balance:'残高',rate:'金利',pmtMo:'月々返済',debtRemain:'残高',debts:'借入金',loanOut:'貸出',loanOutTag:'債権',receivables:'貸出金',household:'世帯',kid1:'+1人',kid2:'+2人',kid3:'+3人',kid4:'+4人',yourTax:'現在の税率',incomeAfterTax:'収入 {inc}/月 → {aft}/月（税引後）',canAfford:'住める',cantAfford:'住めない',affordLine:'境界線',afterTaxInc:'税引後収入',taxSavings:'節税',taxIncrease:'増税',netSurplus:'余剰',localInf:'現地インフレ',sameTax:'同じ',estimates:'推定値。税 = 総収入に対する実効税率。余剰 = 税引後収入 − 現地コスト。'},
+zh:{pillars:'净资产 · 预测 · 搬迁',relocHd:'你能住在哪里？',liqHd:'流动资产',illHd:'非流动资产',revHd:'月收入',costHd:'月生活成本',ievHd:'收入事件',eevHd:'支出事件',liqHint:'每项资产以自己的利率增长。<b>主</b>账户接收所有收入。支出先从主账户扣除——如果用尽，会依次从下一个资产扣除。',illHint:'房产、车辆 — 不易快速出售的资产。',ievHint:'一次性收入或出售资产。',eevHint:'一次性支出或购买资产。',none:'暂无',now:'现在',inMo:'{m}个月后',inYr:'{y}年后',inYrMo:'{y}年{m}个月后',moS:'月',yrS:'年',curNet:'当前净资产',netIn:'净资产（',liquid:'流动',illiquid:'非流动',total:'总计',family:'家庭',taxRate:'你的税率',region:'地区',afford:'个可负担城市',mo:'/月',rent:'房租',food:'食物',transport:'交通',util:'水电',health:'医疗',other:'其他',tax:'税',inf:'通胀',primary:'主要',add:'+ 添加',del:'×',name:'名称',value:'金额',returnRate:'回报%',appRate:'增值%',amount:'金额',from:'从',to:'至',growth:'增长%',linked:'关联',type:'类型',date:'日期',sell:'出售资产',cash:'现金',expense:'支出',buy:'购买资产',solo:'单身',couple:'情侣',returnYr:'回报/年',appYr:'增值/年',perMo:'$/月',growthYr:'增长/年',infYr:'通胀/年',link:'关联',starts:'开始',ends:'结束',when:'时间',nameAsset:'名称 / 资产',apprDepr:'增值/贬值',sell:'出售',buy:'购买',buyAsset:'购买资产',moneyIn:'资金流入',moneyOut:'资金流出',invReturns:'投资收益',returns:'收益',incomeTag:'收入',soldTag:'已售',boughtTag:'已购',spentTag:'已支出',ownedTag:'持有',liqAssets:'流动资产',illAssets:'非流动资产',by:'截至',debt:'贷款',debtTag:'贷款',balance:'余额',rate:'利率',pmtMo:'月还款',debtRemain:'剩余',debts:'负债',loanOut:'借出',loanOutTag:'应收',receivables:'应收款',household:'家庭',kid1:'+1孩',kid2:'+2孩',kid3:'+3孩',kid4:'+4孩',yourTax:'当前税率',incomeAfterTax:'收入 {inc}/月 → {aft}/月（税后）',canAfford:'可负担',cantAfford:'不可负担',affordLine:'负担能力线',afterTaxInc:'税后收入',taxSavings:'节税',taxIncrease:'增税',netSurplus:'净盈余',localInf:'当地通胀',sameTax:'相同',estimates:'估算。税 = 总收入有效税率。盈余 = 税后收入 − 当地成本。'},
+ko:{pillars:'순자산 · 예측 · 이주',relocHd:'어디서 살 수 있나요?',liqHd:'유동 자산',illHd:'비유동 자산',revHd:'월 수입',costHd:'월 생활비',ievHd:'수입 이벤트',eevHd:'지출 이벤트',liqHint:'각 자산은 고유한 수익률로 성장합니다. <b>기본</b> 계좌가 모든 수입을 받습니다. 지출은 기본 계좌에서 먼저 차감되며, 잔액이 부족하면 다음 자산으로 넘어갑니다.',illHint:'부동산, 차량 — 빨리 팔기 어려운 자산.',ievHint:'일시적 수입 또는 자산 매각.',eevHint:'일시적 지출 또는 자산 구매.',none:'없음',now:'현재',inMo:'{m}개월 후',inYr:'{y}년 후',inYrMo:'{y}년 {m}개월 후',moS:'월',yrS:'년',curNet:'현재 순자산',netIn:'순자산 (',liquid:'유동',illiquid:'비유동',total:'합계',family:'가족',taxRate:'세율',region:'지역',afford:'거주 가능 도시',mo:'/월',rent:'임대료',food:'식비',transport:'교통',util:'공과금',health:'의료',other:'기타',tax:'세금',inf:'인플레이션',primary:'기본',add:'+ 추가',del:'×',name:'이름',value:'금액',returnRate:'수익률%',appRate:'감정%',amount:'금액',from:'시작',to:'종료',growth:'성장%',linked:'연결',type:'유형',date:'날짜',sell:'자산 매각',cash:'현금',expense:'지출',buy:'자산 구매',solo:'1인',couple:'2인',returnYr:'수익/년',appYr:'감정/년',perMo:'$/월',growthYr:'성장/년',infYr:'인플레이션/년',link:'연결',starts:'시작',ends:'종료',when:'시기',nameAsset:'이름 / 자산',apprDepr:'감정/감가',sell:'매각',buy:'구매',buyAsset:'자산 구매',moneyIn:'수입',moneyOut:'지출',invReturns:'투자 수익',returns:'수익',incomeTag:'소득',soldTag:'매각',boughtTag:'구매',spentTag:'지출',ownedTag:'보유',liqAssets:'유동 자산',illAssets:'비유동 자산',by:'까지',debt:'부채',debtTag:'부채',balance:'잔액',rate:'이자율',pmtMo:'월상환',debtRemain:'잔여',debts:'부채',loanOut:'대출',loanOutTag:'채권',receivables:'미수금',household:'가구',kid1:'+1명',kid2:'+2명',kid3:'+3명',kid4:'+4명',yourTax:'현재 세율',incomeAfterTax:'소득 {inc}/월 → {aft}/월 세후',canAfford:'거주 가능',cantAfford:'거주 불가',affordLine:'거주 가능 경계',afterTaxInc:'세후 소득',taxSavings:'절세',taxIncrease:'세금 증가',netSurplus:'순여유',localInf:'현지 인플레이션',sameTax:'동일',estimates:'추정치. 세금 = 총소득 대비 실효세율. 여유 = 세후소득 − 현지비용.'},
+tr:{pillars:'Net Değer · Tahmin · Taşınma',relocHd:'Nerede yaşayabilirsiniz?',liqHd:'Likit Varlıklar',illHd:'Likit Olmayan Varlıklar',revHd:'Aylık Gelir',costHd:'Aylık Yaşam Giderleri',ievHd:'Gelir Olayları',eevHd:'Gider Olayları',liqHint:'Her varlık kendi oranında büyür. <b>Ana</b> hesap tüm geliri alır. Harcamalar önce ana hesaptan düşülür — tükenirse sıradaki varlığa geçer.',illHint:'Gayrimenkul, araçlar — hızlı satılamayan varlıklar.',ievHint:'Tek seferlik gelir veya varlık satışı.',eevHint:'Tek seferlik gider veya varlık alımı.',none:'Henüz yok',now:'şimdi',inMo:'{m} ay sonra',inYr:'{y} yıl sonra',inYrMo:'{y} yıl {m} ay sonra',moS:'a',yrS:'y',curNet:'Mevcut Net Değer',netIn:'Net Değer',liquid:'Likit',illiquid:'Likit Olmayan',total:'Toplam',family:'Aile',taxRate:'Vergi oranınız',region:'Bölge',afford:'yaşanabilir şehir',mo:'/ay',rent:'Kira',food:'Yemek',transport:'Ulaşım',util:'Faturalar',health:'Sağlık',other:'Diğer',tax:'Vergi',inf:'Enflasyon',primary:'ANA',add:'+ Ekle',del:'×',name:'Ad',value:'Değer',returnRate:'Getiri %',appRate:'Değerlenme %',amount:'Tutar',from:'Başlangıç',to:'Bitiş',growth:'Büyüme %',linked:'Bağla',type:'Tür',date:'Tarih',sell:'Varlık sat',cash:'Nakit',expense:'Gider',buy:'Varlık al',solo:'Tek',couple:'Çift',returnYr:'Getiri/yıl',appYr:'Değerl./yıl',perMo:'$/ay',growthYr:'Büyüme/yıl',infYr:'Enflasyon/yıl',link:'Bağla',starts:'Başlangıç',ends:'Bitiş',when:'Ne zaman',nameAsset:'Ad / Varlık',apprDepr:'Değerl./Amo.',sell:'Sat',buy:'Al',buyAsset:'Varlık al',moneyIn:'Gelen para',moneyOut:'Giden para',invReturns:'Yatırım getirileri',returns:'getiri',incomeTag:'gelir',soldTag:'satıldı',boughtTag:'alındı',spentTag:'harcandı',ownedTag:'sahip',liqAssets:'Likit varlıklar',illAssets:'Likit olmayan varlıklar',by:'Tarihine kadar',debt:'Borç',debtTag:'borç',balance:'Bakiye',rate:'Oran',pmtMo:'Ödeme/ay',debtRemain:'kalan',debts:'Borçlar',loanOut:'Borç ver',loanOutTag:'alacak',receivables:'Alacaklar',household:'Hane',kid1:'+1 çocuk',kid2:'+2 çocuk',kid3:'+3 çocuk',kid4:'+4 çocuk',yourTax:'Mevcut vergi oranınız',incomeAfterTax:'gelir {inc}/ay → {aft}/ay vergi sonrası',canAfford:'Yaşanabilir',cantAfford:'Yaşanamaz',affordLine:'karşılanabilirlik sınırı',afterTaxInc:'Vergi sonrası gelir',taxSavings:'Vergi tasarrufu',taxIncrease:'Vergi artışı',netSurplus:'Net fazla',localInf:'Yerel enflasyon',sameTax:'aynı',estimates:'Tahminler. Vergi = brüt gelir üzerinden efektif oran. Fazla = vergi sonrası gelir − yerel maliyetler.'},
+ar:{pillars:'الثروة · التوقعات · الانتقال',relocHd:'أين يمكنك العيش؟',liqHd:'أصول سائلة',illHd:'أصول غير سائلة',revHd:'الدخل الشهري',costHd:'تكاليف المعيشة الشهرية',ievHd:'أحداث الدخل',eevHd:'أحداث النفقات',liqHint:'كل أصل ينمو بمعدله الخاص. الحساب <b>الرئيسي</b> يستقبل كل الدخل. المصروفات تُخصم أولاً من الحساب الرئيسي — إذا نفد، تنتقل إلى الأصل التالي.',illHint:'عقارات، مركبات — أصول يصعب بيعها بسرعة.',ievHint:'دخل لمرة واحدة أو بيع أصل.',eevHint:'نفقة لمرة واحدة أو شراء أصل.',none:'لا يوجد',now:'الآن',inMo:'خلال {m} شهر',inYr:'خلال {y} سنة',inYrMo:'خلال {y} سنة {m} شهر',moS:'ش',yrS:'س',curNet:'صافي الثروة الحالي',netIn:'صافي الثروة في',liquid:'سائل',illiquid:'غير سائل',total:'الإجمالي',family:'الأسرة',taxRate:'معدل الضريبة',region:'المنطقة',afford:'مدن ميسورة',mo:'/شهر',rent:'إيجار',food:'طعام',transport:'مواصلات',util:'مرافق',health:'صحة',other:'أخرى',tax:'ضريبة',inf:'تضخم',primary:'رئيسي',add:'+ إضافة',del:'×',name:'الاسم',value:'القيمة',returnRate:'العائد%',appRate:'التقدير%',amount:'المبلغ',from:'من',to:'إلى',growth:'النمو%',linked:'ربط',type:'النوع',date:'التاريخ',sell:'بيع أصل',cash:'نقد',expense:'مصروف',buy:'شراء أصل',solo:'فردي',couple:'زوجين',returnYr:'العائد/سنة',appYr:'التقدير/سنة',perMo:'$/شهر',growthYr:'النمو/سنة',infYr:'التضخم/سنة',link:'ربط',starts:'بداية',ends:'نهاية',when:'متى',nameAsset:'الاسم / الأصل',apprDepr:'تقدير/إهلاك',sell:'بيع',buy:'شراء',buyAsset:'شراء أصل',moneyIn:'الأموال الواردة',moneyOut:'الأموال الصادرة',invReturns:'عوائد الاستثمار',returns:'عوائد',incomeTag:'دخل',soldTag:'مُباع',boughtTag:'مُشترى',spentTag:'مُنفق',ownedTag:'مملوك',liqAssets:'أصول سائلة',illAssets:'أصول غير سائلة',by:'بحلول',debt:'دين',debtTag:'دين',balance:'الرصيد',rate:'الفائدة',pmtMo:'الدفعة/شهر',debtRemain:'المتبقي',debts:'الديون',loanOut:'إقراض',loanOutTag:'مستحق',receivables:'المستحقات',household:'الأسرة',kid1:'+1 طفل',kid2:'+2 أطفال',kid3:'+3 أطفال',kid4:'+4 أطفال',yourTax:'معدل الضريبة الحالي',incomeAfterTax:'الدخل {inc}/شهر → {aft}/شهر بعد الضريبة',canAfford:'يمكنك العيش',cantAfford:'لا يمكنك العيش',affordLine:'خط القدرة المالية',afterTaxInc:'الدخل بعد الضريبة',taxSavings:'توفير ضريبي',taxIncrease:'زيادة ضريبية',netSurplus:'الفائض الصافي',localInf:'التضخم المحلي',sameTax:'نفسه',estimates:'تقديرات. الضريبة = المعدل الفعلي على الدخل الإجمالي. الفائض = الدخل بعد الضريبة − التكاليف المحلية.'},
+hi:{pillars:'संपत्ति · पूर्वानुमान · स्थानांतरण',relocHd:'आप कहाँ रह सकते हैं?',liqHd:'तरल संपत्ति',illHd:'अतरल संपत्ति',revHd:'मासिक आय',costHd:'मासिक जीवन लागत',ievHd:'आय घटनाएँ',eevHd:'व्यय घटनाएँ',liqHint:'प्रत्येक संपत्ति अपनी दर से बढ़ती है। <b>प्राथमिक</b> खाता सभी आय प्राप्त करता है। खर्च पहले प्राथमिक खाते से काटे जाते हैं — यदि समाप्त हो जाए, तो अगली संपत्ति पर जाते हैं।',illHint:'अचल संपत्ति, वाहन — जल्दी बेचना कठिन।',ievHint:'एकमुश्त आय या संपत्ति बिक्री।',eevHint:'एकमुश्त खर्च या संपत्ति खरीद।',none:'कोई नहीं',now:'अभी',inMo:'{m} महीने में',inYr:'{y} साल में',inYrMo:'{y} साल {m} महीने में',moS:'म',yrS:'व',curNet:'वर्तमान कुल संपत्ति',netIn:'कुल संपत्ति',liquid:'तरल',illiquid:'अतरल',total:'कुल',family:'परिवार',taxRate:'कर दर',region:'क्षेत्र',afford:'किफायती शहर',mo:'/माह',rent:'किराया',food:'भोजन',transport:'परिवहन',util:'उपयोगिताएँ',health:'स्वास्थ्य',other:'अन्य',tax:'कर',inf:'मुद्रास्फीति',primary:'प्राथमिक',add:'+ जोड़ें',del:'×',name:'नाम',value:'मूल्य',returnRate:'रिटर्न%',appRate:'मूल्यवृद्धि%',amount:'राशि',from:'से',to:'तक',growth:'वृद्धि%',linked:'लिंक',type:'प्रकार',date:'तारीख',sell:'संपत्ति बेचें',cash:'नकद',expense:'खर्च',buy:'संपत्ति खरीदें',solo:'अकेला',couple:'जोड़ा',returnYr:'रिटर्न/वर्ष',appYr:'मूल्यवृद्धि/वर्ष',perMo:'$/माह',growthYr:'वृद्धि/वर्ष',infYr:'मुद्रास्फीति/वर्ष',link:'लिंक',starts:'शुरू',ends:'अंत',when:'कब',nameAsset:'नाम / संपत्ति',apprDepr:'मूल्यवृद्धि/ह्रास',sell:'बेचें',buy:'खरीदें',buyAsset:'संपत्ति खरीदें',moneyIn:'आय',moneyOut:'व्यय',invReturns:'निवेश रिटर्न',returns:'रिटर्न',incomeTag:'आय',soldTag:'बेचा',boughtTag:'खरीदा',spentTag:'खर्च',ownedTag:'स्वामित्व',liqAssets:'तरल संपत्ति',illAssets:'अतरल संपत्ति',by:'तक',debt:'ऋण',debtTag:'ऋण',balance:'शेष',rate:'दर',pmtMo:'भुगतान/माह',debtRemain:'शेष',debts:'ऋण',loanOut:'उधार',loanOutTag:'प्राप्य',receivables:'प्राप्य राशि',household:'परिवार',kid1:'+1 बच्चा',kid2:'+2 बच्चे',kid3:'+3 बच्चे',kid4:'+4 बच्चे',yourTax:'आपकी वर्तमान कर दर',incomeAfterTax:'आय {inc}/माह → {aft}/माह कर के बाद',canAfford:'किफायती',cantAfford:'महंगा',affordLine:'किफायती सीमा',afterTaxInc:'कर-पश्चात आय',taxSavings:'कर बचत',taxIncrease:'कर वृद्धि',netSurplus:'शुद्ध अधिशेष',localInf:'स्थानीय मुद्रास्फीति',sameTax:'समान',estimates:'अनुमान। कर = सकल आय पर प्रभावी दर। अधिशेष = कर-पश्चात आय − स्थानीय लागत।'},
+ru:{pillars:'Капитал · Прогноз · Переезд',relocHd:'Где вы можете жить?',liqHd:'Ликвидные активы',illHd:'Неликвидные активы',revHd:'Ежемесячный доход',costHd:'Ежемесячные расходы',ievHd:'Разовые доходы',eevHd:'Разовые расходы',liqHint:'Каждый актив растёт по своей ставке. <b>Основной</b> счёт получает весь доход. Расходы списываются сначала с основного счёта — если он исчерпан, списание переходит на следующий актив.',illHint:'Недвижимость, транспорт — то, что сложно быстро продать.',ievHint:'Разовый доход или продажа актива.',eevHint:'Разовый расход или покупка актива.',none:'Пока нет',now:'сейчас',inMo:'через {m} мес.',inYr:'через {y} г.',inYrMo:'через {y} г. {m} мес.',moS:'м',yrS:'г',curNet:'Текущий капитал',netIn:'Капитал через',liquid:'Ликвидный',illiquid:'Неликвидный',total:'Итого',family:'Семья',taxRate:'Ваша ставка налога',region:'Регион',afford:'доступных городов',mo:'/мес.',rent:'Аренда',food:'Еда',transport:'Транспорт',util:'Коммунальные',health:'Здоровье',other:'Другое',tax:'Налог',inf:'Инфляция',primary:'ОСНОВНОЙ',add:'+ Добавить',del:'×',name:'Название',value:'Стоимость',returnRate:'Доход %',appRate:'Рост %',amount:'Сумма',from:'С',to:'По',growth:'Рост %',linked:'Связать',type:'Тип',date:'Дата',sell:'Продать актив',cash:'Наличные',expense:'Расход',buy:'Купить актив',solo:'Один',couple:'Пара',returnYr:'Доход/год',appYr:'Рост/год',perMo:'$/мес.',growthYr:'Рост/год',infYr:'Инфляция/год',link:'Связать',starts:'Начало',ends:'Конец',when:'Когда',nameAsset:'Название / Актив',apprDepr:'Рост/Ам.',sell:'Продать',buy:'Купить',buyAsset:'Купить актив',moneyIn:'Поступления',moneyOut:'Расходы',invReturns:'Доход от инвестиций',returns:'доход',incomeTag:'доход',soldTag:'продано',boughtTag:'куплено',spentTag:'потрачено',ownedTag:'в собственности',liqAssets:'Ликвидные активы',illAssets:'Неликвидные активы',by:'К',debt:'Долг',debtTag:'долг',balance:'Остаток',rate:'Ставка',pmtMo:'Платёж/мес.',debtRemain:'остаток',debts:'Долги',loanOut:'Займ',loanOutTag:'дебитор',receivables:'Дебиторская',household:'Семья',kid1:'+1 ребёнок',kid2:'+2 детей',kid3:'+3 детей',kid4:'+4 детей',yourTax:'Ваш налог',incomeAfterTax:'доход {inc}/мес. → {aft}/мес. после налогов',canAfford:'Доступно',cantAfford:'Недоступно',affordLine:'граница доступности',afterTaxInc:'Доход после налогов',taxSavings:'Экономия на налогах',taxIncrease:'Рост налогов',netSurplus:'Чистый остаток',localInf:'Местная инфляция',sameTax:'одинаково',estimates:'Оценки. Налог = эффективная ставка на валовой доход. Остаток = доход после налогов − местные расходы.'},
+ka:{pillars:'კაპიტალი · პროგნოზი · გადასახლება',relocHd:'სად შეგიძლიათ ცხოვრება?',liqHd:'ლიკვიდური აქტივები',illHd:'არალიკვიდური აქტივები',revHd:'ყოველთვიური შემოსავალი',costHd:'ყოველთვიური ხარჯები',ievHd:'შემოსავლის მოვლენები',eevHd:'ხარჯის მოვლენები',liqHint:'თითოეული აქტივი იზრდება საკუთარი განაკვეთით. <b>მთავარი</b> ანგარიში იღებს ყველა შემოსავალს. ხარჯები ჯერ მთავარი ანგარიშიდან იჭრება — თუ ამოიწურა, გადადის შემდეგ აქტივზე.',illHint:'უძრავი ქონება, ტრანსპორტი.',ievHint:'ერთჯერადი შემოსავალი ან აქტივის გაყიდვა.',eevHint:'ერთჯერადი ხარჯი ან აქტივის შეძენა.',none:'ჯერ არ არის',now:'ახლა',inMo:'{m} თვეში',inYr:'{y} წელში',inYrMo:'{y} წ. {m} თვეში',moS:'თ',yrS:'წ',curNet:'მიმდინარე კაპიტალი',netIn:'კაპიტალი',liquid:'ლიკვიდური',illiquid:'არალიკვიდური',total:'ჯამი',family:'ოჯახი',taxRate:'გადასახადის განაკვეთი',region:'რეგიონი',afford:'ხელმისაწვდომი ქალაქი',mo:'/თვე',rent:'ქირა',food:'საკვები',transport:'ტრანსპორტი',util:'კომუნალური',health:'ჯანმრთელობა',other:'სხვა',tax:'გადასახადი',inf:'ინფლაცია',primary:'მთავარი',add:'+ დამატება',del:'×',name:'სახელი',value:'ღირებულება',returnRate:'შემოსავალი%',appRate:'ზრდა%',amount:'თანხა',from:'დან',to:'მდე',growth:'ზრდა%',linked:'დაკავშირება',type:'ტიპი',date:'თარიღი',sell:'აქტივის გაყიდვა',cash:'ნაღდი',expense:'ხარჯი',buy:'აქტივის ყიდვა',solo:'მარტო',couple:'წყვილი',returnYr:'შემოსავალი/წ.',appYr:'ზრდა/წ.',perMo:'$/თვე',growthYr:'ზრდა/წ.',infYr:'ინფლაცია/წ.',link:'დაკავშირება',starts:'დაწყება',ends:'დასრულება',when:'როდის',nameAsset:'სახელი / აქტივი',apprDepr:'ზრდა/კლება',sell:'გაყიდვა',buy:'ყიდვა',buyAsset:'აქტივის ყიდვა',moneyIn:'შემოსავალი',moneyOut:'გასავალი',invReturns:'საინვესტიციო შემოსავალი',returns:'შემოსავალი',incomeTag:'შემოსავალი',soldTag:'გაყიდული',boughtTag:'ნაყიდი',spentTag:'დახარჯული',ownedTag:'საკუთრებაში',liqAssets:'ლიკვიდური აქტივები',illAssets:'არალიკვიდური აქტივები',by:'მდე',debt:'ვალი',debtTag:'ვალი',balance:'ნაშთი',rate:'განაკვეთი',pmtMo:'გადახდა/თვე',debtRemain:'დარჩენილი',debts:'ვალები',loanOut:'სესხი',loanOutTag:'მისაღები',receivables:'მისაღები თანხები',household:'ოჯახი',kid1:'+1 შვილი',kid2:'+2 შვილი',kid3:'+3 შვილი',kid4:'+4 შვილი',yourTax:'თქვენი გადასახადი',incomeAfterTax:'შემოსავალი {inc}/თვე → {aft}/თვე გადასახადის შემდეგ',canAfford:'ხელმისაწვდომი',cantAfford:'მიუწვდომელი',affordLine:'ხელმისაწვდომობის ზღვარი',afterTaxInc:'შემოსავალი გადასახადის შემდეგ',taxSavings:'საგადასახადო დანაზოგი',taxIncrease:'გადასახადის ზრდა',netSurplus:'წმინდა ნაშთი',localInf:'ადგილობრივი ინფლაცია',sameTax:'იგივე',estimates:'შეფასებები. გადასახადი = ეფექტური განაკვეთი მთლიან შემოსავალზე. ნაშთი = შემოსავალი გადასახადის შემდეგ − ადგილობრივი ხარჯები.'},
+uk:{pillars:'Капітал · Прогноз · Переїзд',relocHd:'Де ви можете жити?',liqHd:'Ліквідні активи',illHd:'Неліквідні активи',revHd:'Щомісячний дохід',costHd:'Щомісячні витрати',ievHd:'Разові доходи',eevHd:'Разові витрати',liqHint:'Кожен актив зростає за своєю ставкою. <b>Основний</b> рахунок отримує весь дохід. Витрати спочатку списуються з основного рахунку — якщо він вичерпаний, переходять на наступний актив.',illHint:'Нерухомість, транспорт — те, що складно швидко продати.',ievHint:'Разовий дохід або продаж активу.',eevHint:'Разова витрата або купівля активу.',none:'Поки немає',now:'зараз',inMo:'через {m} міс.',inYr:'через {y} р.',inYrMo:'через {y} р. {m} міс.',moS:'м',yrS:'р',curNet:'Поточний капітал',netIn:'Капітал через',liquid:'Ліквідний',illiquid:'Неліквідний',total:'Всього',family:'Сім\'я',taxRate:'Ваша ставка податку',region:'Регіон',afford:'доступних міст',mo:'/міс.',rent:'Оренда',food:'Їжа',transport:'Транспорт',util:'Комунальні',health:'Здоров\'я',other:'Інше',tax:'Податок',inf:'Інфляція',primary:'ОСНОВНИЙ',add:'+ Додати',del:'×',name:'Назва',value:'Вартість',returnRate:'Дохід%',appRate:'Зростання%',amount:'Сума',from:'З',to:'По',growth:'Зростання%',linked:'Зв\'язати',type:'Тип',date:'Дата',sell:'Продати актив',cash:'Готівка',expense:'Витрата',buy:'Купити актив',solo:'Один',couple:'Пара',returnYr:'Дохід/рік',appYr:'Зрост./рік',perMo:'$/міс.',growthYr:'Зрост./рік',infYr:'Інфляція/рік',link:'Зв\'язати',starts:'Початок',ends:'Кінець',when:'Коли',nameAsset:'Назва / Актив',apprDepr:'Зрост./Ам.',sell:'Продати',buy:'Купити',buyAsset:'Купити актив',moneyIn:'Надходження',moneyOut:'Витрати',invReturns:'Інвестиційний дохід',returns:'дохід',incomeTag:'дохід',soldTag:'продано',boughtTag:'куплено',spentTag:'витрачено',ownedTag:'у власності',liqAssets:'Ліквідні активи',illAssets:'Неліквідні активи',by:'До',debt:'Борг',debtTag:'борг',balance:'Залишок',rate:'Ставка',pmtMo:'Платіж/міс.',debtRemain:'залишок',debts:'Борги',loanOut:'Позика',loanOutTag:'дебітор',receivables:'Дебіторська',household:'Сім\'я',kid1:'+1 дитина',kid2:'+2 дітей',kid3:'+3 дітей',kid4:'+4 дітей',yourTax:'Ваш податок',incomeAfterTax:'дохід {inc}/міс. → {aft}/міс. після податків',canAfford:'Доступно',cantAfford:'Недоступно',affordLine:'межа доступності',afterTaxInc:'Дохід після податків',taxSavings:'Економія на податках',taxIncrease:'Зростання податків',netSurplus:'Чистий залишок',localInf:'Місцева інфляція',sameTax:'однаково',estimates:'Оцінки. Податок = ефективна ставка на валовий дохід. Залишок = дохід після податків − місцеві витрати.'}
 };
 // Fallback to English for unsupported languages
 const T=I18N[LANG]||I18N.en;
@@ -540,10 +560,10 @@ const y1=String(NOW.getFullYear()+1),y3=String(NOW.getFullYear()+3),y5=String(NO
 const sv=load()||{};
 const D={
   liq:sv.liquidAssets||[
+    {id:'idx_001',name:S.brk,value:22000,returnRate:9},
     {id:'cash_001',name:S.chk,value:8500,returnRate:0},
     {id:'sav_001',name:S.emf,value:15000,returnRate:4.5},
-    {id:'sp5_001',name:S.ret,value:85000,returnRate:8},
-    {id:'idx_001',name:S.brk,value:22000,returnRate:9}],
+    {id:'sp5_001',name:S.ret,value:85000,returnRate:8}],
   ill:sv.ownedAssets||[
     {id:'home_001',name:S.home,value:380000,appRate:3.5},
     {id:'car_001',name:S.car,value:24000,appRate:-12}],
@@ -578,18 +598,21 @@ const D={
 let FC=[];
 function runFC(){
   const pts=[];
-  const lb={};D.liq.forEach(a=>{lb[a.id]=a.value||0});
-  let cR=0;const lr={};D.liq.forEach(a=>{lr[a.id]=0});
-  const rc={};D.rev.forEach(r=>rc[r.id]=0);
-  const cc={};D.cst.forEach(c=>cc[c.id]=0);
-  const et={},xt={},sa=new Set(),ba={};
-  const cid=D.liq.length?D.liq[0].id:null;
+  const _liq=D.liq.filter(a=>!a.disabled),_ill=D.ill.filter(a=>!a.disabled),_rev=D.rev.filter(r=>!r.disabled),_cst=D.cst.filter(c=>!c.disabled),_iev=D.iev.filter(e=>!e.disabled),_eev=D.eev.filter(e=>!e.disabled);
+  const lb={};_liq.forEach(a=>{lb[a.id]=a.value||0});
+  let cR=0;const lr={};_liq.forEach(a=>{lr[a.id]=0});
+  const rc={};_rev.forEach(r=>rc[r.id]=0);D.iev.filter(e=>!e.disabled).forEach(e=>rc[e.id]=0);
+  const cc={};_cst.forEach(c=>cc[c.id]=0);D.eev.filter(e=>!e.disabled).forEach(e=>cc[e.id]=0);
+  const et={},xt={},sa=new Set(),ba={},db={},lo={};
+  // db = debt tracker: db[ev.id] = remaining balance (you owe)
+  // lo = loan-out tracker: lo[ev.id] = remaining receivable (owed to you)
+  const cid=_liq.length?_liq[0].id:null;
 
   // Cascade withdraw: deduct amount from liquid assets in order (first→last)
   // Returns actual amount deducted (may be less if all assets drained)
   function withdraw(amount){
     let rem=amount;
-    for(const a of D.liq){
+    for(const a of _liq){
       if(rem<=0)break;
       const take=Math.min(rem,lb[a.id]);
       if(take>0){lb[a.id]-=take;rem-=take}
@@ -603,35 +626,69 @@ function runFC(){
     const d=new Date(NOW.getFullYear(),NOW.getMonth()+m,1);
     if(m>0){
       // Compound returns — each asset keeps its own returns
-      for(const a of D.liq){const mr=(a.returnRate||0)/100/12;const r=lb[a.id]*mr;lb[a.id]+=r;lr[a.id]=(lr[a.id]||0)+r;cR+=r}
+      for(const a of _liq){const mr=(a.returnRate||0)/100/12;const r=lb[a.id]*mr;lb[a.id]+=r;lr[a.id]=(lr[a.id]||0)+r;cR+=r}
       const md=new Date(NOW.getFullYear(),NOW.getMonth()+m-1,15);
       // Revenue flows into first asset
-      for(const r of D.rev){
+      for(const r of _rev){
         if(r.linkedAssetId&&(sa.has(r.linkedAssetId)||sa.has('bought_'+r.linkedAssetId)))continue;
         const f=r.from?new Date(r.from):new Date(0),t=r.to?new Date(r.to):new Date(9999,0);
         if(md>=f&&md<=t){const mr=(r.appRate||0)/100/12;const am=(r.amount||0)*Math.pow(1+mr,m-1);if(cid)lb[cid]+=am;rc[r.id]=(rc[r.id]||0)+am}}
       // Costs cascade: deduct from first, overflow to second, etc.
-      for(const c of D.cst){
+      for(const c of _cst){
         if(c.linkedAssetId&&(sa.has(c.linkedAssetId)||sa.has('bought_'+c.linkedAssetId)))continue;
         const f=c.from?new Date(c.from):new Date(0),t=c.to?new Date(c.to):new Date(9999,0);
         if(md>=f&&md<=t){const mr=(c.appRate||0)/100/12;const am=(c.amount||0)*Math.pow(1+mr,m-1);withdraw(am);cc[c.id]=(cc[c.id]||0)+am}}
     }
     // Income events — proceeds to first asset
-    for(const ev of D.iev){if(ev.date){const ed=new Date(ev.date);if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&!et[ev.id]){
-      if(ev.type==='sell'&&ev.sellAssetId){
-        const as=D.ill.find(a=>a.id===ev.sellAssetId);
-        if(as&&!sa.has(as.id)){const mr=(as.appRate||0)/100/12;const ap=(as.value||0)*Math.pow(1+mr,m);if(cid)lb[cid]+=ap;et[ev.id]={value:ap,name:as.name};sa.add(as.id)}
-        const bi=ev.sellAssetId.replace('bought_','');const b=ba[bi];
-        if(b&&!sa.has('bought_'+bi)){const mo=m-b.buyMonth;const mr=(b.appRate||0)/100/12;const ap=b.value*Math.pow(1+mr,Math.max(0,mo));if(cid)lb[cid]+=ap;et[ev.id]={value:ap,name:b.name};sa.add('bought_'+bi)}
-      }else{if(cid)lb[cid]+=(ev.amount||0);et[ev.id]={value:ev.amount||0,name:ev.name}}}}}
+    for(const ev of _iev){if(ev.date){const ed=new Date(ev.date);
+      if(ev.type==='loanOut'){
+        // Loan out: initialize on start month, then receive monthly payments with interest
+        if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&lo[ev.id]===undefined){
+          lo[ev.id]=ev.amount||0; // initial receivable
+        }
+        if(lo[ev.id]!==undefined&&lo[ev.id]>0&&m>0&&d>=ed){
+          const mir=(ev.loanRate||0)/100/12;
+          lo[ev.id]+=lo[ev.id]*mir; // accrue interest on receivable
+          const pmt=Math.min(ev.monthlyPmt||0,lo[ev.id]);
+          if(pmt>0&&cid){lb[cid]+=pmt;lo[ev.id]-=pmt;rc[ev.id]=(rc[ev.id]||0)+pmt}
+          if(lo[ev.id]<0.01)lo[ev.id]=0;
+          et[ev.id]={value:rc[ev.id]||0,name:ev.name};
+        }
+      }else if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&!et[ev.id]){
+        if(ev.type==='sell'&&ev.sellAssetId){
+          const as=D.ill.find(a=>a.id===ev.sellAssetId);
+          if(as&&!sa.has(as.id)){const mr=(as.appRate||0)/100/12;const ap=(as.value||0)*Math.pow(1+mr,m);if(cid)lb[cid]+=ap;et[ev.id]={value:ap,name:as.name};sa.add(as.id)}
+          const bi=ev.sellAssetId.replace('bought_','');const b=ba[bi];
+          if(b&&!sa.has('bought_'+bi)){const mo=m-b.buyMonth;const mr=(b.appRate||0)/100/12;const ap=b.value*Math.pow(1+mr,Math.max(0,mo));if(cid)lb[cid]+=ap;et[ev.id]={value:ap,name:b.name};sa.add('bought_'+bi)}
+        }else{if(cid)lb[cid]+=(ev.amount||0);et[ev.id]={value:ev.amount||0,name:ev.name}}
+      }
+    }}
     // Expense events — cascade withdraw
-    for(const ev of D.eev){if(ev.date){const ed=new Date(ev.date);if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&!xt[ev.id]){
-      withdraw(ev.amount||0);if(ev.type==='buy')ba[ev.id]={name:ev.name,value:ev.amount||0,appRate:ev.appRate||0,buyMonth:m};xt[ev.id]=true}}}
-    let lT=0;const lv={};for(const a of D.liq){lv[a.id]=lb[a.id];lT+=lb[a.id]}
+    for(const ev of _eev){if(ev.date){const ed=new Date(ev.date);
+      if(ev.type==='debt'){
+        // Debt: initialize on start month, then monthly payments with interest
+        if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&db[ev.id]===undefined){
+          db[ev.id]=ev.amount||0; // initial balance
+        }
+        if(db[ev.id]!==undefined&&db[ev.id]>0&&m>0&&d>=ed){
+          const mir=(ev.appRate||0)/100/12;
+          db[ev.id]+=db[ev.id]*mir; // accrue interest
+          const pmt=Math.min(ev.monthlyPmt||0,db[ev.id]);
+          if(pmt>0){withdraw(pmt);db[ev.id]-=pmt;cc[ev.id]=(cc[ev.id]||0)+pmt}
+          if(db[ev.id]<0.01)db[ev.id]=0;
+          xt[ev.id]=true;
+        }
+      }else if(ed.getFullYear()===d.getFullYear()&&ed.getMonth()===d.getMonth()&&!xt[ev.id]){
+        withdraw(ev.amount||0);if(ev.type==='buy')ba[ev.id]={name:ev.name,value:ev.amount||0,appRate:ev.appRate||0,buyMonth:m};xt[ev.id]=true}
+    }}
+    let lT=0;const lv={};for(const a of _liq){lv[a.id]=lb[a.id];lT+=lb[a.id]}
     let iT=0;const av={};
-    for(const a of D.ill){if(!sa.has(a.id)){const mr=(a.appRate||0)/100/12;const v=(a.value||0)*Math.pow(1+mr,m);iT+=v;av[a.id]=v}else av[a.id]=0}
+    for(const a of _ill){if(!sa.has(a.id)){const mr=(a.appRate||0)/100/12;const v=(a.value||0)*Math.pow(1+mr,m);iT+=v;av[a.id]=v}else av[a.id]=0}
     const bv={};for(const[k,b]of Object.entries(ba)){if(!sa.has('bought_'+k)){const mo=m-b.buyMonth;const mr=(b.appRate||0)/100/12;const v=b.value*Math.pow(1+mr,Math.max(0,mo));iT+=v;bv[k]=v}else bv[k]=0}
-    pts.push({month:m,value:lT+iT,cash:lT,assetTotal:iT,liqValues:{...lv},liqReturns:{...lr},assetValues:av,boughtValues:{...bv},boughtAssets:{...ba},date:d,cumReturns:cR,revCum:{...rc},costCum:{...cc},evtTriggered:{...et},expTriggered:{...xt},soldAssets:new Set(sa)});
+    // Debt balances reduce net worth, loan-out receivables increase it
+    let debtT=0;for(const[,v]of Object.entries(db))debtT+=v;
+    let loanOutT=0;for(const[,v]of Object.entries(lo))loanOutT+=v;
+    pts.push({month:m,value:lT+iT-debtT+loanOutT,cash:lT,assetTotal:iT,debtTotal:debtT,debtValues:{...db},loanOutTotal:loanOutT,loanOutValues:{...lo},liqValues:{...lv},liqReturns:{...lr},assetValues:av,boughtValues:{...bv},boughtAssets:{...ba},date:d,cumReturns:cR,revCum:{...rc},costCum:{...cc},evtTriggered:{...et},expTriggered:{...xt},soldAssets:new Set(sa)});
   }
   FC=pts;
 }
@@ -934,7 +991,7 @@ function renderBreakdown(){
 
   // Total money in/out at current slider
   const totalIn=D.rev.reduce((s,r)=>s+(cur.revCum[r.id]||0),0)+D.iev.filter(e=>cur.evtTriggered[e.id]).reduce((s,e)=>s+(cur.evtTriggered[e.id]?.value||0),0)+cur.cumReturns;
-  const totalOut=D.cst.reduce((s,c)=>s+(cur.costCum[c.id]||0),0)+D.eev.filter(e=>cur.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0);
+  const totalOut=D.cst.reduce((s,c)=>s+(cur.costCum[c.id]||0),0)+D.eev.filter(e=>cur.expTriggered[e.id]&&e.type!=='debt').reduce((s,e)=>s+(e.amount||0),0)+D.eev.filter(e=>e.type==='debt').reduce((s,e)=>s+(cur.costCum[e.id]||0),0);
 
   // Compute money in/out for last month and last year
   const inM=prev1?totalIn-(D.rev.reduce((s,r)=>s+(prev1.revCum[r.id]||0),0)+D.iev.filter(e=>prev1.evtTriggered[e.id]).reduce((s,e)=>s+(prev1.evtTriggered[e.id]?.value||0),0)+prev1.cumReturns):totalIn;
@@ -946,14 +1003,14 @@ function renderBreakdown(){
   const hB=Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).reduce((s,[k])=>s+(cur.boughtValues[k]||0),0);
   const tH=hO+hB;
 
-  // Helper: 3-column value row (month, year, total)
-  const vMut='color:var(--mut);font-size:10px;font-weight:500';
+  // Helper: 3-column value row (month, year, total) — fixed widths for alignment
+  const vMut='color:var(--mut);font-size:10px;font-weight:500;text-align:right';
   const _moL=t('mo'),_yrL='/'+t('yrS');
   function vals3(total,lastYr,lastMo,color,prefix){
-    return`<span style="display:flex;gap:8px;align-items:baseline;flex-shrink:0;font-family:var(--mo)">
-      ${mi>=1?`<span style="${vMut}">${prefix}${fm(lastMo)}${_moL}</span>`:''}
-      ${mi>=12?`<span style="${vMut}">${prefix}${fm(lastYr)}${_yrL}</span>`:''}
-      <span style="font-weight:600;color:${color}">${prefix}${fm(total)}</span>
+    return`<span style="display:flex;align-items:baseline;flex-shrink:0;font-family:var(--mo)">
+      ${mi>=1?`<span style="${vMut};width:74px;border-right:1px solid #e5e2dc40;padding-right:4px;margin-right:4px">${prefix}${fm(lastMo)}${_moL}</span>`:''}
+      ${mi>=12?`<span style="${vMut};width:74px;border-right:1px solid #e5e2dc40;padding-right:4px;margin-right:4px">${prefix}${fm(lastYr)}${_yrL}</span>`:''}
+      <span style="font-weight:600;color:${color};text-align:right;min-width:64px">${prefix}${fm(total)}</span>
     </span>`}
 
   const _t=t; // preserve t() reference
@@ -961,32 +1018,61 @@ function renderBreakdown(){
   <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);font-family:var(--mo);margin-bottom:4px">${_t('by')} ${cur.date.toLocaleDateString(LANG==='en'?'en':LANG,{month:'short',year:'numeric'})} — ${fmT(D.sl)}</div>
   <div class="bh"><span class="bhl" style="color:var(--grn)">${_t('moneyIn')}</span><span class="bhr" style="color:var(--grn);opacity:.45">${mi>=1?fm(inM)+_moL+' · ':''}${mi>=12?fm(inY)+_yrL+' · ':''}${fm(totalIn)}</span></div>`;
 
-  D.rev.filter(r=>(cur.revCum[r.id]||0)>0).forEach(r=>{
-    const rv=cur.revCum[r.id]||0;const lm=d1(cur,prev1,r.id,'revCum');const ly=d1(cur,prev12,r.id,'revCum');
-    h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center;min-width:0;overflow:hidden">↑ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.name||_t('incomeTag'))}</span>${tg(_t('incomeTag'),'var(--grn-bg)','var(--grn)')}</span>${vals3(rv,ly,lm,'var(--grn)','+')}</div>`});
+  D.rev.filter(r=>(cur.revCum[r.id]||0)>0||r.disabled).forEach(r=>{
+    const dis=r.disabled;const rv=dis?0:cur.revCum[r.id]||0;const lm=dis?0:d1(cur,prev1,r.id,'revCum');const ly=dis?0:d1(cur,prev12,r.id,'revCum');
+    h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--grn);display:flex;align-items:center;min-width:0;overflow:hidden">↑ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(r.name||_t('incomeTag'))}</span>${tg(_t('incomeTag'),'var(--grn-bg)','var(--grn)')}</span>${vals3(rv,ly,lm,'var(--grn)','+')}</div>`});
 
-  D.iev.filter(e=>cur.evtTriggered[e.id]).forEach(e=>{
-    h+=`<div class="br"><span style="color:var(--grn);display:flex;align-items:center">◆ ${esc(cur.evtTriggered[e.id].name||_t('incomeTag'))}${e.type==='sell'?tg(_t('soldTag'),'#fef3c7','#92400e'):tg(_t('incomeTag'),'var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(cur.evtTriggered[e.id].value)}</span></div>`});
+  // Loan-out repayments (monthly, show with breakdowns)
+  D.iev.filter(e=>e.type==='loanOut'&&((cur.revCum[e.id]||0)>0||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const rv=dis?0:cur.revCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'revCum');const ly=dis?0:d1(cur,prev12,e.id,'revCum');
+    h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--grn);display:flex;align-items:center;min-width:0;overflow:hidden">↑ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.name||_t('loanOut'))}</span>${tg(_t('loanOutTag'),'var(--grn-bg)','var(--grn)')}</span>${vals3(rv,ly,lm,'var(--grn)','+')}</div>`});
 
-  if(cur.cumReturns>0){const lm=dF(cur,prev1,'cumReturns');const ly=dF(cur,prev12,'cumReturns');
+  // Other income events (one-time)
+  D.iev.filter(e=>e.type!=='loanOut'&&(cur.evtTriggered[e.id]||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const val=dis?0:(cur.evtTriggered[e.id]?.value||0);
+    h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--grn);display:flex;align-items:center">◆ ${esc(dis?e.name:(cur.evtTriggered[e.id]?.name||_t('incomeTag')))}${e.type==='sell'?tg(_t('soldTag'),'#fef3c7','#92400e'):tg(_t('incomeTag'),'var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(val)}</span></div>`});
+
+  {const lm=dF(cur,prev1,'cumReturns');const ly=dF(cur,prev12,'cumReturns');
     h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">◎ ${_t('invReturns')}${tg(_t('returns'),'var(--acc-lt)','var(--acc)')}</span>${vals3(cur.cumReturns,ly,lm,'var(--acc)','+')}</div>`}
 
   h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--red)">${_t('moneyOut')}</span><span class="bhr" style="color:var(--red);opacity:.45">${mi>=1?fm(outM)+_moL+' · ':''}${mi>=12?fm(outY)+_yrL+' · ':''}${fm(totalOut)}</span></div>`;
 
-  D.cst.filter(c=>(cur.costCum[c.id]||0)>0).forEach(c=>{
-    const cv=cur.costCum[c.id]||0;const lm=d1(cur,prev1,c.id,'costCum');const ly=d1(cur,prev12,c.id,'costCum');
-    h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center;min-width:0;overflow:hidden">↓ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(c.name||_t('expense'))}</span>${tg(_t('expense'),'var(--red-bg)','var(--red)')}</span>${vals3(cv,ly,lm,'var(--red)','-')}</div>`});
+  D.cst.filter(c=>(cur.costCum[c.id]||0)>0||c.disabled).forEach(c=>{
+    const dis=c.disabled;const cv=dis?0:cur.costCum[c.id]||0;const lm=dis?0:d1(cur,prev1,c.id,'costCum');const ly=dis?0:d1(cur,prev12,c.id,'costCum');
+    h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--red);display:flex;align-items:center;min-width:0;overflow:hidden">↓ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(c.name||_t('expense'))}</span>${tg(_t('expense'),'var(--red-bg)','var(--red)')}</span>${vals3(cv,ly,lm,'var(--red)','-')}</div>`});
 
-  D.eev.filter(e=>cur.expTriggered[e.id]).forEach(e=>{
-    h+=`<div class="br"><span style="color:var(--red);display:flex;align-items:center">◆ ${esc(e.name||_t('expense'))}${e.type==='buy'?tg(_t('boughtTag'),'var(--prp-bg)','var(--prp)'):tg(_t('spentTag'),'var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(e.amount)}</span></div>`});
+  D.eev.filter(e=>e.type!=='debt'&&(cur.expTriggered[e.id]||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const val=dis?0:(e.amount||0);
+    h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--red);display:flex;align-items:center">◆ ${esc(e.name||_t('expense'))}${e.type==='buy'?tg(_t('boughtTag'),'var(--prp-bg)','var(--prp)'):tg(_t('spentTag'),'var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(val)}</span></div>`});
 
-  // Liquid assets
-  h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--acc)">${_t('liqAssets')}</span><span class="bhr" style="color:var(--acc);opacity:.45">Σ ${fm(cur.cash)}</span></div>`;
-  D.liq.forEach(a=>{h+=`<div class="br"><span style="color:var(--acc);display:flex;align-items:center">▪ ${esc(a.name)}${a.returnRate?` <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.returnRate>0?'+':''}${a.returnRate}%/${_t('yrS')})</span>`:''}${tg(_t('liquid'),'var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">${fm(cur.liqValues[a.id]||0)}</span></div>`});
-  // Illiquid
-  if(hO>0||hB>0){
+  // Debt payments in money out
+  D.eev.filter(e=>e.type==='debt'&&((cur.costCum[e.id]||0)>0||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const cv=dis?0:cur.costCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'costCum');const ly=dis?0:d1(cur,prev12,e.id,'costCum');
+    h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--red);display:flex;align-items:center;min-width:0;overflow:hidden">↓ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.name||_t('debt'))}</span>${tg(_t('debtTag'),'var(--red-bg)','var(--red)')}</span>${vals3(cv,ly,lm,'var(--red)','-')}</div>`});
+
+  // Debts section
+  const debtEvs=D.eev.filter(e=>e.type==='debt');
+  if(debtEvs.length){
+    h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--red)">${_t('debts')}</span><span class="bhr" style="color:var(--red);opacity:.45">-${fm(cur.debtTotal||0)}</span></div>`;
+    debtEvs.forEach(e=>{const dis=e.disabled;h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--red);display:flex;align-items:center;min-width:0;overflow:hidden">▪ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.name||_t('debt'))}</span> <span style="font-size:10px;color:var(--mut);margin-left:4px">(${e.appRate||0}%/${_t('yrS')})</span>${tg(_t('debtRemain'),'var(--red-bg)','var(--red)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--red)">-${fm(dis?0:cur.debtValues[e.id]||0)}</span></div>`});
+  }
+
+  // Receivables (loaned out money)
+  const loEvs=D.iev.filter(e=>e.type==='loanOut');
+  if(loEvs.length){
+    h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--grn)">${_t('receivables')}</span><span class="bhr" style="color:var(--grn);opacity:.45">+${fm(cur.loanOutTotal||0)}</span></div>`;
+    loEvs.forEach(e=>{const dis=e.disabled;h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--grn);display:flex;align-items:center;min-width:0;overflow:hidden">▪ <span style="white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(e.name||_t('loanOut'))}</span> <span style="font-size:10px;color:var(--mut);margin-left:4px">(${e.loanRate||0}%/${_t('yrS')})</span>${tg(_t('loanOutTag'),'var(--grn-bg)','var(--grn)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--grn)">+${fm(dis?0:cur.loanOutValues[e.id]||0)}</span></div>`});
+  }
+
+  // Liquid assets — always show section
+  if(D.liq.length){
+    h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--acc)">${_t('liqAssets')}</span><span class="bhr" style="color:var(--acc);opacity:.45">Σ ${fm(cur.cash)}</span></div>`;
+    D.liq.forEach(a=>{const dis=a.disabled;h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--acc);display:flex;align-items:center">▪ ${esc(a.name)}${a.returnRate?` <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.returnRate>0?'+':''}${a.returnRate}%/${_t('yrS')})</span>`:''}${tg(_t('liquid'),'var(--acc-lt)','var(--acc)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--acc)">${fm(dis?0:cur.liqValues[a.id]||0)}</span></div>`});
+  }
+  // Illiquid — always show section
+  if(D.ill.length){
     h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--prp)">${_t('illAssets')}</span><span class="bhr" style="color:var(--prp);opacity:.45">Σ ${fm(tH)}</span></div>`;
-    D.ill.filter(a=>!cur.soldAssets.has(a.id)).forEach(a=>{h+=`<div class="br"><span style="color:var(--prp);display:flex;align-items:center">▪ ${esc(a.name)} <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.appRate>0?'+':''}${a.appRate}%/${_t('yrS')})</span>${tg(_t('ownedTag'),'var(--prp-bg)','var(--prp)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--prp)">${fm(cur.assetValues[a.id])}</span></div>`});
+    D.ill.forEach(a=>{const dis=a.disabled;if(!dis&&cur.soldAssets.has(a.id))return;h+=`<div class="br" style="${dis?'opacity:.35':''}"><span style="color:var(--prp);display:flex;align-items:center">▪ ${esc(a.name)} <span style="font-size:10px;color:var(--mut);margin-left:4px">(${a.appRate>0?'+':''}${a.appRate}%/${_t('yrS')})</span>${tg(dis?_t('ownedTag'):_t('ownedTag'),'var(--prp-bg)','var(--prp)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--prp)">${fm(dis?0:cur.assetValues[a.id]||0)}</span></div>`});
     Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).forEach(([k,b])=>{h+=`<div class="br"><span style="color:var(--prp);display:flex;align-items:center">▪ ${esc(b.name)} <span style="font-size:10px;color:var(--mut);margin-left:4px">(${b.appRate>0?'+':''}${b.appRate}%/${_t('yrS')})</span>${tg(_t('boughtTag'),'var(--prp-bg)','var(--prp)')}</span><span style="font-family:var(--mo);font-weight:600;color:var(--prp)">${fm(cur.boughtValues[k])}</span></div>`});
   }
   h+=`</div>`;el.innerHTML=h;
@@ -1006,35 +1092,35 @@ function renderRelocate(){
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="font-size:15px;flex-shrink:0">${c.flag}</span><span style="font-weight:600;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.city}</span><span style="font-size:10px;color:var(--mut);flex-shrink:0">${c.country}</span></div>
       <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-        <span style="font-family:var(--mo);font-size:12px;font-weight:600;color:var(--mut)">$${c.mc.toLocaleString()}<span style="font-size:9px;font-weight:400">/mo</span></span>
-        ${c.tax!==D.curTax?`<span style="font-family:var(--mo);font-size:9px;padding:1px 5px;border-radius:3px;background:${td>=0?'var(--grn-bg)':'#fef3c7'};color:${td>=0?'var(--grn)':'#92400e'}">${c.tax}% ${td>0?'↓':'↑'} tax</span>`:`<span style="font-family:var(--mo);font-size:9px;padding:1px 5px;border-radius:3px;background:var(--brd);color:var(--mut)">${c.tax}% same</span>`}
+        <span style="font-family:var(--mo);font-size:12px;font-weight:600;color:var(--mut)">$${c.mc.toLocaleString()}<span style="font-size:9px;font-weight:400">${t('mo')}</span></span>
+        ${c.tax!==D.curTax?`<span style="font-family:var(--mo);font-size:9px;padding:1px 5px;border-radius:3px;background:${td>=0?'var(--grn-bg)':'#fef3c7'};color:${td>=0?'var(--grn)':'#92400e'}">${c.tax}% ${td>0?'↓':'↑'} ${t('tax')}</span>`:`<span style="font-family:var(--mo);font-size:9px;padding:1px 5px;border-radius:3px;background:var(--brd);color:var(--mut)">${c.tax}% ${t('sameTax')}</span>`}
         <span style="font-family:var(--mo);font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:${s>=0?'var(--grn-bg)':'var(--red-bg)'};color:${s>=0?'var(--grn)':'var(--red)'};min-width:52px;text-align:right">${s>=0?'+':''}${fm(s)}</span>
       </div></div>`;
-    if(exp){const cats=[['Rent',c._r,'#6366f1'],['Food',c._f,'#059669'],['Transport',c._t,'#d97706'],['Utilities',c._u,'#dc2626'],['Health',c._h,'#f59e0b'],['Other',c._o,'#8b5cf6']];
+    if(exp){const cats=[[t('rent'),c._r,'#6366f1'],[t('food'),c._f,'#059669'],[t('transport'),c._t,'#d97706'],[t('util'),c._u,'#dc2626'],[t('health'),c._h,'#f59e0b'],[t('other'),c._o,'#8b5cf6']];
       h+=`<div class="ce"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 12px;font-size:11px;margin-bottom:6px">`;
       cats.forEach(([l,v,co])=>{h+=`<div style="display:flex;justify-content:space-between;padding:1px 0"><span style="color:var(--mut)"><span style="display:inline-block;width:6px;height:6px;border-radius:2px;background:${co};opacity:.7;margin-right:4px"></span>${l}</span><span style="font-family:var(--mo);font-weight:600">$${v.toLocaleString()}</span></div>`});
       h+=`</div><div style="display:flex;gap:8px;margin-bottom:4px">
-        <div class="mt" style="background:var(--acc-lt)"><div class="ml">After-tax income</div><div class="mv" style="color:var(--acc)">${fm(c.destAT)}/mo</div></div>
-        <div class="mt" style="background:${td>=0?'var(--grn-bg)':'var(--red-bg)'}"><div class="ml">Tax ${td>=0?'savings':'increase'}</div><div class="mv" style="color:${td>=0?'var(--grn)':'var(--red)'}">${td>=0?'+':''}${fm(td)}/mo</div></div>
-        <div class="mt" style="background:${s>=0?'var(--grn-bg)':'var(--red-bg)'}"><div class="ml">Net surplus</div><div class="mv" style="color:${s>=0?'var(--grn)':'var(--red)'}">${s>=0?'+':''}${fm(s)}</div></div>
-        <div class="mt" style="background:#fef3c7"><div class="ml">Local inflation</div><div class="mv" style="color:#92400e">${c.inf}%/yr</div></div>
+        <div class="mt" style="background:var(--acc-lt)"><div class="ml">${t('afterTaxInc')}</div><div class="mv" style="color:var(--acc)">${fm(c.destAT)}${t('mo')}</div></div>
+        <div class="mt" style="background:${td>=0?'var(--grn-bg)':'var(--red-bg)'}"><div class="ml">${td>=0?t('taxSavings'):t('taxIncrease')}</div><div class="mv" style="color:${td>=0?'var(--grn)':'var(--red)'}">${td>=0?'+':''}${fm(td)}${t('mo')}</div></div>
+        <div class="mt" style="background:${s>=0?'var(--grn-bg)':'var(--red-bg)'}"><div class="ml">${t('netSurplus')}</div><div class="mv" style="color:${s>=0?'var(--grn)':'var(--red)'}">${s>=0?'+':''}${fm(s)}</div></div>
+        <div class="mt" style="background:#fef3c7"><div class="ml">${t('localInf')}</div><div class="mv" style="color:#92400e">${c.inf}%/${t('yrS')}</div></div>
       </div><p style="font-size:10px;font-style:italic;color:var(--mut);opacity:.8;margin:0">${c.notes}</p></div>`}
     h+=`</div>`;return h}
   // Controls row: household + current tax + income display
   let h=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;flex-wrap:wrap;gap:6px">
     <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap">
-      <div style="display:flex;gap:3px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo);margin-right:2px">Household:</span>`;
-  FAMS.forEach(f=>{h+=`<button class="fb" style="border:1px solid ${D.fam===f.id?'var(--acc)':'var(--brd)'};background:${D.fam===f.id?'var(--acc-lt)':'transparent'};color:${D.fam===f.id?'var(--acc)':'var(--mut)'};font-weight:${D.fam===f.id?700:400}" data-fam="${f.id}">${f.label}</button>`});
+      <div style="display:flex;gap:3px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo);margin-right:2px">${t('household')}:</span>`;
+  FAMS.forEach(f=>{h+=`<button class="fb" style="border:1px solid ${D.fam===f.id?'var(--acc)':'var(--brd)'};background:${D.fam===f.id?'var(--acc-lt)':'transparent'};color:${D.fam===f.id?'var(--acc)':'var(--mut)'};font-weight:${D.fam===f.id?700:400}" data-fam="${f.id}">${t(f.lk)}</button>`});
   h+=`</div>
-      <div style="display:flex;gap:4px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo)">Your current tax:</span>
+      <div style="display:flex;gap:4px;align-items:center"><span style="font-size:10px;color:var(--mut);font-family:var(--mo)">${t('yourTax')}:</span>
         <div style="position:relative;width:62px"><input class="sm" type="number" id="cur-tax-input" value="${D.curTax}" min="0" max="60" step="1" style="text-align:right;width:100%;padding-right:22px;font-weight:600;font-size:13px"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px;font-family:var(--mo)">%</span></div>
       </div>
     </div>
-    <span style="font-size:10px;color:var(--mut);font-family:var(--mo)">income ${fm(mRev)}/mo → ${fm(curAT)}/mo after tax</span></div>`;
-  if(aff.length){h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--grn);font-family:var(--mo)">✓ Can afford (${aff.length})</span><div style="flex:1;height:1px;background:var(--grn);opacity:.2"></div></div>`;h+=aff.map(cityRow).join('')}
-  if(aff.length&&naf.length){h+=`<div style="display:flex;align-items:center;margin:10px 0 6px"><div style="flex:1;height:2px;background:linear-gradient(90deg,rgba(5,150,105,.2),rgba(220,38,38,.2))"></div><span style="font-size:9px;font-family:var(--mo);color:var(--mut);padding:0 10px;white-space:nowrap">affordability line</span><div style="flex:1;height:2px;background:rgba(220,38,38,.2)"></div></div>`}
-  if(naf.length){h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-family:var(--mo)">✗ Can't afford (${naf.length})</span><div style="flex:1;height:1px;background:var(--red);opacity:.2"></div></div>`;h+=naf.map(cityRow).join('')}
-  h+=`<p style="font-size:9px;color:var(--mut);margin-top:10px;text-align:center;opacity:.5">Estimates. Tax = effective rate on gross income. Surplus = after-tax income − local costs. Numbeo / AffordWhere 2026.</p>`;
+    <span style="font-size:10px;color:var(--mut);font-family:var(--mo)">${t('incomeAfterTax').replace('{inc}',fm(mRev)).replace('{aft}',fm(curAT))}</span></div>`;
+  if(aff.length){h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--grn);font-family:var(--mo)">✓ ${t('canAfford')} (${aff.length})</span><div style="flex:1;height:1px;background:var(--grn);opacity:.2"></div></div>`;h+=aff.map(cityRow).join('')}
+  if(aff.length&&naf.length){h+=`<div style="display:flex;align-items:center;margin:10px 0 6px"><div style="flex:1;height:2px;background:linear-gradient(90deg,rgba(5,150,105,.2),rgba(220,38,38,.2))"></div><span style="font-size:9px;font-family:var(--mo);color:var(--mut);padding:0 10px;white-space:nowrap">${t('affordLine')}</span><div style="flex:1;height:2px;background:rgba(220,38,38,.2)"></div></div>`}
+  if(naf.length){h+=`<div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1.5px;color:var(--red);font-family:var(--mo)">✗ ${t('cantAfford')} (${naf.length})</span><div style="flex:1;height:1px;background:var(--red);opacity:.2"></div></div>`;h+=naf.map(cityRow).join('')}
+  h+=`<p style="font-size:9px;color:var(--mut);margin-top:10px;text-align:center;opacity:.5">${t('estimates')}</p>`;
   bd.innerHTML=h;
   // Event delegation for city clicks, fam buttons, and tax input
   bd.querySelectorAll('[data-city]').forEach(el=>{el.addEventListener('click',()=>{D.relExp=D.relExp===el.dataset.city?null:el.dataset.city;renderRelocate()})});
@@ -1093,94 +1179,98 @@ function renderSections(){
   const tLiq=D.liq.reduce((s,a)=>s+(a.value||0),0);
   let h='';
   // LIQUID ASSETS
-  h+=secHd(t('liqHd'),'var(--acc)','addLiq()',`<span class="sr" style="color:var(--acc)">${fm(tLiq)}</span>`,t('liqHint'));
-  if(D.liq.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('value')}</span><span style="flex:0 0 72px;text-align:right">${t('returnYr')}</span><span style="flex:0 0 22px"></span><span style="flex:0 0 16px"></span></div>`;
+  h+=secHd(t('liqHd'),'var(--acc)','addLiq()',`<span class="sr" style="color:var(--acc)">${fm(tLiq)}</span>`);
+  if(D.liq.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('value')}</span><span style="flex:0 0 72px;text-align:right">${t('returnYr')}</span><span style="flex:0 0 56px"></span></div>`;
   D.liq.forEach((a,i)=>{
     const isPrimary=i===0;
     const rowCls=isPrimary?'rw rw-primary':'rw';
-    h+=`<div class="${rowCls}" style="margin-left:${isPrimary?'12px':'0'}">
-    ${isPrimary?`<span class="primary-badge">${t('primary')}</span>`:''}
-    <input class="sm" value="${esc(a.name)}" placeholder="Name" style="flex:1 1 100px;min-width:60px" data-arr="liq" data-idx="${i}" data-fld="name">
+    h+=`<div class="${rowCls}${a.disabled?' disabled':''}" draggable="true" data-drag-arr="liq" data-drag-idx="${i}" style="margin-left:${isPrimary?'12px':'0'};position:relative">
+    <span class="drag-handle">⠿</span>
+    <button class="eye-btn${a.disabled?' off':''}" data-eye="liq" data-idx="${i}">${a.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
+    ${isPrimary?`<span class="primary-badge" style="cursor:help">${t('primary')}<span class="primary-tip">${t('liqHint')}</span></span>`:''}
+    <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="liq" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="liq" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.returnRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="liq" data-idx="${i}" data-fld="returnRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
-    <div class="reorder-wrap">${i>0?`<button class="reorder-btn" data-move="liq" data-idx="${i}" data-dir="-1" title="Move up">▲</button>`:'<div style="width:22px;height:11px"></div>'}${i<D.liq.length-1?`<button class="reorder-btn" data-move="liq" data-idx="${i}" data-dir="1" title="Move down">▼</button>`:'<div style="width:22px;height:11px"></div>'}</div>
     <button class="bd" data-del="liq" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // ILLIQUID ASSETS
   h+=secHd(t('illHd'),'var(--prp)','addIll()',`<span class="sr" style="color:var(--prp)">${fm(D.ill.reduce((s,a)=>s+(a.value||0),0))}</span>`,t('illHint'));
-  if(D.ill.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('value')}</span><span style="flex:0 0 72px;text-align:right">${t('appYr')}</span><span style="flex:0 0 16px"></span></div>`;
-  D.ill.forEach((a,i)=>{h+=`<div class="rw">
-    <input class="sm" value="${esc(a.name)}" placeholder="Name" style="flex:1 1 100px;min-width:60px" data-arr="ill" data-idx="${i}" data-fld="name">
+  if(D.ill.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('value')}</span><span style="flex:0 0 72px;text-align:right">${t('appYr')}</span><span style="flex:0 0 56px"></span></div>`;
+  D.ill.forEach((a,i)=>{h+=`<div class="rw${a.disabled?' disabled':''}" draggable="true" data-drag-arr="ill" data-drag-idx="${i}">
+    <span class="drag-handle">⠿</span>
+    <button class="eye-btn${a.disabled?' off':''}" data-eye="ill" data-idx="${i}">${a.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
+    <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="ill" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="ill" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="ill" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <button class="bd" data-del="ill" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // MONTHLY REVENUE
   h+=secHd(t('revHd'),'var(--grn)','addRev()',`<span class="sr" style="color:var(--grn)">+${fm(mRev)}${t('mo')}</span>`);
-  if(D.rev.length)h+=`<div class="col-hdr"><span style="flex:1 1 80px;min-width:50px">${t('name')}</span><span style="flex:0 0 90px;text-align:right">${t('perMo')}</span><span style="flex:0 0 68px;text-align:right">${t('growthYr')}</span><span style="flex:0 0 40px;text-align:center">${t('link')}</span><span style="flex:0 0 96px">${t('starts')}</span><span style="flex:0 0 96px">${t('ends')}</span><span style="flex:0 0 16px"></span></div>`;
-  D.rev.forEach((r,i)=>{h+=`<div class="rw rw-rc">
-    <div class="r1"><input class="sm" value="${esc(r.name)}" placeholder="Name" style="flex:1;min-width:50px" data-arr="rev" data-idx="${i}" data-fld="name"></div>
-    <div class="r2">
-      <div style="position:relative;flex:0 0 90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${r.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="rev" data-idx="${i}" data-fld="amount" data-num="1"></div>
-      <div style="position:relative;flex:0 0 68px"><input class="sm" type="number" value="${r.appRate??''}" step="0.5" placeholder="0" title="Annual growth %" style="text-align:right;width:100%;padding-right:22px" data-arr="rev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
-      <select class="sm ls" style="color:${r.linkedAssetId?'var(--prp)':'var(--mut)'}" data-arr="rev" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(r.linkedAssetId)}</select>
-    </div>
-    <div class="r3">
-      ${ymPicker('rev',i,'from',r.from)}
-      ${ymPicker('rev',i,'to',r.to)}
-      <button class="bd" data-del="rev" data-idx="${i}">×</button>
-    </div>
-  </div>`});
+  if(D.rev.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('perMo')}</span><span style="flex:0 0 72px;text-align:right">${t('growthYr')}</span><span style="flex:0 0 56px"></span></div>`;
+  D.rev.forEach((r,i)=>{h+=`<div class="rw${r.disabled?' disabled':''}" draggable="true" data-drag-arr="rev" data-drag-idx="${i}">
+    <span class="drag-handle">⠿</span>
+    <button class="eye-btn${r.disabled?' off':''}" data-eye="rev" data-idx="${i}">${r.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
+    <input class="sm" value="${esc(r.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="rev" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${r.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="rev" data-idx="${i}" data-fld="amount" data-num="1"></div>
+    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${r.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="rev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
+      <div><label>${t('link')}</label><select class="sm ls" data-arr="rev" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(r.linkedAssetId)}</select></div>
+      <div><label>${t('starts')}</label>${ymPicker('rev',i,'from',r.from)}</div>
+      <div><label>${t('ends')}</label>${ymPicker('rev',i,'to',r.to)}</div>
+    </div></div>
+    <button class="bd" data-del="rev" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // MONTHLY COSTS
   h+=secHd(t('costHd'),'var(--red)','addCst()',`<span class="sr" style="color:var(--red)">-${fm(mCost)}${t('mo')}</span>`);
-  if(D.cst.length)h+=`<div class="col-hdr"><span style="flex:1 1 80px;min-width:50px">${t('name')}</span><span style="flex:0 0 90px;text-align:right">${t('perMo')}</span><span style="flex:0 0 68px;text-align:right">${t('infYr')}</span><span style="flex:0 0 40px;text-align:center">${t('link')}</span><span style="flex:0 0 96px">${t('starts')}</span><span style="flex:0 0 96px">${t('ends')}</span><span style="flex:0 0 16px"></span></div>`;
-  D.cst.forEach((c,i)=>{h+=`<div class="rw rw-rc">
-    <div class="r1"><input class="sm" value="${esc(c.name)}" placeholder="Name" style="flex:1;min-width:50px" data-arr="cst" data-idx="${i}" data-fld="name"></div>
-    <div class="r2">
-      <div style="position:relative;flex:0 0 90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${c.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="cst" data-idx="${i}" data-fld="amount" data-num="1"></div>
-      <div style="position:relative;flex:0 0 68px"><input class="sm" type="number" value="${c.appRate??''}" step="0.5" placeholder="0" title="Annual inflation %" style="text-align:right;width:100%;padding-right:22px" data-arr="cst" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
-      <select class="sm ls" style="color:${c.linkedAssetId?'var(--prp)':'var(--mut)'}" data-arr="cst" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(c.linkedAssetId)}</select>
-    </div>
-    <div class="r3">
-      ${ymPicker('cst',i,'from',c.from)}
-      ${ymPicker('cst',i,'to',c.to)}
-      <button class="bd" data-del="cst" data-idx="${i}">×</button>
-    </div>
-  </div>`});
+  if(D.cst.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('perMo')}</span><span style="flex:0 0 72px;text-align:right">${t('infYr')}</span><span style="flex:0 0 56px"></span></div>`;
+  D.cst.forEach((c,i)=>{h+=`<div class="rw${c.disabled?' disabled':''}" draggable="true" data-drag-arr="cst" data-drag-idx="${i}">
+    <span class="drag-handle">⠿</span>
+    <button class="eye-btn${c.disabled?' off':''}" data-eye="cst" data-idx="${i}">${c.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
+    <input class="sm" value="${esc(c.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="cst" data-idx="${i}" data-fld="name">
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${c.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="cst" data-idx="${i}" data-fld="amount" data-num="1"></div>
+    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${c.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="cst" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
+      <div><label>${t('link')}</label><select class="sm ls" data-arr="cst" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(c.linkedAssetId)}</select></div>
+      <div><label>${t('starts')}</label>${ymPicker('cst',i,'from',c.from)}</div>
+      <div><label>${t('ends')}</label>${ymPicker('cst',i,'to',c.to)}</div>
+    </div></div>
+    <button class="bd" data-del="cst" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // INCOME EVENTS
   h+=secHd(t('ievHd'),'var(--grn)','addIev()','',t('ievHint'));
-  if(D.iev.length)h+=`<div class="col-hdr"><span style="flex:0 0 70px">${t('type')}</span><span style="flex:1 1 80px">${t('nameAsset')}</span><span style="flex:0 0 90px;text-align:right">${t('amount')}</span><span style="flex:0 0 96px">${t('when')}</span><span style="flex:0 0 16px"></span></div>`;
-  D.iev.forEach((ev,i)=>{h+=`<div class="rw rw-ev">
-    <div class="r1">
-      <select class="sm" style="flex:0 0 70px;width:70px" data-arr="iev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="cash"${ev.type==='cash'?' selected':''}>${t('cash')}</option><option value="sell"${ev.type==='sell'?' selected':''}>${t('sell')}</option></select>`;
-    if(ev.type==='cash'){h+=`<input class="sm" value="${esc(ev.name)}" placeholder="Name" style="flex:1;min-width:50px" data-arr="iev" data-idx="${i}" data-fld="name">`}
-    else{h+=`<select class="sm" style="flex:1" data-arr="iev" data-idx="${i}" data-fld="sellAssetId">${sellOpts(ev.sellAssetId)}</select>`}
-    h+=`</div>
-    <div class="r2">`;
-    if(ev.type==='cash'){h+=`<div style="position:relative;flex:1"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="amount" data-num="1"></div>`}
-    h+=`${ymPicker('iev',i,'date',ev.date)}
-      <button class="bd" data-del="iev" data-idx="${i}">×</button>
-    </div>
-  </div>`});
+  if(D.iev.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('nameAsset')}</span><span style="flex:0 0 100px;text-align:right">${t('amount')}</span><span style="flex:0 0 56px"></span></div>`;
+  D.iev.forEach((ev,i)=>{
+    const nameField=ev.type==='sell'?`<select class="sm" style="flex:1 1 100px" data-arr="iev" data-idx="${i}" data-fld="sellAssetId">${sellOpts(ev.sellAssetId)}</select>`:`<input class="sm" value="${esc(ev.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="iev" data-idx="${i}" data-fld="name">`;
+    const amtField=ev.type!=='sell'?`<div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" placeholder="${ev.type==='loanOut'?t('balance'):'0'}" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="amount" data-num="1"></div>`:'<div style="flex:0 0 100px"></div>';
+    h+=`<div class="rw${ev.disabled?' disabled':''}" draggable="true" data-drag-arr="iev" data-drag-idx="${i}">
+    <span class="drag-handle">⠿</span>
+    <button class="eye-btn${ev.disabled?' off':''}" data-eye="iev" data-idx="${i}">${ev.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
+      ${nameField}${amtField}
+      <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
+        <div><label>${t('type')}</label><select class="sm" data-arr="iev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="cash"${ev.type==='cash'?' selected':''}>${t('cash')}</option><option value="sell"${ev.type==='sell'?' selected':''}>${t('sell')}</option><option value="loanOut"${ev.type==='loanOut'?' selected':''}>${t('loanOut')}</option></select></div>
+        <div><label>${t('when')}</label>${ymPicker('iev',i,'date',ev.date)}</div>
+        ${ev.type==='loanOut'?`<div><label>${t('rate')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.loanRate??''}" step="0.1" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="iev" data-idx="${i}" data-fld="loanRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
+        <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
+      </div></div>
+      <button class="bd" data-del="iev" data-idx="${i}">×</button></div>`});
   if(!D.iev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
   h+=`</div>`;
   // EXPENSE EVENTS
   h+=secHd(t('eevHd'),'var(--red)','addEev()','',t('eevHint'));
-  if(D.eev.length)h+=`<div class="col-hdr"><span style="flex:0 0 72px">${t('type')}</span><span style="flex:1 1 80px">${t('name')}</span><span style="flex:0 0 90px;text-align:right">${t('amount')}</span><span style="flex:0 0 72px;text-align:right">${t('apprDepr')}</span><span style="flex:0 0 96px">${t('when')}</span><span style="flex:0 0 16px"></span></div>`;
-  D.eev.forEach((ev,i)=>{h+=`<div class="rw rw-ev">
-    <div class="r1">
-      <select class="sm" style="flex:0 0 72px;width:72px" data-arr="eev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="expense"${ev.type==='expense'?' selected':''}>${t('expense')}</option><option value="buy"${ev.type==='buy'?' selected':''}>${t('buy')}</option></select>
-      <input class="sm" value="${esc(ev.name)}" placeholder="${t('name')}" style="flex:1;min-width:50px" data-arr="eev" data-idx="${i}" data-fld="name">
-    </div>
-    <div class="r2">
-      <div style="position:relative;flex:1"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="amount" data-num="1"></div>`;
-    if(ev.type==='buy'){h+=`<div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.5" placeholder="0" title="Positive = appreciates, negative = depreciates" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>`}
-    h+=`${ymPicker('eev',i,'date',ev.date)}
-      <button class="bd" data-del="eev" data-idx="${i}">×</button>
-    </div>
-  </div>`});
+  if(D.eev.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('amount')}</span><span style="flex:0 0 56px"></span></div>`;
+  D.eev.forEach((ev,i)=>{h+=`<div class="rw${ev.disabled?' disabled':''}" draggable="true" data-drag-arr="eev" data-drag-idx="${i}">
+    <span class="drag-handle">⠿</span>
+    <button class="eye-btn${ev.disabled?' off':''}" data-eye="eev" data-idx="${i}">${ev.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
+      <input class="sm" value="${esc(ev.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="eev" data-idx="${i}" data-fld="name">
+      <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" placeholder="${ev.type==='debt'?t('balance'):'0'}" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="amount" data-num="1"></div>
+      <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
+        <div><label>${t('type')}</label><select class="sm" data-arr="eev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="expense"${ev.type==='expense'?' selected':''}>${t('expense')}</option><option value="buy"${ev.type==='buy'?' selected':''}>${t('buy')}</option><option value="debt"${ev.type==='debt'?' selected':''}>${t('debt')}</option></select></div>
+        <div><label>${t('when')}</label>${ymPicker('eev',i,'date',ev.date)}</div>
+        ${ev.type==='debt'?`<div><label>${t('rate')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.1" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
+        <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
+        ${ev.type==='buy'?`<div><label>${t('apprDepr')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>`:''}
+      </div></div>
+      <button class="bd" data-del="eev" data-idx="${i}">×</button></div>`});
   if(!D.eev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
   h+=`</div>`;
 
@@ -1192,6 +1282,41 @@ function renderSections(){
 const ARRS={liq:D.liq,ill:D.ill,rev:D.rev,cst:D.cst,iev:D.iev,eev:D.eev};
 function bindSections(){
   const secs=document.getElementById('secs');
+  // More tooltips — hover to open, stays open while interacting
+  secs.querySelectorAll('.more-wrap').forEach((wrap,wi)=>{
+    let timer=null,locked=false;
+    const tag=`[tooltip#${wi}]`;
+    const show=(src)=>{clearTimeout(timer);wrap.classList.add('open');console.log(tag,'SHOW from:',src)};
+    const tryHide=(src)=>{clearTimeout(timer);timer=setTimeout(()=>{
+      console.log(tag,'tryHide check from:',src,'locked=',locked,'_locked=',wrap._locked,'activeEl=',document.activeElement?.tagName,'inWrap=',wrap.contains(document.activeElement));
+      if(locked||wrap._locked){console.log(tag,'BLOCKED — locked');return}
+      const active=document.activeElement;
+      if(active&&wrap.contains(active)){console.log(tag,'BLOCKED — focus inside');return}
+      wrap.classList.remove('open');
+      console.log(tag,'CLOSED');
+    },300)};
+    wrap.querySelector('.more-btn').addEventListener('mouseenter',()=>show('btn-mouseenter'));
+    wrap.querySelector('.more-btn').addEventListener('click',e=>{e.stopPropagation();show('btn-click')});
+    wrap.addEventListener('mouseleave',()=>{console.log(tag,'mouseleave');tryHide('mouseleave')});
+    wrap.addEventListener('mouseenter',()=>{console.log(tag,'mouseenter');clearTimeout(timer)});
+    wrap.querySelectorAll('select').forEach(sel=>{
+      sel.addEventListener('mousedown',()=>{locked=true;show('select-mousedown')});
+      sel.addEventListener('change',()=>{console.log(tag,'select-change');locked=false;show('select-change')});
+      sel.addEventListener('blur',()=>{console.log(tag,'select-blur');locked=false;tryHide('select-blur')});
+      sel.addEventListener('focus',()=>{locked=true;show('select-focus')});
+    });
+    wrap.querySelectorAll('input').forEach(inp=>{
+      inp.addEventListener('focus',()=>{locked=true;show('input-focus')});
+      inp.addEventListener('blur',()=>{console.log(tag,'input-blur');locked=false;tryHide('input-blur')});
+      inp.addEventListener('change',()=>show('input-change'));
+    });
+  });
+  // Helper: keep parent tooltip open after a change
+  function keepTooltipOpen(el){
+    const wrap=el.closest('.more-wrap');
+    console.log('[keepTooltipOpen]','wrap found=',!!wrap,'el=',el.tagName,el.dataset.fld||el.dataset.part||'');
+    if(wrap){wrap.classList.add('open');wrap._locked=true;setTimeout(()=>{wrap._locked=false;console.log('[keepTooltipOpen] _locked released')},500)}
+  }
   // Input changes (text, number, regular selects — NOT month-year part selects)
   secs.querySelectorAll('input[data-arr],select[data-arr]:not([data-part])').forEach(el=>{
     el.addEventListener('change',()=>{
@@ -1199,7 +1324,8 @@ function bindSections(){
       if(!arr||!arr[idx])return;
       arr[idx][fld]=el.dataset.num?parseFloat(el.value)||0:el.value;
       persist();
-      if(el.dataset.rebuild){runFC();renderSections();updateView()}
+      keepTooltipOpen(el);
+      if(el.dataset.rebuild){const idx=_saveOpenMore();runFC();renderSections();updateView();_restoreOpenMore(idx)}
       else{runFC();updateView();renderSectionTotals()}
     });
   });
@@ -1215,7 +1341,9 @@ function bindSections(){
       if(part==='y'){const v=parseInt(el.value);if(!isNaN(v))yr=v}
       if(el.value==='')arr[idx][fld]='';
       else arr[idx][fld]=`${yr}-${String(mo+1).padStart(2,'0')}-01`;
-      persist();runFC();updateView();renderSectionTotals();
+      persist();
+      keepTooltipOpen(el);
+      runFC();updateView();renderSectionTotals();
     });
   });
   // Delete buttons
@@ -1226,59 +1354,58 @@ function bindSections(){
       persist();fullUpdate();
     });
   });
-  // Reorder buttons — animate swap then rebuild
-  secs.querySelectorAll('[data-move]').forEach(el=>{
+  // Eye toggle (disable/enable for simulation)
+  secs.querySelectorAll('[data-eye]').forEach(el=>{
     el.addEventListener('click',()=>{
-      const arrKey=el.dataset.move,idx=+el.dataset.idx,dir=+el.dataset.dir;
-      const arr=ARRS[arrKey];
-      const newIdx=idx+dir;
-      if(!arr||newIdx<0||newIdx>=arr.length)return;
-
-      // Find the two rows to swap in current DOM
-      const section=el.closest('.c');
-      const allRows=[...section.querySelectorAll('.rw')];
-      const rowA=allRows[idx],rowB=allRows[newIdx];
-      if(!rowA||!rowB){
-        // Fallback: just swap without animation
-        const tmp=arr[idx];arr[idx]=arr[newIdx];arr[newIdx]=tmp;
-        persist();fullUpdate();return;
-      }
-
-      // Get positions before swap
-      const rectA=rowA.getBoundingClientRect();
-      const rectB=rowB.getBoundingClientRect();
-      const dy=rectB.top-rectA.top;
-
-      // Animate both rows sliding past each other
-      rowA.style.transition='none';
-      rowB.style.transition='none';
-      rowA.style.transform=`translateY(0)`;
-      rowB.style.transform=`translateY(0)`;
-      rowA.style.position='relative';
-      rowB.style.position='relative';
-      rowA.style.zIndex='5';
-      rowB.style.zIndex='1';
-      // Force reflow
-      rowA.offsetHeight;
-
-      rowA.style.transition='transform 0.28s cubic-bezier(0.22,0.68,0.31,1.0)';
-      rowB.style.transition='transform 0.28s cubic-bezier(0.22,0.68,0.31,1.0)';
-      rowA.style.transform=`translateY(${dy}px)`;
-      rowB.style.transform=`translateY(${-dy}px)`;
-
-      // After animation completes, do the actual data swap and rebuild
-      rowA.addEventListener('transitionend',function handler(){
-        rowA.removeEventListener('transitionend',handler);
-        const tmp=arr[idx];arr[idx]=arr[newIdx];arr[newIdx]=tmp;
-        persist();fullUpdate();
-      });
+      const arr=ARRS[el.dataset.eye],idx=+el.dataset.idx;
+      if(!arr||!arr[idx])return;
+      arr[idx].disabled=!arr[idx].disabled;
+      persist();fullUpdate();
+    });
+  });
+  // Drag and drop reordering — only from handle
+  let dragArr=null,dragIdx=-1,canDrag=false;
+  secs.querySelectorAll('.drag-handle').forEach(handle=>{
+    handle.addEventListener('mousedown',()=>{canDrag=true});
+    handle.addEventListener('touchstart',()=>{canDrag=true},{passive:true});
+  });
+  document.addEventListener('mouseup',()=>{canDrag=false});
+  document.addEventListener('touchend',()=>{canDrag=false});
+  secs.querySelectorAll('[data-drag-arr]').forEach(row=>{
+    row.addEventListener('dragstart',e=>{
+      if(!canDrag){e.preventDefault();return}
+      dragArr=row.dataset.dragArr;dragIdx=+row.dataset.dragIdx;
+      row.classList.add('dragging');
+      e.dataTransfer.effectAllowed='move';
+      e.dataTransfer.setData('text/plain','');
+    });
+    row.addEventListener('dragend',()=>{
+      row.classList.remove('dragging');canDrag=false;
+      secs.querySelectorAll('.drag-over').forEach(r=>r.classList.remove('drag-over'));
+      dragArr=null;dragIdx=-1;
+    });
+    row.addEventListener('dragover',e=>{
+      if(row.dataset.dragArr!==dragArr)return;
+      e.preventDefault();e.dataTransfer.dropEffect='move';
+      secs.querySelectorAll('.drag-over').forEach(r=>r.classList.remove('drag-over'));
+      row.classList.add('drag-over');
+    });
+    row.addEventListener('dragleave',()=>row.classList.remove('drag-over'));
+    row.addEventListener('drop',e=>{
+      e.preventDefault();row.classList.remove('drag-over');
+      const toIdx=+row.dataset.dragIdx;
+      if(dragArr!==row.dataset.dragArr||dragIdx===toIdx||dragIdx<0)return;
+      const arr=ARRS[dragArr];if(!arr)return;
+      const item=arr.splice(dragIdx,1)[0];
+      arr.splice(toIdx,0,item);
+      persist();fullUpdate();
     });
   });
 }
 function renderSectionTotals(){
-  // We could surgically update totals, but sections are cheap to rebuild
-  // since the user isn't dragging during typing. Just rebuild.
+  const idx=_saveOpenMore();
   renderSections();
+  _restoreOpenMore(idx);
 }
 
 // ═══════════════ ADD FUNCTIONS (global, called from onclick)
@@ -1290,10 +1417,12 @@ function addIev(){D.iev.push({id:uid(),type:'cash',name:'',amount:0,date:DF,sell
 function addEev(){D.eev.push({id:uid(),type:'expense',name:'',amount:0,date:DF,appRate:0});persist();fullUpdate()}
 
 // ═══════════════ FULL UPDATE (recalc + render everything)
+function _saveOpenMore(){const w=[...document.querySelectorAll('.more-wrap')];return w.findIndex(x=>x.classList.contains('open'))}
+function _restoreOpenMore(idx){if(idx>=0){const w=[...document.querySelectorAll('.more-wrap')];if(w[idx])w[idx].classList.add('open')}}
 function fullUpdate(){
-  runFC();
-  renderSections();
-  updateView();
+  const idx=_saveOpenMore();
+  runFC();renderSections();updateView();
+  _restoreOpenMore(idx);
 }
 
 // ═══════════════ INIT
