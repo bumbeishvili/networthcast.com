@@ -652,7 +652,7 @@ function drawChart(){
   const ctx=cv.getContext('2d');ctx.scale(2,2);ctx.clearRect(0,0,W,H);
   const ei=Math.max(6,Math.min(D.sl||6,FC.length-1));
   const vis=FC.slice(0,ei+1),len=vis.length;
-  const p={t:16,r:140,b:32,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const p={t:16,r:85,b:32,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
   const vTotal=vis.map(d=>d.value);
   const vLiq=vis.map(d=>d.cash);
   const vIll=vis.map(d=>d.assetTotal);
@@ -717,23 +717,25 @@ function drawChart(){
   if(hasLiq)drawSeries(vLiq,'rgb(5,150,105)',0.06,1.5);
   drawSeries(vTotal,'rgb(37,99,235)',0.10,2);
 
-  // End-of-line labels (right side, aligned to where each line ends)
+  // End-of-line labels (right side: name, value below)
   const endX=xO(len-1)+10;
-  ctx.font=`bold 9px ${MO}`;ctx.textAlign='left';
+  ctx.textAlign='left';
   // Collect label positions, then nudge to avoid overlap
   const labels=[];
-  labels.push({label:`${t('total')} ${fm(vTotal[len-1],precise)}`,color:'#2563eb',y:yO(vTotal[len-1])});
-  if(hasLiq)labels.push({label:`${t('liquid')} ${fm(vLiq[len-1],precise)}`,color:'#059669',y:yO(vLiq[len-1])});
-  if(hasIll)labels.push({label:`${t('illiquid')} ${fm(vIll[len-1],precise)}`,color:'#ea580c',y:yO(vIll[len-1])});
-  // Sort by y position and nudge overlapping labels apart
+  labels.push({name:t('total'),val:fm(vTotal[len-1],precise),color:'#2563eb',y:yO(vTotal[len-1])});
+  if(hasLiq)labels.push({name:t('liquid'),val:fm(vLiq[len-1],precise),color:'#059669',y:yO(vLiq[len-1])});
+  if(hasIll)labels.push({name:t('illiquid'),val:fm(vIll[len-1],precise),color:'#ea580c',y:yO(vIll[len-1])});
+  // Sort by y position and nudge overlapping labels apart (need more gap for 2 lines)
   labels.sort((a,b)=>a.y-b.y);
-  const minGap=11;
+  const minGap=20;
   for(let i=1;i<labels.length;i++){
     if(labels[i].y-labels[i-1].y<minGap)labels[i].y=labels[i-1].y+minGap;
   }
   for(const lb of labels){
-    ctx.fillStyle=lb.color;
-    ctx.fillText(lb.label,endX,lb.y+3);
+    ctx.font=`bold 9px ${MO}`;ctx.fillStyle=lb.color;
+    ctx.fillText(lb.name,endX,lb.y);
+    ctx.font=`600 8px ${MO}`;ctx.fillStyle=lb.color+'99';
+    ctx.fillText(lb.val,endX,lb.y+10);
   }
 
   // FIRE crossing points — markers with time labels for all 4 types
