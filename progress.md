@@ -7,6 +7,7 @@
 - **Languages declared in homepage hreflang but missing:** 15 (it, nl, fi, et, pl, cs, sv, no, da, el, bn, th, vi, id, ms)
 - **Tool pages per language:** 8
 
+# Done, but with mistakes
 ---
 
 ## Arabic (ar)
@@ -279,47 +280,47 @@
 
 ### Thai (th)
 - [ ] Homepage (th/index.html)
-- [ ] coast-fire-calculator
-- [ ] cost-of-living-comparison
-- [ ] fire-calculator
-- [ ] geographic-arbitrage
-- [ ] net-worth-calculator
-- [ ] net-worth-forecast
-- [ ] net-worth-tracker
-- [ ] where-to-live
+- [x] coast-fire-calculator
+- [x] cost-of-living-comparison
+- [x] fire-calculator
+- [x] geographic-arbitrage
+- [x] net-worth-calculator
+- [x] net-worth-forecast
+- [x] net-worth-tracker
+- [x] where-to-live
 
 ### Vietnamese (vi)
 - [ ] Homepage (vi/index.html)
-- [ ] coast-fire-calculator
-- [ ] cost-of-living-comparison
-- [ ] fire-calculator
-- [ ] geographic-arbitrage
-- [ ] net-worth-calculator
-- [ ] net-worth-forecast
-- [ ] net-worth-tracker
-- [ ] where-to-live
+- [x] coast-fire-calculator
+- [x] cost-of-living-comparison
+- [x] fire-calculator
+- [x] geographic-arbitrage
+- [x] net-worth-calculator
+- [x] net-worth-forecast
+- [x] net-worth-tracker
+- [x] where-to-live
 
 ### Indonesian (id)
 - [ ] Homepage (id/index.html)
-- [ ] coast-fire-calculator
-- [ ] cost-of-living-comparison
-- [ ] fire-calculator
-- [ ] geographic-arbitrage
-- [ ] net-worth-calculator
-- [ ] net-worth-forecast
-- [ ] net-worth-tracker
-- [ ] where-to-live
+- [x] coast-fire-calculator
+- [x] cost-of-living-comparison
+- [x] fire-calculator
+- [x] geographic-arbitrage
+- [x] net-worth-calculator
+- [x] net-worth-forecast
+- [x] net-worth-tracker
+- [x] where-to-live
 
 ### Malay (ms)
 - [ ] Homepage (ms/index.html)
-- [ ] coast-fire-calculator
-- [ ] cost-of-living-comparison
-- [ ] fire-calculator
-- [ ] geographic-arbitrage
-- [ ] net-worth-calculator
-- [ ] net-worth-forecast
-- [ ] net-worth-tracker
-- [ ] where-to-live
+- [x] coast-fire-calculator
+- [x] cost-of-living-comparison
+- [x] fire-calculator
+- [x] geographic-arbitrage
+- [x] net-worth-calculator
+- [x] net-worth-forecast
+- [x] net-worth-tracker
+- [x] where-to-live
 
 ---
 
