@@ -284,24 +284,13 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .col-hdr{display:none}
   /* All inputs bigger for touch */
   .rw input,.rw select{font-size:14px!important;padding:9px 8px!important;min-height:38px}
-  /* Grouped rows: r1=name, r2=amount+rate+link, r3=dates+delete */
-  .rw-rc,.rw-ev{display:block!important;padding:10px 0}
-  .rw-rc .r1,.rw-ev .r1{display:flex;gap:4px;margin-bottom:4px}
-  .rw-rc .r1 input,.rw-ev .r1 input,.rw-ev .r1 select{flex:1}
-  .rw-rc .r2,.rw-ev .r2{display:flex;gap:4px;margin-bottom:4px;align-items:center}
-  .rw-rc .r2>*,.rw-ev .r2>*{flex:1 1 0}
-  .rw-rc .r2 .ls{flex:0 0 44px}
-  .rw-rc .r3{display:flex;gap:4px;align-items:center}
-  .rw-rc .r3 .ym{flex:1}
-  .rw-rc .r3 .bd,.rw-ev .r2 .bd{flex:0 0 auto}
-  /* Liquid/illiquid: just wrap naturally */
-  .rw:not(.rw-rc):not(.rw-ev){flex-wrap:wrap;gap:4px;padding:10px 0}
-  .rw:not(.rw-rc):not(.rw-ev)>input:first-of-type{flex:1 1 100%!important;min-width:0!important}
-  .rw:not(.rw-rc):not(.rw-ev)>[style*="flex:0 0 100px"]{flex:1 1 45%!important}
-  .rw:not(.rw-rc):not(.rw-ev)>[style*="flex:0 0 72px"]{flex:1 1 45%!important}
-  /* Date pickers bigger on mobile */
+  /* Horizontal scroll for all field rows instead of wrapping */
+  .rw,.rw-rc,.rw-ev{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap!important;display:flex!important;gap:4px;padding:10px 0;scrollbar-width:none}
+  .rw::-webkit-scrollbar,.rw-rc::-webkit-scrollbar,.rw-ev::-webkit-scrollbar{display:none}
+  .rw>*,.rw-rc .r1>*,.rw-rc .r2>*,.rw-rc .r3>*,.rw-ev .r1>*,.rw-ev .r2>*{flex-shrink:0}
+  .rw-rc .r1,.rw-ev .r1,.rw-rc .r2,.rw-ev .r2,.rw-rc .r3{display:contents}
+  /* Date pickers */
   .ym select{font-size:13px!important;padding:8px 4px!important;min-height:38px}
-  .ym .ym-m{width:52px!important}.ym .ym-y{width:60px!important}
   .ym{flex:0 0 auto!important}
   /* Delete + reorder buttons bigger tap target */
   .bd{font-size:20px!important;padding:4px 10px!important;min-height:38px;display:flex;align-items:center;justify-content:center}
@@ -311,13 +300,14 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .rw-primary{margin-left:6px!important}
   .sh{flex-wrap:wrap;gap:4px}
   .cr{padding:10px 12px!important}
-  .cr>div:first-child{flex-wrap:wrap;gap:4px}
+  .cr>div:first-child{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .cr>div:first-child::-webkit-scrollbar{display:none}
   .fb{padding:6px 10px!important;font-size:12px!important}
-  .ce>div[style*="display:flex;gap:8px"]{flex-wrap:wrap}
-  .mt{min-width:80px;flex:1 1 45%!important}
+  .ce>div[style*="display:flex;gap:8px"]{flex-wrap:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+  .ce>div[style*="display:flex;gap:8px"]::-webkit-scrollbar{display:none}
+  .mt{min-width:80px;flex-shrink:0}
   .qb{flex-wrap:wrap}
   .qb button{padding:4px 8px!important;font-size:10px!important}
-  .stb{font-size:10px!important;padding:3px 8px!important}
   #h-sub{font-size:10px!important}
 }
 @media(max-width:420px){
