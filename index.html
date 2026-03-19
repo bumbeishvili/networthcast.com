@@ -285,10 +285,18 @@ input,select{font-family:var(--fn);color:var(--txt)}
   /* All inputs bigger for touch */
   .rw input,.rw select{font-size:14px!important;padding:9px 8px!important;min-height:38px}
   /* Horizontal scroll for all field rows instead of wrapping */
-  .rw,.rw-rc,.rw-ev{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap!important;display:flex!important;gap:4px;padding:10px 0;scrollbar-width:none}
+  .rw,.rw-rc,.rw-ev{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap!important;display:flex!important;gap:6px;padding:10px 0;scrollbar-width:none}
   .rw::-webkit-scrollbar,.rw-rc::-webkit-scrollbar,.rw-ev::-webkit-scrollbar{display:none}
   .rw>*,.rw-rc .r1>*,.rw-rc .r2>*,.rw-rc .r3>*,.rw-ev .r1>*,.rw-ev .r2>*{flex-shrink:0}
   .rw-rc .r1,.rw-ev .r1,.rw-rc .r2,.rw-ev .r2,.rw-rc .r3{display:contents}
+  /* Meaningful minimum widths for each field type on mobile */
+  .rw>input[data-fld="name"],.rw-rc input[data-fld="name"],.rw-ev input[data-fld="name"]{min-width:140px!important}
+  .rw>div[style*="flex:0 0 100px"]{min-width:110px!important;flex:0 0 110px!important}
+  .rw>div[style*="flex:0 0 72px"]{min-width:80px!important;flex:0 0 80px!important}
+  .rw-rc div[style*="flex:0 0 90px"]{min-width:100px!important;flex:0 0 100px!important}
+  .rw-rc div[style*="flex:0 0 68px"]{min-width:80px!important;flex:0 0 80px!important}
+  .rw-ev input[style*="flex:1"]{min-width:120px!important}
+  .rw-ev div[style*="flex:0 0"]{min-width:90px!important}
   /* Date pickers */
   .ym select{font-size:13px!important;padding:8px 4px!important;min-height:38px}
   .ym{flex:0 0 auto!important}
