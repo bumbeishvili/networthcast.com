@@ -280,6 +280,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .more-pop .ym select{width:auto;min-width:0;padding:4px 3px;font-size:11px}
 .more-pop .ls{width:auto!important;flex:none!important;padding:4px 6px;font-size:11px}
 .more-pop select,.more-pop input{font-size:11px;padding:4px 6px}
+.more-close{position:absolute;top:4px;right:6px;background:0;border:0;cursor:pointer;color:var(--mut);font-size:14px;line-height:1;padding:2px 4px;border-radius:4px;font-family:var(--mo)}.more-close:hover{color:var(--txt);background:var(--brd)}
 .rw-primary{background:var(--acc-lt);border-left:3px solid var(--acc);border-bottom:1px solid #bfdbfe;padding-left:8px;border-radius:4px 0 0 4px;position:relative}
 .rw-primary::before{content:'★';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-size:9px;color:var(--acc)}
 .primary-tip{display:none;position:absolute;left:0;top:calc(100% + 8px);z-index:30;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.5;padding:10px 14px;border-radius:8px;width:280px;white-space:normal;text-transform:none;letter-spacing:0;box-shadow:0 4px 16px rgba(0,0,0,.2);pointer-events:none}
@@ -324,6 +325,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .ym{flex:0 0 auto!important}
   /* Delete + reorder buttons bigger tap target */
   .bd{font-size:20px!important;padding:4px 10px!important;min-height:38px;display:flex;align-items:center;justify-content:center}
+  .drag-handle,.eye-btn{display:none!important}
   .primary-badge{font-size:7px!important}
   .rw-primary{margin-left:6px!important}
   .sh{flex-wrap:wrap;gap:4px}
@@ -1357,6 +1359,13 @@ function bindSections(){
   secs.querySelectorAll('.more-wrap').forEach((wrap,wi)=>{
     let timer=null,locked=false;
     const tag=`[tooltip#${wi}]`;
+    // Inject close button into the pop
+    const pop=wrap.querySelector('.more-pop');
+    const closeBtn=document.createElement('button');
+    closeBtn.className='more-close';closeBtn.textContent='×';closeBtn.title='Close';
+    pop.appendChild(closeBtn);
+    const forceClose=()=>{clearTimeout(timer);locked=false;wrap._locked=false;wrap.classList.remove('open')};
+    closeBtn.addEventListener('click',e=>{e.stopPropagation();forceClose()});
     const show=(src)=>{clearTimeout(timer);wrap.classList.add('open');console.log(tag,'SHOW from:',src)};
     const tryHide=(src)=>{clearTimeout(timer);timer=setTimeout(()=>{
       console.log(tag,'tryHide check from:',src,'locked=',locked,'_locked=',wrap._locked,'activeEl=',document.activeElement?.tagName,'inWrap=',wrap.contains(document.activeElement));
