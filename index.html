@@ -294,6 +294,24 @@ input,select{font-family:var(--fn);color:var(--txt)}
 @keyframes swapFlash{0%{background:rgba(37,99,235,.15)}100%{background:transparent}}
 .rw-swapped{animation:swapFlash .5s ease-out}
 .seo-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+/* ═══════════════ FLOATING DASHBOARD ═══════════════ */
+#float-dash{position:fixed;top:12px;right:12px;z-index:100;background:var(--card);border:1px solid var(--brd);border-radius:var(--rad);box-shadow:0 4px 20px rgba(0,0,0,.12);padding:10px 14px;font-family:var(--mo);font-size:11px;width:320px;max-height:calc(100vh - 24px);overflow-y:auto;scrollbar-width:thin;transition:opacity .2s,transform .2s}
+#float-dash.hidden{opacity:0;pointer-events:none;transform:translateX(20px)}
+#float-dash .fd-toggle{position:absolute;top:6px;right:8px;background:0;border:0;cursor:pointer;color:var(--mut);font-size:14px;line-height:1;padding:2px 4px;border-radius:4px}
+#float-dash .fd-toggle:hover{color:var(--txt);background:var(--brd)}
+.fd-btn{position:fixed;top:12px;right:12px;z-index:99;background:var(--card);border:1px solid var(--brd);border-radius:8px;box-shadow:var(--shd);cursor:pointer;padding:6px 10px;font-size:11px;font-family:var(--mo);font-weight:600;color:var(--acc);display:none;transition:opacity .2s}
+.fd-btn:hover{background:var(--acc-lt)}
+.fd-sect{margin-bottom:6px}
+.fd-sect-hd{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin-bottom:3px;display:flex;justify-content:space-between;align-items:center}
+.fd-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0;font-size:10px}
+.fd-row .fd-label{color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
+.fd-row .fd-vals{display:flex;gap:6px;align-items:baseline;flex-shrink:0}
+.fd-row .fd-v{text-align:right;min-width:52px;font-weight:600}
+.fd-row .fd-vm{text-align:right;min-width:44px;color:var(--mut);font-size:9px;font-weight:500}
+.fd-div{height:1px;background:var(--brd);margin:5px 0}
+.fd-fire-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0;font-size:10px}
+.fd-fire-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-right:4px;display:inline-block}
+@media(max-width:680px){#float-dash{width:calc(100vw - 24px);right:12px;top:auto;bottom:12px;max-height:50vh}.fd-btn{top:auto;bottom:12px}}
 .col-hdr{display:flex;gap:6px;align-items:center;padding:0 0 4px;flex-wrap:nowrap}
 .col-hdr span{font-size:9px;color:var(--mut);font-family:var(--mo);text-transform:uppercase;letter-spacing:.5px}
 .ym{display:flex;gap:2px;align-items:center;flex:0 0 96px}
@@ -490,6 +508,10 @@ input,select{font-family:var(--fn);color:var(--txt)}
   <div id="secs"></div>
   </main>
 </div>
+
+<!-- Floating Dashboard -->
+<div id="float-dash" class="hidden"></div>
+<button class="fd-btn" id="fd-open" title="Open dashboard">📊 Dashboard</button>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -1043,6 +1065,8 @@ function updateView(){
   document.getElementById('rel-cnt').textContent=`${affCnt} of ${COL.length} cities`;
   // If relocate is open, re-render it
   if(D.relOpen)renderRelocate();
+  // Floating dashboard
+  renderFloatDash();
 }
 
 // ═══════════════ TAG helper
@@ -1495,6 +1519,140 @@ function addRev(){D.rev.push({id:uid(),name:'',amount:0,from:DF,to:DT,appRate:0,
 function addCst(){D.cst.push({id:uid(),name:'',amount:0,from:DF,to:DT,appRate:0,linkedAssetId:''});persist();fullUpdate()}
 function addIev(){D.iev.push({id:uid(),type:'cash',name:'',amount:0,date:DF,sellAssetId:''});persist();fullUpdate()}
 function addEev(){D.eev.push({id:uid(),type:'expense',name:'',amount:0,date:DF,appRate:0});persist();fullUpdate()}
+
+// ═══════════════ FLOATING DASHBOARD
+let _fdOpen=false;
+function renderFloatDash(){
+  const fd=document.getElementById('float-dash');
+  const btn=document.getElementById('fd-open');
+  if(!fd)return;
+  if(!_fdOpen){fd.classList.add('hidden');btn.style.display='block';return}
+  fd.classList.remove('hidden');btn.style.display='none';
+  if(!FC.length)return;
+  const mi=Math.min(D.sl,FC.length-1);
+  const cur=FC[mi];
+  const prev1=mi>=1?FC[mi-1]:null;
+  const prev12=mi>=12?FC[mi-12]:null;
+  const _t=t;
+
+  // FIRE values
+  const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
+  const fireNum=mCost>0?(mCost*12)/.04:0;
+  const fireVariants=[
+    {id:'coast',label:'Coast',num:fireNum?fireNum/Math.pow(1.07,20):0,color:'#0891b2'},
+    {id:'lean',label:'Lean',num:fireNum*0.6,color:'#16a34a'},
+    {id:'fire',label:'FIRE',num:fireNum,color:'#f59e0b'},
+    {id:'fat',label:'Fat',num:fireNum*1.5,color:'#dc2626'}
+  ];
+  const fireMonths=fireVariants.map(v=>({...v,month:v.num>0?FC.findIndex(p=>p.cash>=v.num):-1}));
+
+  // Time helpers
+  const _tShort=m=>{if(m<=0)return _t('now');const y=Math.floor(m/12),mo=m%12;if(!y)return`${mo}${_t('moS')}`;if(!mo)return`${y}${_t('yrS')}`;return`${y}${_t('yrS')} ${mo}${_t('moS')}`};
+  const sliderDate=cur.date.toLocaleDateString(LANG==='en'?'en':LANG,{month:'short',year:'numeric'});
+  const timeToSlider=fmT(D.sl);
+
+  // Delta helpers
+  function d1(cur,prev,id,map){return prev?((cur[map]||{})[id]||0)-((prev[map]||{})[id]||0):(cur[map]||{})[id]||0}
+  function dF(cur,prev,field){return prev?(cur[field]||0)-(prev[field]||0):(cur[field]||0)}
+
+  // Money in totals
+  const totalIn=D.rev.reduce((s,r)=>s+(cur.revCum[r.id]||0),0)+D.iev.filter(e=>cur.evtTriggered[e.id]).reduce((s,e)=>s+(cur.evtTriggered[e.id]?.value||0),0)+cur.cumReturns;
+  const inM=prev1?totalIn-(D.rev.reduce((s,r)=>s+(prev1.revCum[r.id]||0),0)+D.iev.filter(e=>prev1.evtTriggered[e.id]).reduce((s,e)=>s+(prev1.evtTriggered[e.id]?.value||0),0)+prev1.cumReturns):totalIn;
+  const inY=prev12?totalIn-(D.rev.reduce((s,r)=>s+(prev12.revCum[r.id]||0),0)+D.iev.filter(e=>prev12.evtTriggered[e.id]).reduce((s,e)=>s+(prev12.evtTriggered[e.id]?.value||0),0)+prev12.cumReturns):totalIn;
+
+  // Money out totals
+  const totalOut=D.cst.reduce((s,c)=>s+(cur.costCum[c.id]||0),0)+D.eev.filter(e=>cur.expTriggered[e.id]&&e.type!=='debt').reduce((s,e)=>s+(e.amount||0),0)+D.eev.filter(e=>e.type==='debt').reduce((s,e)=>s+(cur.costCum[e.id]||0),0);
+  const outM=prev1?totalOut-(D.cst.reduce((s,c)=>s+(prev1.costCum[c.id]||0),0)+D.eev.filter(e=>prev1.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0)):totalOut;
+  const outY=prev12?totalOut-(D.cst.reduce((s,c)=>s+(prev12.costCum[c.id]||0),0)+D.eev.filter(e=>prev12.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0)):totalOut;
+
+  // Illiquid total
+  const hO=D.ill.filter(a=>!cur.soldAssets.has(a.id)).reduce((s,a)=>s+(cur.assetValues[a.id]||0),0);
+  const hB=Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).reduce((s,[k])=>s+(cur.boughtValues[k]||0),0);
+  const illTotal=hO+hB;
+
+  const _moL=_t('mo'),_yrL='/'+_t('yrS');
+  // 3-col value helper (month, year, total)
+  function v3(total,yr,mo,color,prefix){
+    let s='';
+    if(mi>=1)s+=`<span class="fd-vm">${prefix}${fm(mo)}${_moL}</span>`;
+    if(mi>=12)s+=`<span class="fd-vm">${prefix}${fm(yr)}${_yrL}</span>`;
+    s+=`<span class="fd-v" style="color:${color}">${prefix}${fm(total)}</span>`;
+    return s;
+  }
+
+  let h=`<button class="fd-toggle" id="fd-close">&times;</button>`;
+
+  // Slider date & time
+  h+=`<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin-bottom:6px;padding-right:16px">${sliderDate} &mdash; ${timeToSlider}</div>`;
+
+  // Assets section
+  h+=`<div class="fd-sect">`;
+  h+=`<div class="fd-sect-hd"><span style="color:var(--acc)">${_t('total')}</span><span style="font-size:11px;font-weight:700;color:${cur.value>=0?'var(--acc)':'var(--red)'}">${fm(cur.value)}</span></div>`;
+  h+=`<div class="fd-row"><span class="fd-label" style="color:#059669">${_t('liquid')}</span><span class="fd-v" style="color:#059669">${fm(cur.cash)}</span></div>`;
+  h+=`<div class="fd-row"><span class="fd-label" style="color:#ea580c">${_t('illiquid')}</span><span class="fd-v" style="color:#ea580c">${fm(illTotal)}</span></div>`;
+  h+=`</div>`;
+
+  // FIRE section
+  h+=`<div class="fd-div"></div><div class="fd-sect">`;
+  h+=`<div class="fd-sect-hd"><span>FIRE</span></div>`;
+  for(const fv of fireMonths){
+    const reached=fv.month>0&&fv.month<=mi;
+    const timeStr=fv.month>0?_tShort(fv.month):'—';
+    h+=`<div class="fd-fire-row"><span style="display:flex;align-items:center"><span class="fd-fire-dot" style="background:${fv.color}"></span><span style="color:${fv.color};font-weight:600">${fv.label}</span></span><span style="display:flex;gap:8px;align-items:baseline"><span class="fd-vm">${timeStr}</span><span class="fd-v" style="color:${fv.color}">${fm(fv.num)}${reached?' ✓':''}</span></span></div>`;
+  }
+  h+=`</div>`;
+
+  // Money In section
+  h+=`<div class="fd-div"></div><div class="fd-sect">`;
+  h+=`<div class="fd-sect-hd"><span style="color:var(--grn)">${_t('moneyIn')}</span><span class="fd-vals">${v3(totalIn,inY,inM,'var(--grn)','+')}</span></div>`;
+  // Revenue items
+  D.rev.filter(r=>(cur.revCum[r.id]||0)>0||r.disabled).forEach(r=>{
+    const dis=r.disabled;const rv=dis?0:cur.revCum[r.id]||0;const lm=dis?0:d1(cur,prev1,r.id,'revCum');const ly=dis?0:d1(cur,prev12,r.id,'revCum');
+    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(r.name||_t('incomeTag'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
+  });
+  // Loan-out repayments
+  D.iev.filter(e=>e.type==='loanOut'&&((cur.revCum[e.id]||0)>0||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const rv=dis?0:cur.revCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'revCum');const ly=dis?0:d1(cur,prev12,e.id,'revCum');
+    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(e.name||_t('loanOut'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
+  });
+  // One-time income events
+  D.iev.filter(e=>e.type!=='loanOut'&&(cur.evtTriggered[e.id]||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const val=dis?0:(cur.evtTriggered[e.id]?.value||0);
+    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">◆ ${esc(dis?e.name:(cur.evtTriggered[e.id]?.name||_t('incomeTag')))}</span><span class="fd-v" style="color:var(--grn)">+${fm(val)}</span></div>`;
+  });
+  // Investment returns
+  {const lm=dF(cur,prev1,'cumReturns');const ly=dF(cur,prev12,'cumReturns');
+    h+=`<div class="fd-row"><span class="fd-label" style="color:var(--acc)">◎ ${_t('invReturns')}</span><span class="fd-vals">${v3(cur.cumReturns,ly,lm,'var(--acc)','+')}</span></div>`}
+  h+=`</div>`;
+
+  // Money Out section
+  h+=`<div class="fd-div"></div><div class="fd-sect">`;
+  h+=`<div class="fd-sect-hd"><span style="color:var(--red)">${_t('moneyOut')}</span><span class="fd-vals">${v3(totalOut,outY,outM,'var(--red)','-')}</span></div>`;
+  // Cost items
+  D.cst.filter(c=>(cur.costCum[c.id]||0)>0||c.disabled).forEach(c=>{
+    const dis=c.disabled;const cv=dis?0:cur.costCum[c.id]||0;const lm=dis?0:d1(cur,prev1,c.id,'costCum');const ly=dis?0:d1(cur,prev12,c.id,'costCum');
+    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(c.name||_t('expense'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
+  });
+  // One-time expense events
+  D.eev.filter(e=>e.type!=='debt'&&(cur.expTriggered[e.id]||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const val=dis?0:(e.amount||0);
+    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">◆ ${esc(e.name||_t('expense'))}</span><span class="fd-v" style="color:var(--red)">-${fm(val)}</span></div>`;
+  });
+  // Debt payments
+  D.eev.filter(e=>e.type==='debt'&&((cur.costCum[e.id]||0)>0||e.disabled)).forEach(e=>{
+    const dis=e.disabled;const cv=dis?0:cur.costCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'costCum');const ly=dis?0:d1(cur,prev12,e.id,'costCum');
+    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(e.name||_t('debt'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
+  });
+  h+=`</div>`;
+
+  fd.innerHTML=h;
+
+  // Close button
+  document.getElementById('fd-close')?.addEventListener('click',()=>{_fdOpen=false;renderFloatDash()});
+}
+
+// Open button
+document.getElementById('fd-open')?.addEventListener('click',()=>{_fdOpen=true;renderFloatDash()});
 
 // ═══════════════ FULL UPDATE (recalc + render everything)
 function _saveOpenMore(){const w=[...document.querySelectorAll('.more-wrap')];return w.findIndex(x=>x.classList.contains('open'))}
