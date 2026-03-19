@@ -267,10 +267,11 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .eye-btn.off{color:var(--mut);opacity:.25}
 .rw.disabled{opacity:.4}
 .rw.disabled input,.rw.disabled select{pointer-events:none;text-decoration:line-through}
-.more-wrap{position:relative;display:inline-block}
+.more-wrap{position:relative;display:inline-block;z-index:1}
+.more-wrap.open{z-index:40}
 .more-btn{background:0;border:1px solid var(--brd);border-radius:5px;cursor:pointer;color:var(--mut);font-size:14px;padding:2px 6px;line-height:1;font-family:var(--mo)}
 .more-btn:hover{background:var(--acc-lt);color:var(--acc);border-color:var(--acc)}
-.more-pop{display:none;position:absolute;right:-4px;bottom:calc(100% + 6px);z-index:30;background:var(--card);border:1px solid var(--brd);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.1);padding:10px 12px}
+.more-pop{display:none;position:absolute;right:-4px;bottom:calc(100% + 6px);z-index:50;background:var(--card);border:1px solid var(--brd);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.1);padding:10px 12px}
 .more-pop::before{content:'';position:absolute;bottom:-10px;right:0;left:0;height:12px;background:transparent}
 .more-pop::after{content:'';position:absolute;bottom:-4px;right:14px;width:8px;height:8px;background:var(--card);border-right:1px solid var(--brd);border-bottom:1px solid var(--brd);transform:rotate(45deg)}
 .more-wrap.open .more-pop{display:flex;flex-wrap:nowrap;gap:12px;align-items:flex-start}
@@ -311,7 +312,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .fd-div{height:1px;background:var(--brd);margin:5px 0}
 .fd-fire-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0;font-size:10px}
 .fd-fire-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-right:4px;display:inline-block}
-@media(max-width:680px){#float-dash{width:calc(100vw - 24px);right:12px;top:auto;bottom:12px;max-height:50vh}.fd-btn{top:auto;bottom:12px}}
+@media(max-width:680px){#float-dash{width:calc(100vw - 24px);right:12px;top:auto;bottom:12px;max-height:50vh}.fd-btn{top:auto;bottom:12px}.fd-detail{display:none!important}}
 .col-hdr{display:flex;gap:6px;align-items:center;padding:0 0 4px;flex-wrap:nowrap}
 .col-hdr span{font-size:9px;color:var(--mut);font-family:var(--mo);text-transform:uppercase;letter-spacing:.5px}
 .ym{display:flex;gap:2px;align-items:center;flex:0 0 96px}
@@ -323,6 +324,15 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .w{padding:10px 10px 60px}
   #h-val{font-size:32px!important}
   .col-hdr{display:none}
+  /* More popup: prevent row overflow from clipping popup */
+  .rw:has(.more-wrap.open),.rw-rc:has(.more-wrap.open),.rw-ev:has(.more-wrap.open){overflow:visible!important}
+  /* Header: hide pillars, wrap controls */
+  header[role="banner"]{flex-wrap:wrap!important}
+  #nav-pillars{display:none!important}
+  header nav{display:none!important}
+  header>div:last-child{gap:4px!important}
+  #cur-switcher{width:54px!important;font-size:10px!important;padding:3px 4px!important}
+  #lang-switcher{font-size:10px!important;padding:3px 4px!important;max-width:90px}
   /* All inputs bigger for touch */
   .rw input,.rw select{font-size:14px!important;padding:9px 8px!important;min-height:38px}
   /* Horizontal scroll for all field rows instead of wrapping */
@@ -1588,8 +1598,19 @@ function renderFloatDash(){
   // Assets section
   h+=`<div class="fd-sect">`;
   h+=`<div class="fd-sect-hd"><span style="color:var(--acc)">${_t('total')}</span><span style="font-size:11px;font-weight:700;color:${cur.value>=0?'var(--acc)':'var(--red)'}">${fm(cur.value)}</span></div>`;
-  h+=`<div class="fd-row"><span class="fd-label" style="color:#059669">${_t('liquid')}</span><span class="fd-v" style="color:#059669">${fm(cur.cash)}</span></div>`;
-  h+=`<div class="fd-row"><span class="fd-label" style="color:#ea580c">${_t('illiquid')}</span><span class="fd-v" style="color:#ea580c">${fm(illTotal)}</span></div>`;
+  h+=`<div class="fd-row"><span class="fd-label" style="color:#059669;font-weight:600">${_t('liquid')}</span><span class="fd-v" style="color:#059669">${fm(cur.cash)}</span></div>`;
+  // Liquid asset details
+  D.liq.forEach(a=>{const dis=a.disabled;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:#059669;padding-left:10px">▪ ${esc(a.name)} <span style="font-size:8px;color:var(--mut)">(${a.returnRate>0?'+':''}${a.returnRate||0}%/${_t('yrS')})</span></span><span class="fd-v" style="color:#059669">${fm(dis?0:cur.liqValues[a.id]||0)}</span></div>`;
+  });
+  h+=`<div class="fd-row"><span class="fd-label" style="color:#ea580c;font-weight:600">${_t('illiquid')}</span><span class="fd-v" style="color:#ea580c">${fm(illTotal)}</span></div>`;
+  // Illiquid asset details
+  D.ill.forEach(a=>{const dis=a.disabled;if(!dis&&cur.soldAssets.has(a.id))return;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:#ea580c;padding-left:10px">▪ ${esc(a.name)} <span style="font-size:8px;color:var(--mut)">(${a.appRate>0?'+':''}${a.appRate||0}%/${_t('yrS')})</span></span><span class="fd-v" style="color:#ea580c">${fm(dis?0:cur.assetValues[a.id]||0)}</span></div>`;
+  });
+  Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).forEach(([k,b])=>{
+    h+=`<div class="fd-row fd-detail"><span class="fd-label" style="color:#ea580c;padding-left:10px">▪ ${esc(b.name)} <span style="font-size:8px;color:var(--mut)">(${b.appRate>0?'+':''}${b.appRate||0}%/${_t('yrS')})</span></span><span class="fd-v" style="color:#ea580c">${fm(cur.boughtValues[k])}</span></div>`;
+  });
   h+=`</div>`;
 
   // FIRE section
@@ -1605,43 +1626,43 @@ function renderFloatDash(){
   // Money In section
   h+=`<div class="fd-div"></div><div class="fd-sect">`;
   h+=`<div class="fd-sect-hd"><span style="color:var(--grn)">${_t('moneyIn')}</span><span class="fd-vals">${v3(totalIn,inY,inM,'var(--grn)','+')}</span></div>`;
-  // Revenue items
+  // Revenue items (desktop detail)
   D.rev.filter(r=>(cur.revCum[r.id]||0)>0||r.disabled).forEach(r=>{
     const dis=r.disabled;const rv=dis?0:cur.revCum[r.id]||0;const lm=dis?0:d1(cur,prev1,r.id,'revCum');const ly=dis?0:d1(cur,prev12,r.id,'revCum');
-    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(r.name||_t('incomeTag'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(r.name||_t('incomeTag'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
   });
-  // Loan-out repayments
+  // Loan-out repayments (desktop detail)
   D.iev.filter(e=>e.type==='loanOut'&&((cur.revCum[e.id]||0)>0||e.disabled)).forEach(e=>{
     const dis=e.disabled;const rv=dis?0:cur.revCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'revCum');const ly=dis?0:d1(cur,prev12,e.id,'revCum');
-    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(e.name||_t('loanOut'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(e.name||_t('loanOut'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
   });
-  // One-time income events
+  // One-time income events (desktop detail)
   D.iev.filter(e=>e.type!=='loanOut'&&(cur.evtTriggered[e.id]||e.disabled)).forEach(e=>{
     const dis=e.disabled;const val=dis?0:(cur.evtTriggered[e.id]?.value||0);
-    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">◆ ${esc(dis?e.name:(cur.evtTriggered[e.id]?.name||_t('incomeTag')))}</span><span class="fd-v" style="color:var(--grn)">+${fm(val)}</span></div>`;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">◆ ${esc(dis?e.name:(cur.evtTriggered[e.id]?.name||_t('incomeTag')))}</span><span class="fd-v" style="color:var(--grn)">+${fm(val)}</span></div>`;
   });
-  // Investment returns
+  // Investment returns (desktop detail)
   {const lm=dF(cur,prev1,'cumReturns');const ly=dF(cur,prev12,'cumReturns');
-    h+=`<div class="fd-row"><span class="fd-label" style="color:var(--acc)">◎ ${_t('invReturns')}</span><span class="fd-vals">${v3(cur.cumReturns,ly,lm,'var(--acc)','+')}</span></div>`}
+    h+=`<div class="fd-row fd-detail"><span class="fd-label" style="color:var(--acc)">◎ ${_t('invReturns')}</span><span class="fd-vals">${v3(cur.cumReturns,ly,lm,'var(--acc)','+')}</span></div>`}
   h+=`</div>`;
 
   // Money Out section
   h+=`<div class="fd-div"></div><div class="fd-sect">`;
   h+=`<div class="fd-sect-hd"><span style="color:var(--red)">${_t('moneyOut')}</span><span class="fd-vals">${v3(totalOut,outY,outM,'var(--red)','-')}</span></div>`;
-  // Cost items
+  // Cost items (desktop detail)
   D.cst.filter(c=>(cur.costCum[c.id]||0)>0||c.disabled).forEach(c=>{
     const dis=c.disabled;const cv=dis?0:cur.costCum[c.id]||0;const lm=dis?0:d1(cur,prev1,c.id,'costCum');const ly=dis?0:d1(cur,prev12,c.id,'costCum');
-    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(c.name||_t('expense'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(c.name||_t('expense'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
   });
-  // One-time expense events
+  // One-time expense events (desktop detail)
   D.eev.filter(e=>e.type!=='debt'&&(cur.expTriggered[e.id]||e.disabled)).forEach(e=>{
     const dis=e.disabled;const val=dis?0:(e.amount||0);
-    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">◆ ${esc(e.name||_t('expense'))}</span><span class="fd-v" style="color:var(--red)">-${fm(val)}</span></div>`;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">◆ ${esc(e.name||_t('expense'))}</span><span class="fd-v" style="color:var(--red)">-${fm(val)}</span></div>`;
   });
-  // Debt payments
+  // Debt payments (desktop detail)
   D.eev.filter(e=>e.type==='debt'&&((cur.costCum[e.id]||0)>0||e.disabled)).forEach(e=>{
     const dis=e.disabled;const cv=dis?0:cur.costCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'costCum');const ly=dis?0:d1(cur,prev12,e.id,'costCum');
-    h+=`<div class="fd-row" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(e.name||_t('debt'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
+    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(e.name||_t('debt'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
   });
   h+=`</div>`;
 
