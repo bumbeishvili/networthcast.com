@@ -381,6 +381,36 @@ input,select{font-family:var(--fn);color:var(--txt)}
       <span style="font-size:11px;color:var(--mut);margin-left:4px" id="nav-pillars">Net Worth · Forecast · Relocate</span>
     </nav>
     <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
+    <select id="cur-switcher" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;font-size:11px;font-family:var(--mo);color:var(--txt);cursor:pointer;outline:none;width:62px">
+      <option value="USD">$ USD</option>
+      <option value="EUR">€ EUR</option>
+      <option value="GBP">£ GBP</option>
+      <option value="JPY">¥ JPY</option>
+      <option value="CNY">¥ CNY</option>
+      <option value="KRW">₩ KRW</option>
+      <option value="INR">₹ INR</option>
+      <option value="TRY">₺ TRY</option>
+      <option value="RUB">₽ RUB</option>
+      <option value="UAH">₴ UAH</option>
+      <option value="GEL">₾ GEL</option>
+      <option value="PLN">zł PLN</option>
+      <option value="CZK">Kč CZK</option>
+      <option value="SEK">kr SEK</option>
+      <option value="NOK">kr NOK</option>
+      <option value="DKK">kr DKK</option>
+      <option value="CHF">Fr CHF</option>
+      <option value="BRL">R$ BRL</option>
+      <option value="AUD">A$ AUD</option>
+      <option value="CAD">C$ CAD</option>
+      <option value="THB">฿ THB</option>
+      <option value="VND">₫ VND</option>
+      <option value="IDR">Rp IDR</option>
+      <option value="MYR">RM MYR</option>
+      <option value="BDT">৳ BDT</option>
+      <option value="SGD">S$ SGD</option>
+      <option value="HKD">HK$ HKD</option>
+      <option value="TWD">NT$ TWD</option>
+    </select>
     <select id="lang-switcher" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;font-size:11px;font-family:var(--mo);color:var(--txt);cursor:pointer;outline:none">
       <option value="en">English</option>
       <option value="es">Español</option>
@@ -535,8 +565,10 @@ const COL=[
 // ═══════════════ UTILS
 const uid=()=>Math.random().toString(36).slice(2,9);
 const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
-function fm(n,precise){if(n==null||isNaN(n))return'$0';const s=n<0?'-':'',a=Math.abs(n);if(a>=1e6){const d=precise?2:1;return s+'$'+(a/1e6).toFixed(d)+'M'}if(a>=1e3){const d=precise?1:0;return s+'$'+(a/1e3).toFixed(d)+'k'}return s+'$'+Math.round(a).toLocaleString()}
-function fmF(n){if(n==null||isNaN(n))return'$0';return(n<0?'-$':'$')+Math.abs(Math.round(n)).toLocaleString()}
+let CUR='$';
+const CURRENCIES={USD:'$',EUR:'€',GBP:'£',JPY:'¥',CNY:'¥',KRW:'₩',INR:'₹',TRY:'₺',RUB:'₽',UAH:'₴',GEL:'₾',PLN:'zł',CZK:'Kč',SEK:'kr',NOK:'kr',DKK:'kr',CHF:'Fr',BRL:'R$',AUD:'A$',CAD:'C$',THB:'฿',VND:'₫',IDR:'Rp',MYR:'RM',BDT:'৳',PHP:'₱',SGD:'S$',HKD:'HK$',TWD:'NT$',ARS:'$',MXN:'$',COP:'$',PEN:'S/'};
+function fm(n,precise){if(n==null||isNaN(n))return CUR+'0';const s=n<0?'-':'',a=Math.abs(n);if(a>=1e6){const d=precise?2:1;return s+CUR+(a/1e6).toFixed(d)+'M'}if(a>=1e3){const d=precise?1:0;return s+CUR+(a/1e3).toFixed(d)+'k'}return s+CUR+Math.round(a).toLocaleString()}
+function fmF(n){if(n==null||isNaN(n))return CUR+'0';return(n<0?'-'+CUR:CUR)+Math.abs(Math.round(n)).toLocaleString()}
 function fmT(m){if(m<=0)return t('now');const y=Math.floor(m/12),mo=m%12;const tNow=t('now'),tMo=t('inMo'),tYr=t('inYr'),tYrMo=t('inYrMo');if(!y)return tMo.replace('{m}',mo);if(!mo)return tYr.replace('{y}',y);return tYrMo.replace('{y}',y).replace('{m}',mo)}
 const SK='networthcast_v2';
 // ═══════════════ i18n
@@ -585,7 +617,7 @@ uk:{chk:'Поточний рахунок',emf:'Резервний фонд',ret:
 const S=SEED[LANG]||SEED.en;
 
 function load(){try{const r=localStorage.getItem(SK);return r?JSON.parse(r):null}catch{return null}}
-function persist(){try{localStorage.setItem(SK,JSON.stringify({liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam,curTax:D.curTax}))}catch{}}
+function persist(){try{localStorage.setItem(SK,JSON.stringify({liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam,curTax:D.curTax,currency:D.cur}))}catch{}}
 const NOW=new Date(),MX=360,DF=NOW.toISOString().slice(0,10);
 const DT=new Date(NOW.getFullYear()+30,NOW.getMonth(),NOW.getDate()).toISOString().slice(0,10);
 const SS=1000;
@@ -627,9 +659,11 @@ const D={
   sl:sv.slider??0,
   fam:sv.famSize||'solo',
   curTax:sv.curTax??24,
+  cur:sv.currency||'USD',
   relOpen:false,
   relExp:null
 };
+CUR=CURRENCIES[D.cur]||'$';
 
 // ═══════════════ FORECAST ENGINE
 let FC=[];
@@ -1129,13 +1163,13 @@ function renderRelocate(){
     <div style="display:flex;justify-content:space-between;align-items:center">
       <div style="display:flex;align-items:center;gap:6px;min-width:0"><span style="font-size:15px;flex-shrink:0">${c.flag}</span><span style="font-weight:600;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${c.city}</span><span style="font-size:10px;color:var(--mut);flex-shrink:0">${c.country}</span></div>
       <div style="display:flex;align-items:center;gap:8px;flex-shrink:0">
-        <span style="font-family:var(--mo);font-size:12px;font-weight:600;color:var(--mut)">$${c.mc.toLocaleString()}<span style="font-size:9px;font-weight:400">${t('mo')}</span></span>
+        <span style="font-family:var(--mo);font-size:12px;font-weight:600;color:var(--mut)">${CUR}${c.mc.toLocaleString()}<span style="font-size:9px;font-weight:400">${t('mo')}</span></span>
         ${c.tax!==D.curTax?`<span style="font-family:var(--mo);font-size:9px;padding:1px 5px;border-radius:3px;background:${td>=0?'var(--grn-bg)':'#fef3c7'};color:${td>=0?'var(--grn)':'#92400e'}">${c.tax}% ${td>0?'↓':'↑'} ${t('tax')}</span>`:`<span style="font-family:var(--mo);font-size:9px;padding:1px 5px;border-radius:3px;background:var(--brd);color:var(--mut)">${c.tax}% ${t('sameTax')}</span>`}
         <span style="font-family:var(--mo);font-size:11px;font-weight:700;padding:2px 7px;border-radius:4px;background:${s>=0?'var(--grn-bg)':'var(--red-bg)'};color:${s>=0?'var(--grn)':'var(--red)'};min-width:52px;text-align:right">${s>=0?'+':''}${fm(s)}</span>
       </div></div>`;
     if(exp){const cats=[[t('rent'),c._r,'#6366f1'],[t('food'),c._f,'#059669'],[t('transport'),c._t,'#d97706'],[t('util'),c._u,'#dc2626'],[t('health'),c._h,'#f59e0b'],[t('other'),c._o,'#8b5cf6']];
       h+=`<div class="ce"><div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px 12px;font-size:11px;margin-bottom:6px">`;
-      cats.forEach(([l,v,co])=>{h+=`<div style="display:flex;justify-content:space-between;padding:1px 0"><span style="color:var(--mut)"><span style="display:inline-block;width:6px;height:6px;border-radius:2px;background:${co};opacity:.7;margin-right:4px"></span>${l}</span><span style="font-family:var(--mo);font-weight:600">$${v.toLocaleString()}</span></div>`});
+      cats.forEach(([l,v,co])=>{h+=`<div style="display:flex;justify-content:space-between;padding:1px 0"><span style="color:var(--mut)"><span style="display:inline-block;width:6px;height:6px;border-radius:2px;background:${co};opacity:.7;margin-right:4px"></span>${l}</span><span style="font-family:var(--mo);font-weight:600">${CUR}${v.toLocaleString()}</span></div>`});
       h+=`</div><div style="display:flex;gap:8px;margin-bottom:4px">
         <div class="mt" style="background:var(--acc-lt)"><div class="ml">${t('afterTaxInc')}</div><div class="mv" style="color:var(--acc)">${fm(c.destAT)}${t('mo')}</div></div>
         <div class="mt" style="background:${td>=0?'var(--grn-bg)':'var(--red-bg)'}"><div class="ml">${td>=0?t('taxSavings'):t('taxIncrease')}</div><div class="mv" style="color:${td>=0?'var(--grn)':'var(--red)'}">${td>=0?'+':''}${fm(td)}${t('mo')}</div></div>
@@ -1226,7 +1260,7 @@ function renderSections(){
     <button class="eye-btn${a.disabled?' off':''}" data-eye="liq" data-idx="${i}">${a.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
     ${isPrimary?`<span class="primary-badge" style="cursor:help">${t('primary')}<span class="primary-tip">${t('liqHint')}</span></span>`:''}
     <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="liq" data-idx="${i}" data-fld="name">
-    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="liq" data-idx="${i}" data-fld="value" data-num="1"></div>
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="liq" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.returnRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="liq" data-idx="${i}" data-fld="returnRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <button class="bd" data-del="liq" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
@@ -1237,7 +1271,7 @@ function renderSections(){
     <span class="drag-handle">⠿</span>
     <button class="eye-btn${a.disabled?' off':''}" data-eye="ill" data-idx="${i}">${a.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
     <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="ill" data-idx="${i}" data-fld="name">
-    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="ill" data-idx="${i}" data-fld="value" data-num="1"></div>
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="ill" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="ill" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <button class="bd" data-del="ill" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
@@ -1248,7 +1282,7 @@ function renderSections(){
     <span class="drag-handle">⠿</span>
     <button class="eye-btn${r.disabled?' off':''}" data-eye="rev" data-idx="${i}">${r.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
     <input class="sm" value="${esc(r.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="rev" data-idx="${i}" data-fld="name">
-    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${r.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="rev" data-idx="${i}" data-fld="amount" data-num="1"></div>
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${r.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="rev" data-idx="${i}" data-fld="amount" data-num="1"></div>
     <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${r.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="rev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div><label>${t('link')}</label><select class="sm ls" data-arr="rev" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(r.linkedAssetId)}</select></div>
@@ -1264,7 +1298,7 @@ function renderSections(){
     <span class="drag-handle">⠿</span>
     <button class="eye-btn${c.disabled?' off':''}" data-eye="cst" data-idx="${i}">${c.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
     <input class="sm" value="${esc(c.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="cst" data-idx="${i}" data-fld="name">
-    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${c.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="cst" data-idx="${i}" data-fld="amount" data-num="1"></div>
+    <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${c.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="cst" data-idx="${i}" data-fld="amount" data-num="1"></div>
     <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${c.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="cst" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div><label>${t('link')}</label><select class="sm ls" data-arr="cst" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(c.linkedAssetId)}</select></div>
@@ -1278,7 +1312,7 @@ function renderSections(){
   if(D.iev.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('nameAsset')}</span><span style="flex:0 0 100px;text-align:right">${t('amount')}</span><span style="flex:0 0 56px"></span></div>`;
   D.iev.forEach((ev,i)=>{
     const nameField=ev.type==='sell'?`<select class="sm" style="flex:1 1 100px" data-arr="iev" data-idx="${i}" data-fld="sellAssetId">${sellOpts(ev.sellAssetId)}</select>`:`<input class="sm" value="${esc(ev.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="iev" data-idx="${i}" data-fld="name">`;
-    const amtField=ev.type!=='sell'?`<div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" placeholder="${ev.type==='loanOut'?t('balance'):'0'}" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="amount" data-num="1"></div>`:'<div style="flex:0 0 100px"></div>';
+    const amtField=ev.type!=='sell'?`<div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.amount||''}" placeholder="${ev.type==='loanOut'?t('balance'):'0'}" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="amount" data-num="1"></div>`:'<div style="flex:0 0 100px"></div>';
     h+=`<div class="rw${ev.disabled?' disabled':''}" draggable="true" data-drag-arr="iev" data-drag-idx="${i}">
     <span class="drag-handle">⠿</span>
     <button class="eye-btn${ev.disabled?' off':''}" data-eye="iev" data-idx="${i}">${ev.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
@@ -1287,7 +1321,7 @@ function renderSections(){
         <div><label>${t('type')}</label><select class="sm" data-arr="iev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="cash"${ev.type==='cash'?' selected':''}>${t('cash')}</option><option value="sell"${ev.type==='sell'?' selected':''}>${t('sell')}</option><option value="loanOut"${ev.type==='loanOut'?' selected':''}>${t('loanOut')}</option></select></div>
         <div><label>${t('when')}</label>${ymPicker('iev',i,'date',ev.date)}</div>
         ${ev.type==='loanOut'?`<div><label>${t('rate')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.loanRate??''}" step="0.1" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="iev" data-idx="${i}" data-fld="loanRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
-        <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
+        <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
       </div></div>
       <button class="bd" data-del="iev" data-idx="${i}">×</button></div>`});
   if(!D.iev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
@@ -1299,12 +1333,12 @@ function renderSections(){
     <span class="drag-handle">⠿</span>
     <button class="eye-btn${ev.disabled?' off':''}" data-eye="eev" data-idx="${i}">${ev.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
       <input class="sm" value="${esc(ev.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="eev" data-idx="${i}" data-fld="name">
-      <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.amount||''}" placeholder="${ev.type==='debt'?t('balance'):'0'}" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="amount" data-num="1"></div>
+      <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.amount||''}" placeholder="${ev.type==='debt'?t('balance'):'0'}" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="amount" data-num="1"></div>
       <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
         <div><label>${t('type')}</label><select class="sm" data-arr="eev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="expense"${ev.type==='expense'?' selected':''}>${t('expense')}</option><option value="buy"${ev.type==='buy'?' selected':''}>${t('buy')}</option><option value="debt"${ev.type==='debt'?' selected':''}>${t('debt')}</option></select></div>
         <div><label>${t('when')}</label>${ymPicker('eev',i,'date',ev.date)}</div>
         ${ev.type==='debt'?`<div><label>${t('rate')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.1" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
-        <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">$</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
+        <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
         ${ev.type==='buy'?`<div><label>${t('apprDepr')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>`:''}
       </div></div>
       <button class="bd" data-del="eev" data-idx="${i}">×</button></div>`});
@@ -1467,6 +1501,16 @@ function fullUpdate(){
 if(LANG!=='en'){
   const np=document.getElementById('nav-pillars');if(np)np.textContent=t('pillars');
   const rt=document.getElementById('rel-title');if(rt)rt.textContent=t('relocHd');
+}
+// Currency switcher
+const _cs=document.getElementById('cur-switcher');
+if(_cs){
+  _cs.value=D.cur;
+  _cs.addEventListener('change',()=>{
+    D.cur=_cs.value;
+    CUR=CURRENCIES[D.cur]||'$';
+    persist();fullUpdate();
+  });
 }
 // Language switcher
 const _ls=document.getElementById('lang-switcher');
