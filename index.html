@@ -253,8 +253,6 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .qb{display:flex;justify-content:center;gap:3px;margin-top:6px}
 .qb button{padding:3px 6px;border-radius:5px;font-size:9px;font-weight:600;font-family:var(--mo);cursor:pointer;white-space:nowrap}
 .qb button[data-fire]{position:relative}
-.qb button[data-fire]::after{content:'Coast = growth alone reaches FIRE. Lean = 60% expenses × 25. FIRE = expenses × 25 (4% rule). Fat = 150% expenses × 25.';position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);width:260px;padding:8px 10px;border-radius:8px;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.4;text-align:left;white-space:normal;pointer-events:none;opacity:0;transition:opacity .15s;z-index:20;box-shadow:0 4px 16px rgba(0,0,0,.2)}
-.qb button[data-fire]:hover::after,.qb button[data-fire]:focus::after{opacity:1}
 .cr{padding:8px 14px;cursor:pointer;transition:border-color .15s}
 .cr:hover{border-color:var(--acc)!important}
 .ce{margin-top:8px;padding-top:8px;border-top:1px solid var(--brd)}
@@ -377,9 +375,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
     </div>
     <div id="chart-box"><canvas id="cv"></canvas></div>
     <div class="sw">
-      <div style="position:relative;height:34px;margin-bottom:2px">
-        <div class="stp" id="tip" style="opacity:0"><div class="stb" id="tip-t"></div><div class="sta"></div></div>
-      </div>
+      <div style="display:none"><div class="stp" id="tip"><div class="stb" id="tip-t"></div><div class="sta"></div></div></div>
       <div class="stk" id="trk" tabindex="0" role="slider" aria-valuemin="0" aria-valuemax="360">
         <div class="srl"></div>
         <div class="sfl" id="fill"></div>
@@ -652,7 +648,7 @@ function drawChart(){
   const ctx=cv.getContext('2d');ctx.scale(2,2);ctx.clearRect(0,0,W,H);
   const ei=Math.max(6,Math.min(D.sl||6,FC.length-1));
   const vis=FC.slice(0,ei+1),len=vis.length;
-  const p={t:16,r:85,b:32,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const p={t:22,r:85,b:38,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
   const vTotal=vis.map(d=>d.value);
   const vLiq=vis.map(d=>d.cash);
   const vIll=vis.map(d=>d.assetTotal);
@@ -717,25 +713,37 @@ function drawChart(){
   if(hasLiq)drawSeries(vLiq,'rgb(5,150,105)',0.06,1.5);
   drawSeries(vTotal,'rgb(37,99,235)',0.10,2);
 
-  // End-of-line labels (right side: name, value below)
+  // Time period — prominent, near end of x-axis
+  const endLineX=xO(len-1);
+  const timeLabel=fmT(ei);
+  ctx.textAlign='right';
+  ctx.font=`700 12px ${MO}`;ctx.fillStyle='#1c1917';
+  ctx.fillText(timeLabel,endLineX,H-2);
+
+  // Right-side labels (name + value below) for all series
   const endX=xO(len-1)+10;
   ctx.textAlign='left';
-  // Collect label positions, then nudge to avoid overlap
   const labels=[];
-  labels.push({name:t('total'),val:fm(vTotal[len-1],precise),color:'#2563eb',y:yO(vTotal[len-1])});
+  labels.push({name:t('total'),val:fm(vTotal[len-1],precise),color:'#2563eb',y:yO(vTotal[len-1]),big:true});
   if(hasLiq)labels.push({name:t('liquid'),val:fm(vLiq[len-1],precise),color:'#059669',y:yO(vLiq[len-1])});
   if(hasIll)labels.push({name:t('illiquid'),val:fm(vIll[len-1],precise),color:'#ea580c',y:yO(vIll[len-1])});
-  // Sort by y position and nudge overlapping labels apart (need more gap for 2 lines)
   labels.sort((a,b)=>a.y-b.y);
   const minGap=20;
   for(let i=1;i<labels.length;i++){
     if(labels[i].y-labels[i-1].y<minGap)labels[i].y=labels[i-1].y+minGap;
   }
   for(const lb of labels){
-    ctx.font=`bold 9px ${MO}`;ctx.fillStyle=lb.color;
-    ctx.fillText(lb.name,endX,lb.y);
-    ctx.font=`600 8px ${MO}`;ctx.fillStyle=lb.color+'99';
-    ctx.fillText(lb.val,endX,lb.y+10);
+    if(lb.big){
+      ctx.font=`800 13px ${MO}`;ctx.fillStyle=lb.color;
+      ctx.fillText(lb.val,endX,lb.y);
+      ctx.font=`500 9px ${MO}`;ctx.fillStyle=lb.color+'99';
+      ctx.fillText(lb.name,endX,lb.y+11);
+    }else{
+      ctx.font=`bold 9px ${MO}`;ctx.fillStyle=lb.color;
+      ctx.fillText(lb.name,endX,lb.y);
+      ctx.font=`600 8px ${MO}`;ctx.fillStyle=lb.color+'99';
+      ctx.fillText(lb.val,endX,lb.y+10);
+    }
   }
 
   // FIRE crossing points — markers with time labels for all 4 types
@@ -750,7 +758,7 @@ function drawChart(){
     ctx.beginPath();ctx.arc(fx,fy,4,0,Math.PI*2);ctx.fillStyle=ft.bg+'0.25)';ctx.fill();
     ctx.beginPath();ctx.arc(fx,fy,3,0,Math.PI*2);ctx.fillStyle=ft.color;ctx.fill();ctx.strokeStyle='#fff';ctx.lineWidth=1.5;ctx.stroke();
     // Collect marker for label (avoid overlap)
-    fireMarkers.push({label:`${ft.label} ${ts}`,color:ft.color,x:fx,y:fy,id:ft.id});
+    fireMarkers.push({label:`${ft.label} ${fm(ft.num)} ${ts}`,color:ft.color,x:fx,y:fy,id:ft.id});
   }
   // Draw labels above/below markers, nudge to avoid overlap
   fireMarkers.sort((a,b)=>a.x-b.x);
@@ -794,7 +802,7 @@ function initSlider(){
   let lbH='';tks.filter((_,i)=>i%(tks.length>12?2:1)===0).forEach(t=>{lbH+=`<span style="position:absolute;left:${t.pct}%;transform:translateX(-50%);font-size:9px;font-family:var(--mo);color:${t.yr===0?'var(--txt)':'var(--mut)'};font-weight:${t.yr===0?600:400}">${t.label}</span>`});
   document.getElementById('labels').innerHTML=lbH;
   // Quick buttons — rendered dynamically so FIRE button can be positioned correctly
-  document.getElementById('qbtns').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const m=+b.dataset.qm;if(m>=0){D.sl=Math.min(m,MX);persist();fullUpdate()}});
+  document.getElementById('qbtns').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const m=+b.dataset.qm;if(m>=0){D.sl=Math.min(m,MX);persist();fullUpdate();document.getElementById('tip').style.opacity='0'}});
 
   function posToMonth(e){const r=trk.getBoundingClientRect();const cx=e.touches?e.touches[0].clientX:e.clientX;return s2m(Math.round(Math.max(0,Math.min(1,(cx-r.left)/r.width))*SS))}
   function showTip(){tip.style.opacity='1'}
