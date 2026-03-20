@@ -303,12 +303,12 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .fd-btn{position:fixed;top:12px;right:12px;z-index:99;background:var(--card);border:1px solid var(--brd);border-radius:8px;box-shadow:var(--shd);cursor:pointer;padding:6px 10px;font-size:11px;font-family:var(--mo);font-weight:600;color:var(--acc);display:none;transition:opacity .2s}
 .fd-btn:hover{background:var(--acc-lt)}
 .fd-sect{margin-bottom:6px}
-.fd-sect-hd{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin-bottom:3px;display:flex;justify-content:space-between;align-items:center}
+.fd-sect-hd{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin-bottom:3px;display:flex;justify-content:space-between;align-items:center}.fd-sect-hd .fd-vals{display:flex;gap:2px;align-items:baseline;flex-shrink:0}
 .fd-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0;font-size:10px}
 .fd-row .fd-label{color:var(--txt);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:120px}
-.fd-row .fd-vals{display:flex;gap:6px;align-items:baseline;flex-shrink:0}
-.fd-row .fd-v{text-align:right;min-width:52px;font-weight:600}
-.fd-row .fd-vm{text-align:right;min-width:44px;color:var(--mut);font-size:9px;font-weight:500}
+.fd-row .fd-vals{display:flex;gap:2px;align-items:baseline;flex-shrink:0}
+.fd-row .fd-v{text-align:right;min-width:42px;font-weight:600}
+.fd-row .fd-vm{text-align:right;min-width:36px;color:var(--mut);font-size:9px;font-weight:500}
 .fd-div{height:1px;background:var(--brd);margin:5px 0}
 .fd-fire-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0;font-size:10px}
 .fd-fire-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-right:4px;display:inline-block}
@@ -324,6 +324,8 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .w{padding:10px 10px 60px}
   #h-val{font-size:32px!important}
   .col-hdr{display:none}
+  /* Hero card: tighter padding for more chart space */
+  #hero{padding:8px 8px 10px!important}
   /* More popup: prevent row overflow from clipping popup */
   .rw:has(.more-wrap.open),.rw-rc:has(.more-wrap.open),.rw-ev:has(.more-wrap.open){overflow:visible!important}
   /* Header: hide pillars, wrap controls */
@@ -335,6 +337,8 @@ input,select{font-family:var(--fn);color:var(--txt)}
   #lang-switcher{font-size:10px!important;padding:3px 4px!important;max-width:90px}
   /* All inputs bigger for touch */
   .rw input,.rw select{font-size:14px!important;padding:9px 8px!important;min-height:38px}
+  .pct-wrap span{right:12px!important;font-size:13px!important}
+  .pct-wrap .pct-input{padding:9px 38px 9px 8px!important}
   /* Horizontal scroll for all field rows instead of wrapping */
   .rw,.rw-rc,.rw-ev{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap!important;display:flex!important;gap:6px;padding:10px 0;scrollbar-width:none}
   .rw::-webkit-scrollbar,.rw-rc::-webkit-scrollbar,.rw-ev::-webkit-scrollbar{display:none}
@@ -474,8 +478,35 @@ input,select{font-family:var(--fn);color:var(--txt)}
     </select>
     <button id="pwa-install" style="display:none;background:var(--acc);color:#fff;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;font-family:var(--fn);cursor:pointer;white-space:nowrap;align-items:center;gap:4px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Install
+      Use Offline
     </button>
+    </div>
+
+    <!-- iOS PWA Install Modal -->
+    <div id="ios-modal" style="display:none;position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);align-items:center;justify-content:center">
+      <div style="background:var(--card);border-radius:16px;max-width:360px;width:calc(100% - 32px);padding:24px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative">
+        <button id="ios-modal-close" style="position:absolute;top:10px;right:14px;background:0;border:0;font-size:20px;cursor:pointer;color:var(--mut);line-height:1">&times;</button>
+        <div style="text-align:center;margin-bottom:16px">
+          <div style="width:44px;height:44px;border-radius:10px;background:linear-gradient(135deg,#2563eb,#059669);display:inline-flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:18px;margin-bottom:8px">N</div>
+          <div style="font-weight:700;font-size:15px">Use NetWorthCast Offline</div>
+          <div style="font-size:12px;color:var(--mut);margin-top:4px">Add to your home screen for offline access</div>
+        </div>
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="background:var(--acc-lt);color:var(--acc);font-weight:700;font-size:12px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">1</span>
+            <span style="font-size:13px;line-height:1.4">Tap the <strong>Share</strong> button <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-3px"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg> in the browser toolbar</span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="background:var(--acc-lt);color:var(--acc);font-weight:700;font-size:12px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">2</span>
+            <span style="font-size:13px;line-height:1.4">Scroll down and tap <strong>"Add to Home Screen"</strong></span>
+          </div>
+          <div style="display:flex;align-items:flex-start;gap:10px">
+            <span style="background:var(--acc-lt);color:var(--acc);font-weight:700;font-size:12px;width:22px;height:22px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0">3</span>
+            <span style="font-size:13px;line-height:1.4">Tap <strong>"Add"</strong> to confirm — the app will appear on your home screen</span>
+          </div>
+        </div>
+        <div style="margin-top:16px;text-align:center;font-size:10px;color:var(--mut)">Works on Safari for iPhone, iPad & Mac</div>
+      </div>
     </div>
   </header>
   <main role="main">
@@ -808,7 +839,8 @@ function drawChart(){
   const ctx=cv.getContext('2d');ctx.scale(2,2);ctx.clearRect(0,0,W,H);
   const ei=Math.max(6,Math.min(D.sl||6,FC.length-1));
   const vis=FC.slice(0,ei+1),len=vis.length;
-  const p={t:22,r:85,b:38,l:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
+  const mob=W<500;
+  const p={t:22,r:mob?60:85,b:38,l:mob?36:52},cw=W-p.l-p.r,ch=H-p.t-p.b;
   const vTotal=vis.map(d=>d.value);
   const vLiq=vis.map(d=>d.cash);
   const vIll=vis.map(d=>d.assetTotal);
@@ -837,15 +869,16 @@ function drawChart(){
   // Y grid
   ctx.strokeStyle='#eae7e2';ctx.lineWidth=.5;
   const precise=ei<=24;
-  for(let i=0;i<=4;i++){const v=mn+(rng/4)*i,y=yO(v);ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(W-p.r,y);ctx.stroke();ctx.fillStyle='#8c857d';ctx.font=`9px ${MO}`;ctx.textAlign='right';ctx.fillText(fm(v,precise),p.l-5,y+3)}
+  const _fs=mob?7:9;
+  for(let i=0;i<=4;i++){const v=mn+(rng/4)*i,y=yO(v);ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(W-p.r,y);ctx.stroke();ctx.fillStyle='#8c857d';ctx.font=`${_fs}px ${MO}`;ctx.textAlign='right';ctx.fillText(fm(v,precise),p.l-4,y+3)}
   // X labels
-  ctx.fillStyle='#8c857d';ctx.font=`9px ${MO}`;ctx.textAlign='center';
+  ctx.fillStyle='#8c857d';ctx.font=`${_fs}px ${MO}`;ctx.textAlign='center';
   if(ei<=24){const ms=ei<=8?1:ei<=14?2:3;for(let mi=0;mi<=ei;mi+=ms){if(mi>=len)break;ctx.fillText(fmT(mi),xO(mi),H-p.b+14)}}
   else{const ys=ei<=48?1:ei<=120?2:5;for(let yr=0;yr<=ei/12+.01;yr+=ys){const mi=Math.round(yr*12);if(mi>=len)break;ctx.fillText(fmT(mi),xO(mi),H-p.b+14)}}
   // Zero line
   if(mn<0){ctx.save();ctx.strokeStyle='#dc262640';ctx.lineWidth=1;ctx.setLineDash([4,4]);ctx.beginPath();ctx.moveTo(p.l,yO(0));ctx.lineTo(W-p.r,yO(0));ctx.stroke();ctx.restore()}
   // FIRE dashed line (only for main FIRE)
-  if(fN>0&&fN>=mn&&fN<=mx*1.1){const fy=yO(fN);ctx.save();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(p.l,fy);ctx.lineTo(W-p.r,fy);ctx.stroke();ctx.restore();ctx.fillStyle='#f59e0b';ctx.font=`bold 8px ${MO}`;ctx.textAlign='left';ctx.fillText('FIRE '+fm(fN),p.l+4,fy-4)}
+  if(fN>0&&fN>=mn&&fN<=mx*1.1){const fy=yO(fN);ctx.save();ctx.strokeStyle='#f59e0b';ctx.lineWidth=1.2;ctx.setLineDash([6,4]);ctx.beginPath();ctx.moveTo(p.l,fy);ctx.lineTo(W-p.r,fy);ctx.stroke();ctx.restore();ctx.fillStyle='#f59e0b';ctx.font=`bold ${mob?6:8}px ${MO}`;ctx.textAlign='left';ctx.fillText('FIRE '+fm(fN),p.l+4,fy-4)}
 
   // Helper: draw area + line + end dot for a series
   function drawSeries(vals,color,fillAlpha,lineW){
@@ -877,11 +910,11 @@ function drawChart(){
   const endLineX=xO(len-1);
   const timeLabel=fmT(ei);
   ctx.textAlign='right';
-  ctx.font=`700 12px ${MO}`;ctx.fillStyle='#1c1917';
+  ctx.font=`700 ${mob?9:12}px ${MO}`;ctx.fillStyle='#1c1917';
   ctx.fillText(timeLabel,endLineX,H-2);
 
   // Right-side labels (name + value below) for all series
-  const endX=xO(len-1)+10;
+  const endX=xO(len-1)+(mob?6:10);
   ctx.textAlign='left';
   const labels=[];
   labels.push({name:t('total'),val:fm(vTotal[len-1],precise),color:'#2563eb',y:yO(vTotal[len-1]),big:true});
@@ -894,15 +927,15 @@ function drawChart(){
   }
   for(const lb of labels){
     if(lb.big){
-      ctx.font=`800 13px ${MO}`;ctx.fillStyle=lb.color;
+      ctx.font=`800 ${mob?10:13}px ${MO}`;ctx.fillStyle=lb.color;
       ctx.fillText(lb.val,endX,lb.y);
-      ctx.font=`500 9px ${MO}`;ctx.fillStyle=lb.color+'99';
-      ctx.fillText(lb.name,endX,lb.y+11);
+      ctx.font=`500 ${mob?7:9}px ${MO}`;ctx.fillStyle=lb.color+'99';
+      ctx.fillText(lb.name,endX,lb.y+(mob?9:11));
     }else{
-      ctx.font=`bold 9px ${MO}`;ctx.fillStyle=lb.color;
+      ctx.font=`bold ${mob?7:9}px ${MO}`;ctx.fillStyle=lb.color;
       ctx.fillText(lb.name,endX,lb.y);
-      ctx.font=`600 8px ${MO}`;ctx.fillStyle=lb.color+'99';
-      ctx.fillText(lb.val,endX,lb.y+10);
+      ctx.font=`600 ${mob?7:8}px ${MO}`;ctx.fillStyle=lb.color+'99';
+      ctx.fillText(lb.val,endX,lb.y+(mob?8:10));
     }
   }
 
@@ -924,7 +957,7 @@ function drawChart(){
   fireMarkers.sort((a,b)=>a.x-b.x);
   for(let i=0;i<fireMarkers.length;i++){
     const m=fireMarkers[i];
-    ctx.font=`bold 8px ${MO}`;
+    ctx.font=`bold ${mob?6:8}px ${MO}`;
     const tw=ctx.measureText(m.label).width;
     let lx=m.x-tw/2,ly=m.y-10;
     // Keep within bounds
@@ -959,7 +992,13 @@ function initSlider(){
   for(let yr=0;yr<=ty;yr+=ys){const m2=yr*12;tks.push({yr,pct:(m2s(m2)/SS)*100,label:fmT(m2)})}
   let tkH='';tks.forEach((t,i)=>{tkH+=`<div style="position:absolute;left:${t.pct}%;transform:translateX(-50%);width:1px;height:${i===0?10:6}px;background:${i===0?'var(--mut)':'#d4d0ca'};pointer-events:none"></div>`});
   document.getElementById('ticks').innerHTML=tkH;
-  let lbH='';tks.filter((_,i)=>i%(tks.length>12?2:1)===0).forEach(t=>{lbH+=`<span style="position:absolute;left:${t.pct}%;transform:translateX(-50%);font-size:9px;font-family:var(--mo);color:${t.yr===0?'var(--txt)':'var(--mut)'};font-weight:${t.yr===0?600:400}">${t.label}</span>`});
+  const _lastYr=tks[tks.length-1]?.yr;
+  const _slMob=window.innerWidth<=680;
+  let lbH='';tks.filter((_,i)=>i%(tks.length>12?2:1)===0).forEach(t=>{
+    const isLast=t.yr===_lastYr;
+    const lbl=t.yr===0?t.label:(_slMob?t.yr:t.label);
+    lbH+=`<span style="position:absolute;left:${t.pct}%;transform:translateX(-50%);font-size:9px;font-family:var(--mo);color:${t.yr===0?'var(--txt)':'var(--mut)'};font-weight:${t.yr===0?600:400}"${isLast?' class="sl-last"':''}>${lbl}</span>`});
+
   document.getElementById('labels').innerHTML=lbH;
   // Quick buttons — rendered dynamically so FIRE button can be positioned correctly
   document.getElementById('qbtns').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const m=+b.dataset.qm;if(m>=0){D.sl=Math.min(m,MX);persist();fullUpdate();document.getElementById('tip').style.opacity='0'}});
@@ -1297,7 +1336,7 @@ function renderSections(){
     ${isPrimary?`<span class="primary-badge" style="cursor:help">${t('primary')}<span class="primary-tip">${t('liqHint')}</span></span>`:''}
     <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="liq" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="liq" data-idx="${i}" data-fld="value" data-num="1"></div>
-    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.returnRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="liq" data-idx="${i}" data-fld="returnRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${a.returnRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="liq" data-idx="${i}" data-fld="returnRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <button class="bd" data-del="liq" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // ILLIQUID ASSETS
@@ -1308,7 +1347,7 @@ function renderSections(){
     <button class="eye-btn${a.disabled?' off':''}" data-eye="ill" data-idx="${i}">${a.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
     <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="ill" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="ill" data-idx="${i}" data-fld="value" data-num="1"></div>
-    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${a.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="ill" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${a.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="ill" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <button class="bd" data-del="ill" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // MONTHLY REVENUE
@@ -1319,7 +1358,7 @@ function renderSections(){
     <button class="eye-btn${r.disabled?' off':''}" data-eye="rev" data-idx="${i}">${r.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
     <input class="sm" value="${esc(r.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="rev" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${r.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="rev" data-idx="${i}" data-fld="amount" data-num="1"></div>
-    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${r.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="rev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${r.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="rev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div><label>${t('link')}</label><select class="sm ls" data-arr="rev" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(r.linkedAssetId)}</select></div>
       <div><label>${t('starts')}</label>${ymPicker('rev',i,'from',r.from)}</div>
@@ -1335,7 +1374,7 @@ function renderSections(){
     <button class="eye-btn${c.disabled?' off':''}" data-eye="cst" data-idx="${i}">${c.disabled?'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0112 20c-7 0-11-8-11-8a18.45 18.45 0 015.06-5.94M9.9 4.24A9.12 9.12 0 0112 4c7 0 11 8 11 8a18.5 18.5 0 01-2.16 3.19m-6.72-1.07a3 3 0 11-4.24-4.24"/><line x1="1" y1="1" x2="23" y2="23"/></svg>':'<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>'}</button>
     <input class="sm" value="${esc(c.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="cst" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${c.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="cst" data-idx="${i}" data-fld="amount" data-num="1"></div>
-    <div style="position:relative;flex:0 0 72px"><input class="sm" type="number" value="${c.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="cst" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
+    <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${c.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="cst" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div><label>${t('link')}</label><select class="sm ls" data-arr="cst" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(c.linkedAssetId)}</select></div>
       <div><label>${t('starts')}</label>${ymPicker('cst',i,'from',c.from)}</div>
@@ -1356,7 +1395,7 @@ function renderSections(){
       <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
         <div><label>${t('type')}</label><select class="sm" data-arr="iev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="cash"${ev.type==='cash'?' selected':''}>${t('cash')}</option><option value="sell"${ev.type==='sell'?' selected':''}>${t('sell')}</option><option value="loanOut"${ev.type==='loanOut'?' selected':''}>${t('loanOut')}</option></select></div>
         <div><label>${t('when')}</label>${ymPicker('iev',i,'date',ev.date)}</div>
-        ${ev.type==='loanOut'?`<div><label>${t('rate')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.loanRate??''}" step="0.1" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="iev" data-idx="${i}" data-fld="loanRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
+        ${ev.type==='loanOut'?`<div><label>${t('rate')}</label><div class="pct-wrap" style="position:relative;width:72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${ev.loanRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="iev" data-idx="${i}" data-fld="loanRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
         <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
       </div></div>
       <button class="bd" data-del="iev" data-idx="${i}">×</button></div>`});
@@ -1373,9 +1412,9 @@ function renderSections(){
       <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
         <div><label>${t('type')}</label><select class="sm" data-arr="eev" data-idx="${i}" data-fld="type" data-rebuild="1"><option value="expense"${ev.type==='expense'?' selected':''}>${t('expense')}</option><option value="buy"${ev.type==='buy'?' selected':''}>${t('buy')}</option><option value="debt"${ev.type==='debt'?' selected':''}>${t('debt')}</option></select></div>
         <div><label>${t('when')}</label>${ymPicker('eev',i,'date',ev.date)}</div>
-        ${ev.type==='debt'?`<div><label>${t('rate')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.1" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
+        ${ev.type==='debt'?`<div><label>${t('rate')}</label><div class="pct-wrap" style="position:relative;width:72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${ev.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
         <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
-        ${ev.type==='buy'?`<div><label>${t('apprDepr')}</label><div style="position:relative;width:72px"><input class="sm" type="number" value="${ev.appRate??''}" step="0.5" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>`:''}
+        ${ev.type==='buy'?`<div><label>${t('apprDepr')}</label><div class="pct-wrap" style="position:relative;width:72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${ev.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>`:''}
       </div></div>
       <button class="bd" data-del="eev" data-idx="${i}">×</button></div>`});
   if(!D.eev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
@@ -1720,23 +1759,46 @@ window.addEventListener('resize',()=>drawChart());
 
 // ═══════════════ SERVICE WORKER & PWA INSTALL
 if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
+const _isIOS=/iPad|iPhone|iPod/.test(navigator.userAgent)||(/Macintosh/.test(navigator.userAgent)&&'ontouchend'in document);
+const _isSafari=/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+const _isStandalone=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone;
 let _deferredPrompt=null;
+
+// Show button on iOS/Safari (no beforeinstallprompt) if not already installed
+if((_isIOS||_isSafari)&&!_isStandalone){
+  const btn=document.getElementById('pwa-install');
+  if(btn)btn.style.display='inline-flex';
+}
+
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();
   _deferredPrompt=e;
-  // Only show on mobile/tablet (screen width check)
-  if(window.innerWidth<=768){
-    const btn=document.getElementById('pwa-install');
-    if(btn)btn.style.display='inline-flex';
+  const btn=document.getElementById('pwa-install');
+  if(btn)btn.style.display='inline-flex';
+});
+
+document.getElementById('pwa-install')?.addEventListener('click',async()=>{
+  if(_deferredPrompt){
+    // Chrome/Edge/Firefox — native install prompt
+    _deferredPrompt.prompt();
+    const{outcome}=await _deferredPrompt.userChoice;
+    _deferredPrompt=null;
+    document.getElementById('pwa-install').style.display='none';
+  }else{
+    // iOS/Safari — show instructions modal
+    const modal=document.getElementById('ios-modal');
+    if(modal)modal.style.display='flex';
   }
 });
-document.getElementById('pwa-install')?.addEventListener('click',async()=>{
-  if(!_deferredPrompt)return;
-  _deferredPrompt.prompt();
-  const{outcome}=await _deferredPrompt.userChoice;
-  _deferredPrompt=null;
-  document.getElementById('pwa-install').style.display='none';
+
+// iOS modal close
+document.getElementById('ios-modal-close')?.addEventListener('click',()=>{
+  document.getElementById('ios-modal').style.display='none';
 });
+document.getElementById('ios-modal')?.addEventListener('click',e=>{
+  if(e.target===e.currentTarget)e.currentTarget.style.display='none';
+});
+
 window.addEventListener('appinstalled',()=>{
   document.getElementById('pwa-install').style.display='none';
   _deferredPrompt=null;
