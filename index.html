@@ -291,6 +291,20 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .primary-tip::before{content:'';position:absolute;top:-5px;left:16px;width:10px;height:10px;background:var(--txt);transform:rotate(45deg)}
 .primary-badge:hover .primary-tip{display:block}
 .primary-badge{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:1px 5px;border-radius:3px;background:var(--acc);color:#fff;font-family:var(--mo);margin-left:6px;white-space:nowrap}
+/* ═══════════════ CUSTOM CONFIRM DIALOG ═══════════════ */
+.cd-overlay{position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.4);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .15s;padding:20px}
+.cd-overlay.show{opacity:1}
+.cd-box{background:var(--card);border:1px solid var(--brd);border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,.2);padding:24px;max-width:340px;width:100%;transform:scale(.92);transition:transform .15s}
+.cd-overlay.show .cd-box{transform:scale(1)}
+.cd-icon{width:48px;height:48px;border-radius:50%;background:#fef2f2;display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-size:22px}
+.cd-title{font-size:15px;font-weight:700;text-align:center;color:var(--txt);margin-bottom:6px;font-family:var(--mo)}
+.cd-msg{font-size:12px;color:var(--mut);text-align:center;margin-bottom:20px;line-height:1.5}
+.cd-btns{display:flex;gap:10px}
+.cd-btns button{flex:1;padding:10px;border-radius:10px;font-size:13px;font-weight:600;font-family:var(--mo);cursor:pointer;border:none;transition:all .15s}
+.cd-cancel{background:var(--bg);color:var(--txt);border:1px solid var(--brd)!important}
+.cd-cancel:hover{background:var(--brd)}
+.cd-confirm{background:#dc2626;color:#fff}
+.cd-confirm:hover{background:#b91c1c}
 /* ═══════════════ PCT SLIDER POPUP ═══════════════ */
 .pct-pop{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);z-index:60;background:var(--card);border:1px solid var(--brd);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:4px 6px;display:flex;align-items:center;gap:4px;white-space:nowrap}
 .pct-wrap:has(.pct-pop){z-index:50}
@@ -342,37 +356,47 @@ input,select{font-family:var(--fn);color:var(--txt)}
   /* Hero card: tighter padding for more chart space */
   #hero{padding:8px 8px 10px!important}
   /* More popup: compact on mobile */
-  .more-pop{max-width:calc(100vw - 40px)!important;flex-wrap:wrap!important;right:-8px!important}
-  .more-pop>div{flex-shrink:1!important;min-width:0}
-  .more-pop select,.more-pop input{max-width:100px!important;font-size:10px!important}
-  .more-pop .ls{max-width:70px!important;overflow:hidden;text-overflow:ellipsis}
-  .more-pop .ym select{max-width:56px!important}
+  .more-pop{max-width:calc(100vw - 40px)!important;flex-direction:column!important;flex-wrap:nowrap!important;gap:8px!important;right:auto!important;left:0!important}
+  .more-pop::after{right:auto!important;left:14px!important}
+  .more-pop>div{flex-shrink:0!important;min-width:0;width:100%!important}
+  .more-pop select,.more-pop input{font-size:11px!important}
+  .more-pop .ls{max-width:none!important;width:100%!important}
+  .more-pop .ym{width:100%!important}
+  .more-pop .ym select{max-width:none!important;flex:1!important}
   /* More popup: prevent row overflow from clipping popup */
   .rw:has(.more-wrap.open),.rw-rc:has(.more-wrap.open),.rw-ev:has(.more-wrap.open){overflow:visible!important}
   /* Header: hide pillars, wrap controls */
   header[role="banner"]{flex-wrap:wrap!important}
   #nav-pillars{display:none!important}
   header nav{display:none!important}
-  header>div:last-child{gap:4px!important}
+  header>div:last-child{margin-left:0!important;width:100%!important;justify-content:flex-start!important;gap:4px!important}
   #cur-switcher{width:70px!important;font-size:10px!important;padding:3px 4px!important}
   #lang-switcher{font-size:10px!important;padding:3px 4px!important;max-width:90px}
   /* All inputs bigger for touch */
   .rw input,.rw select{font-size:14px!important;padding:9px 8px!important;min-height:38px}
   .pct-wrap span{right:12px!important;font-size:13px!important}
   .pct-wrap .pct-input{padding:9px 38px 9px 8px!important}
-  /* Horizontal scroll for all field rows instead of wrapping */
-  .rw,.rw-rc,.rw-ev{overflow-x:auto;-webkit-overflow-scrolling:touch;flex-wrap:nowrap!important;display:flex!important;gap:6px;padding:10px 0;scrollbar-width:none}
-  .rw::-webkit-scrollbar,.rw-rc::-webkit-scrollbar,.rw-ev::-webkit-scrollbar{display:none}
-  .rw>*,.rw-rc .r1>*,.rw-rc .r2>*,.rw-rc .r3>*,.rw-ev .r1>*,.rw-ev .r2>*{flex-shrink:0}
+  .pct-pop.mob-pop{position:fixed!important;left:8px!important;right:8px!important;bottom:auto!important;width:auto!important;max-width:none!important;transform:none!important}
+  .pct-pop.mob-pop input[type="range"]{flex:1!important;width:auto!important}
+  .pct-pop.mob-pop::after{display:none!important}
+  /* Three-line rows on mobile: name → numbers → controls */
+  .rw,.rw-rc,.rw-ev{flex-wrap:wrap!important;display:flex!important;gap:4px 6px!important;padding:8px 0!important;overflow:visible!important}
   .rw-rc .r1,.rw-ev .r1,.rw-rc .r2,.rw-ev .r2,.rw-rc .r3{display:contents}
-  /* Meaningful minimum widths for each field type on mobile */
-  .rw>input[data-fld="name"],.rw-rc input[data-fld="name"],.rw-ev input[data-fld="name"]{min-width:140px!important}
-  .rw>div[style*="flex:0 0 100px"]{min-width:110px!important;flex:0 0 110px!important}
-  .rw>div[style*="flex:0 0 72px"]{min-width:80px!important;flex:0 0 80px!important}
-  .rw-rc div[style*="flex:0 0 90px"]{min-width:100px!important;flex:0 0 100px!important}
-  .rw-rc div[style*="flex:0 0 68px"]{min-width:80px!important;flex:0 0 80px!important}
-  .rw-ev input[style*="flex:1"]{min-width:120px!important}
-  .rw-ev div[style*="flex:0 0"]{min-width:90px!important}
+  /* Line 1: name takes full width */
+  .rw>input[data-fld="name"],.rw-rc input[data-fld="name"],.rw-ev input[data-fld="name"]{flex:0 0 100%!important;min-width:0!important;order:1}
+  .rw-ev input[style*="flex:1"],.rw-ev select[data-fld="sellAssetId"]{flex:0 0 100%!important;min-width:0!important;order:1}
+  /* Line 2: value + pct fill the row */
+  .rw>div[style*="flex:0 0 100px"]{flex:1 1 40%!important;min-width:0!important;order:2}
+  .rw>div[style*="flex:0 0 72px"],.rw .pct-wrap{flex:1 1 30%!important;min-width:0!important;order:2}
+  .rw-rc div[style*="flex:0 0 90px"]{flex:1 1 40%!important;min-width:0!important;order:2}
+  .rw-rc div[style*="flex:0 0 68px"]{flex:1 1 30%!important;min-width:0!important;order:2}
+  .rw-ev div[style*="flex:0 0"]{flex:1 1 40%!important;min-width:0!important;order:2}
+  /* Line 3: controls */
+  .rw .drag-handle,.rw-rc .drag-handle,.rw-ev .drag-handle{order:10}
+  .rw .eye-btn,.rw-rc .eye-btn,.rw-ev .eye-btn{order:11}
+  .rw .fc-v3,.rw-rc .fc-v3,.rw-ev .fc-v3{order:12}
+  .rw .more-wrap,.rw-rc .more-wrap,.rw-ev .more-wrap{order:13}
+  .rw>.bd,.rw-rc .bd,.rw-ev .bd{order:14}
   /* Date pickers */
   .ym select{font-size:13px!important;padding:8px 4px!important;min-height:38px}
   .ym{flex:0 0 auto!important}
@@ -671,6 +695,18 @@ const CURRENCIES={USD:'$',EUR:'€',GBP:'£',JPY:'¥',CNY:'¥',KRW:'₩',INR:'�
 function fm(n,precise){if(n==null||isNaN(n))return CUR+'0';const s=n<0?'-':'',a=Math.abs(n);if(a>=1e6){const d=precise?2:1;return s+CUR+(a/1e6).toFixed(d)+'M'}if(a>=1e3){const d=precise?1:0;return s+CUR+(a/1e3).toFixed(d)+'k'}return s+CUR+Math.round(a).toLocaleString()}
 function fmF(n){if(n==null||isNaN(n))return CUR+'0';return(n<0?'-'+CUR:CUR)+Math.abs(Math.round(n)).toLocaleString()}
 function fmT(m){if(m<=0)return t('now');const y=Math.floor(m/12),mo=m%12;const tNow=t('now'),tMo=t('inMo'),tYr=t('inYr'),tYrMo=t('inYrMo');if(!y)return tMo.replace('{m}',mo);if(!mo)return tYr.replace('{y}',y);return tYrMo.replace('{y}',y).replace('{m}',mo)}
+function customConfirm(name){
+  return new Promise(resolve=>{
+    const ov=document.createElement('div');ov.className='cd-overlay';
+    ov.innerHTML=`<div class="cd-box"><div class="cd-icon">🗑️</div><div class="cd-title">Delete "${name}"?</div><div class="cd-msg">This action cannot be undone.</div><div class="cd-btns"><button class="cd-cancel">Cancel</button><button class="cd-confirm">Delete</button></div></div>`;
+    document.body.appendChild(ov);
+    requestAnimationFrame(()=>ov.classList.add('show'));
+    const close=(result)=>{ov.classList.remove('show');setTimeout(()=>ov.remove(),150);resolve(result)};
+    ov.querySelector('.cd-cancel').addEventListener('click',()=>close(false));
+    ov.querySelector('.cd-confirm').addEventListener('click',()=>close(true));
+    ov.addEventListener('click',e=>{if(e.target===ov)close(false)});
+  });
+}
 const SK='networthcast_v2';
 // ═══════════════ i18n
 const LANG=(new URLSearchParams(location.search).get('lang')||'en').toLowerCase();
@@ -1096,19 +1132,21 @@ function updateSliderPos(){
   if(fireKey!==_lastFireKey){
     _lastFireKey=fireKey;
     const _tShort=m=>{const y=Math.floor(m/12),mo=m%12;if(!y)return`${mo}${t('moS')}`;if(!mo)return`${y}${t('yrS')}`;return`${y}${t('yrS')}${mo}${t('moS')}`};
-    const timeBtns=[{l:_tShort(6),m:6},{l:_tShort(12),m:12},{l:_tShort(24),m:24},{l:_tShort(60),m:60},{l:_tShort(120),m:120},{l:_tShort(240),m:240},{l:_tShort(360),m:360}];
+    const timeBtns=[{l:t('now')||'Now',m:0},{l:_tShort(6),m:6},{l:_tShort(12),m:12},{l:_tShort(24),m:24},{l:_tShort(60),m:60},{l:_tShort(120),m:120},{l:_tShort(240),m:240},{l:_tShort(360),m:360}];
     let allBtns=timeBtns.map(b=>({...b,fireId:null,fireColor:null,fireBg:null}));
     // Add FIRE buttons
+    const _mob=window.innerWidth<=680;
+    const _fireIcons={coast:'⛵',lean:'🌱',fire:'🔥',fat:'👑'};
     for(const fv of fireMonths){
       if(fv.month<=0)continue;
       const existing=allBtns.find(b=>b.m===fv.month);
-      const fy=Math.floor(fv.month/12),fmo=fv.month%12;
       const fLabel=_tShort(fv.month);
+      const ico=_fireIcons[fv.id]||'🔥';
       if(existing){
         existing.fireId=fv.id;existing.fireColor=fv.color;existing.fireBg=fv.bg;
-        existing.l=`🔥${fv.label} ${existing.l}`;
+        existing.l=_mob?`${ico}${existing.l}`:`${ico} ${fv.label} ${existing.l}`;
       }else{
-        allBtns.push({l:`🔥${fv.label} ${fLabel}`,m:fv.month,fireId:fv.id,fireColor:fv.color,fireBg:fv.bg});
+        allBtns.push({l:_mob?`${ico}${fLabel}`:`${ico} ${fv.label} ${fLabel}`,m:fv.month,fireId:fv.id,fireColor:fv.color,fireBg:fv.bg});
       }
     }
     allBtns.sort((a,b)=>a.m-b.m);
@@ -1550,7 +1588,8 @@ function bindSections(){
     pop.appendChild(closeBtn);
     const forceClose=()=>{clearTimeout(timer);locked=false;wrap._locked=false;wrap.classList.remove('open')};
     closeBtn.addEventListener('click',e=>{e.stopPropagation();forceClose()});
-    const show=(src)=>{clearTimeout(timer);wrap.classList.add('open');console.log(tag,'SHOW from:',src)};
+    const show=(src)=>{clearTimeout(timer);wrap.classList.add('open');console.log(tag,'SHOW from:',src);
+      requestAnimationFrame(()=>{pop.style.left='';pop.style.right='';const r=pop.getBoundingClientRect();const vw=window.innerWidth;const pad=8;if(r.right>vw-pad){pop.style.left=(vw-pad-r.right)+'px';}if(r.left<pad){pop.style.left=(pad-r.left)+'px';}if(r.bottom>window.innerHeight-pad){pop.style.bottom='auto';pop.style.top='calc(100% + 6px)';}});};
     const tryHide=(src)=>{clearTimeout(timer);timer=setTimeout(()=>{
       console.log(tag,'tryHide check from:',src,'locked=',locked,'_locked=',wrap._locked,'activeEl=',document.activeElement?.tagName,'inWrap=',wrap.contains(document.activeElement));
       if(locked||wrap._locked){console.log(tag,'BLOCKED — locked');return}
@@ -1613,9 +1652,12 @@ function bindSections(){
   });
   // Delete buttons
   secs.querySelectorAll('[data-del]').forEach(el=>{
-    el.addEventListener('click',()=>{
+    el.addEventListener('click',async()=>{
       const arr=ARRS[el.dataset.del],idx=+el.dataset.idx;
-      if(arr)arr.splice(idx,1);
+      if(!arr||!arr[idx])return;
+      const name=arr[idx].name||'this item';
+      if(!await customConfirm(name))return;
+      arr.splice(idx,1);
       persist();fullUpdate();
     });
   });
@@ -1627,11 +1669,18 @@ function bindSections(){
     function showPop(){
       if(pop)return;
       const curVal=parseFloat(inp.value)||0;
-      const mn=curVal-5,mx=curVal+5;
+      const _mob=window.innerWidth<=680;
+      const mn=_mob?-10:curVal-5,mx=_mob?10:curVal+5;
       pop=document.createElement('div');
       pop.className='pct-pop';
       pop.innerHTML=`<button class="pct-dec">◀</button><input type="range" min="${mn}" max="${mx}" step="0.5" value="${curVal}"><span class="pct-pop-val">${curVal.toFixed(1)}%</span><button class="pct-inc">▶</button>`;
-      wrap.appendChild(pop);
+      if(_mob){
+        pop.classList.add('mob-pop');
+        document.body.appendChild(pop);
+        const wr=wrap.getBoundingClientRect();
+        pop.style.top=(wr.top-pop.offsetHeight-6)+'px';
+        requestAnimationFrame(()=>{const pr=pop.getBoundingClientRect();if(pr.top<8)pop.style.top=(wr.bottom+6)+'px';});
+      }else{wrap.appendChild(pop);}
       const rng=pop.querySelector('input[type="range"]');
       const valSpan=pop.querySelector('.pct-pop-val');
       const arrName=inp.dataset.arr,idx=+inp.dataset.idx,fld=inp.dataset.fld;
@@ -1655,7 +1704,7 @@ function bindSections(){
     wrap.addEventListener('touchstart',()=>{cancelHide();showPop()},{passive:true});
     // On touch: close other popups when opening this one
     wrap.addEventListener('touchstart',()=>{
-      secs.querySelectorAll('.pct-pop').forEach(p=>{if(pop&&p!==pop){p.remove()}});
+      document.querySelectorAll('.pct-pop').forEach(p=>{if(pop&&p!==pop){p.remove()}});
     },{passive:true});
   });
 
@@ -1974,14 +2023,14 @@ _saveBtn.addEventListener('click',()=>{
   const profiles=loadProfiles();
   const m=document.createElement('div');
   m.id='profile-modal';m.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center';
-  let h=`<div style="background:var(--card);border-radius:16px;max-width:420px;width:calc(100% - 32px);padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;max-height:80vh;display:flex;flex-direction:column">
+  let h=`<div style="background:var(--card);border-radius:16px;max-width:420px;width:calc(100% - 32px);padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;max-height:80vh;display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden">
     <button onclick="this.closest('#profile-modal').remove()" style="position:absolute;top:10px;right:14px;background:0;border:0;font-size:20px;cursor:pointer;color:var(--mut)">&times;</button>
     <div style="font-weight:700;font-size:14px;margin-bottom:10px">Profiles</div>
-    <div style="display:flex;gap:6px;margin-bottom:10px">
-      <input id="prof-name" class="sm" placeholder="Profile name..." value="${esc(D.sessionName)}" style="flex:1;font-size:13px;padding:8px 10px">
-      <button id="prof-save-btn" style="background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">Save Current</button>
+    <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+      <input id="prof-name" class="sm" placeholder="Profile name..." value="${esc(D.sessionName)}" style="flex:1 1 150px;min-width:0;font-size:13px;padding:8px 10px">
+      <button id="prof-save-btn" style="background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;flex:0 0 auto">Save</button>
     </div>
-    <input id="prof-search" class="sm" placeholder="Search profiles..." style="width:100%;font-size:12px;padding:6px 10px;margin-bottom:8px;${profiles.length<3?'display:none':''}">
+    <input id="prof-search" class="sm" placeholder="Search profiles..." style="width:100%;font-size:12px;padding:6px 10px;margin-bottom:8px;box-sizing:border-box;${profiles.length<3?'display:none':''}">
     <div id="prof-list" style="overflow-y:auto;flex:1;max-height:50vh">`;
   if(!profiles.length){
     h+=`<p style="font-size:12px;color:var(--mut);text-align:center;padding:16px 0">No saved profiles yet</p>`;
@@ -2028,11 +2077,11 @@ _saveBtn.addEventListener('click',()=>{
   });
   // Delete (with confirmation)
   m.querySelectorAll('.prof-del').forEach(btn=>{
-    btn.addEventListener('click',e=>{
+    btn.addEventListener('click',async e=>{
       e.stopPropagation();
       const idx=+btn.dataset.idx;
       const name=profiles[idx]?.name||'this profile';
-      if(!confirm(`Delete "${name}"? This cannot be undone.`))return;
+      if(!await customConfirm(name))return;
       profiles.splice(idx,1);saveProfiles(profiles);m.remove();_saveBtn.click();
     });
   });
