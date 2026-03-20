@@ -326,6 +326,12 @@ input,select{font-family:var(--fn);color:var(--txt)}
   .col-hdr{display:none}
   /* Hero card: tighter padding for more chart space */
   #hero{padding:8px 8px 10px!important}
+  /* More popup: compact on mobile */
+  .more-pop{max-width:calc(100vw - 40px)!important;flex-wrap:wrap!important;right:-8px!important}
+  .more-pop>div{flex-shrink:1!important;min-width:0}
+  .more-pop select,.more-pop input{max-width:100px!important;font-size:10px!important}
+  .more-pop .ls{max-width:70px!important;overflow:hidden;text-overflow:ellipsis}
+  .more-pop .ym select{max-width:56px!important}
   /* More popup: prevent row overflow from clipping popup */
   .rw:has(.more-wrap.open),.rw-rc:has(.more-wrap.open),.rw-ev:has(.more-wrap.open){overflow:visible!important}
   /* Header: hide pillars, wrap controls */
@@ -1449,7 +1455,8 @@ function bindSections(){
       console.log(tag,'CLOSED');
     },300)};
     wrap.querySelector('.more-btn').addEventListener('mouseenter',()=>show('btn-mouseenter'));
-    wrap.querySelector('.more-btn').addEventListener('click',e=>{e.stopPropagation();show('btn-click')});
+    const moreBtn=wrap.querySelector('.more-btn');
+    moreBtn.addEventListener('click',e=>{e.stopPropagation();show('btn-click')});
     wrap.addEventListener('mouseleave',()=>{console.log(tag,'mouseleave');tryHide('mouseleave')});
     wrap.addEventListener('mouseenter',()=>{console.log(tag,'mouseenter');clearTimeout(timer)});
     wrap.querySelectorAll('select').forEach(sel=>{
