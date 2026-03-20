@@ -327,7 +327,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .fd-div{height:1px;background:var(--brd);margin:5px 0}
 .fd-fire-row{display:flex;justify-content:space-between;align-items:center;padding:1px 0;font-size:10px}
 .fd-fire-dot{width:6px;height:6px;border-radius:50%;flex-shrink:0;margin-right:4px;display:inline-block}
-@media(max-width:680px){#float-dash{width:calc(100vw - 24px);right:12px;top:auto;bottom:100px;max-height:45vh}.fd-btn{top:auto;bottom:100px}.fd-detail{display:none!important}}
+@media(max-width:680px){#float-dash{display:none!important}.fd-btn{display:none!important}}
 .col-hdr{display:flex;gap:6px;align-items:center;padding:0 0 4px;flex-wrap:nowrap}
 .col-hdr span{font-size:9px;color:var(--mut);font-family:var(--mo);text-transform:uppercase;letter-spacing:.5px}
 .ym{display:flex;gap:2px;align-items:center;flex:0 0 96px}
@@ -497,6 +497,13 @@ input,select{font-family:var(--fn);color:var(--txt)}
       <option value="id">Bahasa Indonesia</option>
       <option value="ms">Bahasa Melayu</option>
     </select>
+    <button id="btn-export" title="Export data" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+    </button>
+    <button id="btn-import" title="Import data" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+    </button>
+    <input type="file" id="file-import" accept=".json" style="display:none">
     <button id="pwa-install" style="display:none;background:var(--acc);color:#fff;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;font-family:var(--fn);cursor:pointer;white-space:nowrap;align-items:center;gap:4px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
       Use Offline
@@ -534,6 +541,10 @@ input,select{font-family:var(--fn);color:var(--txt)}
 
   <!-- Hero -->
   <div class="c" style="padding:10px 20px 14px" id="hero">
+    <div style="display:flex;align-items:center;gap:6px;margin-bottom:4px">
+      <input id="session-name" placeholder="My finances" style="background:var(--bg);border:1px dashed var(--brd);border-radius:6px;font-family:var(--fn);font-weight:700;font-size:15px;color:var(--txt);outline:none;padding:4px 8px;flex:1;min-width:0;transition:border-color .15s,background .15s">
+      <span id="session-name-hint" style="font-size:9px;color:var(--mut);font-family:var(--mo);white-space:nowrap;opacity:0;transition:opacity .2s">click to edit</span>
+    </div>
     <div style="display:none">
       <div id="h-label"></div>
       <div id="h-val"></div>
@@ -689,25 +700,25 @@ if(LANG==='ar')document.documentElement.dir='rtl';
 
 // Seed data translations
 const SEED={
-en:{chk:'Checking account',emf:'Emergency fund (HYSA)',ret:'401(k)',brk:'Brokerage (index funds)',home:'Home (suburb)',car:'Honda CR-V 2022',sal:'Salary (after tax)',side:'Side income / freelance',mort:'Mortgage payment',groc:'Groceries',carPay:'Car payment + insurance',util:'Utilities',health:'Health insurance (copays)',gas:'Gas & transport',subs:'Subscriptions & phone',dine:'Dining out & entertainment',misc:'Misc / personal',taxRef:'Tax refund',bonus:'Annual bonus',vac:'Family vacation',repair:'Home repair (roof)',reno:'Kitchen renovation'},
-es:{chk:'Cuenta corriente',emf:'Fondo de emergencia',ret:'Plan de pensiones',brk:'Fondos indexados',home:'Vivienda',car:'Coche',sal:'Salario (neto)',side:'Ingresos extra / freelance',mort:'Hipoteca',groc:'Supermercado',carPay:'Coche + seguro',util:'Suministros',health:'Seguro médico',gas:'Gasolina y transporte',subs:'Suscripciones y móvil',dine:'Restaurantes y ocio',misc:'Varios / personal',taxRef:'Devolución de impuestos',bonus:'Bonus anual',vac:'Vacaciones familiares',repair:'Reparación del hogar',reno:'Reforma de cocina'},
-fr:{chk:'Compte courant',emf:'Fonds d\'urgence',ret:'Plan épargne retraite',brk:'Fonds indiciels',home:'Résidence principale',car:'Voiture',sal:'Salaire (net)',side:'Revenus complémentaires',mort:'Crédit immobilier',groc:'Courses alimentaires',carPay:'Voiture + assurance',util:'Charges',health:'Mutuelle santé',gas:'Essence et transport',subs:'Abonnements et téléphone',dine:'Restaurants et sorties',misc:'Divers / personnel',taxRef:'Remboursement d\'impôts',bonus:'Prime annuelle',vac:'Vacances en famille',repair:'Travaux maison',reno:'Rénovation cuisine'},
-de:{chk:'Girokonto',emf:'Notgroschen (Tagesgeld)',ret:'Altersvorsorge',brk:'ETF-Depot',home:'Eigenheim',car:'Auto',sal:'Gehalt (netto)',side:'Nebeneinkommen / Freelance',mort:'Hypothek',groc:'Lebensmittel',carPay:'Auto + Versicherung',util:'Nebenkosten',health:'Krankenversicherung',gas:'Benzin & Transport',subs:'Abos & Handy',dine:'Essen gehen & Freizeit',misc:'Sonstiges',taxRef:'Steuererstattung',bonus:'Jahresbonus',vac:'Familienurlaub',repair:'Hausreparatur',reno:'Küchenrenovierung'},
-pt:{chk:'Conta corrente',emf:'Fundo de emergência',ret:'Previdência privada',brk:'Fundos de investimento',home:'Imóvel',car:'Carro',sal:'Salário (líquido)',side:'Renda extra / freelance',mort:'Financiamento imobiliário',groc:'Supermercado',carPay:'Carro + seguro',util:'Contas de luz/água',health:'Plano de saúde',gas:'Combustível e transporte',subs:'Assinaturas e celular',dine:'Restaurantes e lazer',misc:'Diversos / pessoal',taxRef:'Restituição de imposto',bonus:'Bônus anual',vac:'Férias em família',repair:'Reforma da casa',reno:'Reforma da cozinha'},
-ja:{chk:'普通預金',emf:'緊急資金',ret:'確定拠出年金',brk:'証券口座（インデックス）',home:'自宅',car:'車',sal:'給与（手取り）',side:'副業・フリーランス',mort:'住宅ローン',groc:'食料品',carPay:'車両費・保険',util:'光熱費',health:'健康保険',gas:'ガソリン・交通費',subs:'サブスク・通信費',dine:'外食・娯楽',misc:'雑費',taxRef:'確定申告還付',bonus:'年間ボーナス',vac:'家族旅行',repair:'住宅修繕',reno:'キッチンリフォーム'},
-zh:{chk:'活期存款',emf:'应急基金',ret:'养老金账户',brk:'证券账户（指数基金）',home:'住房',car:'汽车',sal:'工资（税后）',side:'副业收入',mort:'房贷',groc:'食品杂货',carPay:'车贷+保险',util:'水电费',health:'医疗保险',gas:'交通费',subs:'订阅和手机',dine:'外出就餐和娱乐',misc:'杂项',taxRef:'退税',bonus:'年终奖',vac:'家庭度假',repair:'房屋维修',reno:'厨房装修'},
-ko:{chk:'입출금 계좌',emf:'비상금',ret:'퇴직연금',brk:'증권 계좌 (인덱스)',home:'주택',car:'자동차',sal:'급여 (세후)',side:'부업 / 프리랜서',mort:'주택담보대출',groc:'식료품',carPay:'차량비 + 보험',util:'공과금',health:'건강보험',gas:'교통비',subs:'구독 및 통신',dine:'외식 및 여가',misc:'기타',taxRef:'세금 환급',bonus:'연간 보너스',vac:'가족 여행',repair:'집수리',reno:'주방 리모델링'},
-ru:{chk:'Текущий счёт',emf:'Резервный фонд',ret:'Пенсионный счёт',brk:'Брокерский счёт (индексы)',home:'Жильё',car:'Автомобиль',sal:'Зарплата (после налогов)',side:'Подработка / фриланс',mort:'Ипотека',groc:'Продукты',carPay:'Авто + страховка',util:'Коммунальные',health:'Медстраховка',gas:'Бензин и транспорт',subs:'Подписки и связь',dine:'Рестораны и развлечения',misc:'Прочее',taxRef:'Возврат налога',bonus:'Годовая премия',vac:'Семейный отпуск',repair:'Ремонт дома',reno:'Ремонт кухни'},
-ka:{chk:'მიმდინარე ანგარიში',emf:'საგანგებო ფონდი',ret:'საპენსიო ანგარიში',brk:'საინვესტიციო ანგარიში',home:'სახლი',car:'მანქანა',sal:'ხელფასი (გადასახადის შემდეგ)',side:'დამატებითი შემოსავალი',mort:'იპოთეკა',groc:'სურსათი',carPay:'მანქანა + დაზღვევა',util:'კომუნალური',health:'ჯანმრთელობის დაზღვევა',gas:'ბენზინი და ტრანსპორტი',subs:'გამოწერები და ტელეფონი',dine:'რესტორნები და გართობა',misc:'სხვა',taxRef:'გადასახადის დაბრუნება',bonus:'წლიური ბონუსი',vac:'საოჯახო შვებულება',repair:'სახლის შეკეთება',reno:'სამზარეულოს რემონტი'},
-tr:{chk:'Vadesiz hesap',emf:'Acil durum fonu',ret:'Emeklilik hesabı',brk:'Yatırım hesabı (endeks)',home:'Ev',car:'Araba',sal:'Maaş (net)',side:'Ek gelir / serbest',mort:'Konut kredisi',groc:'Market alışverişi',carPay:'Araba + sigorta',util:'Faturalar',health:'Sağlık sigortası',gas:'Benzin ve ulaşım',subs:'Abonelikler ve telefon',dine:'Dışarıda yemek ve eğlence',misc:'Çeşitli',taxRef:'Vergi iadesi',bonus:'Yıllık prim',vac:'Aile tatili',repair:'Ev tamiri',reno:'Mutfak yenileme'},
-ar:{chk:'حساب جاري',emf:'صندوق طوارئ',ret:'حساب تقاعد',brk:'حساب استثمار',home:'منزل',car:'سيارة',sal:'راتب (بعد الضريبة)',side:'دخل إضافي',mort:'قسط المنزل',groc:'بقالة',carPay:'سيارة + تأمين',util:'مرافق',health:'تأمين صحي',gas:'وقود ومواصلات',subs:'اشتراكات وهاتف',dine:'مطاعم وترفيه',misc:'متفرقات',taxRef:'استرداد ضريبي',bonus:'مكافأة سنوية',vac:'إجازة عائلية',repair:'صيانة المنزل',reno:'تجديد المطبخ'},
-hi:{chk:'चालू खाता',emf:'आपातकालीन निधि',ret:'पेंशन खाता',brk:'निवेश खाता (इंडेक्स)',home:'घर',car:'कार',sal:'वेतन (कर के बाद)',side:'अतिरिक्त आय / फ्रीलांस',mort:'गृह ऋण',groc:'किराना',carPay:'कार + बीमा',util:'उपयोगिताएँ',health:'स्वास्थ्य बीमा',gas:'ईंधन और परिवहन',subs:'सदस्यता और फोन',dine:'बाहर खाना और मनोरंजन',misc:'विविध',taxRef:'कर वापसी',bonus:'वार्षिक बोनस',vac:'पारिवारिक छुट्टी',repair:'घर की मरम्मत',reno:'रसोई नवीकरण'},
-uk:{chk:'Поточний рахунок',emf:'Резервний фонд',ret:'Пенсійний рахунок',brk:'Брокерський рахунок',home:'Житло',car:'Автомобіль',sal:'Зарплата (після податків)',side:'Підробіток / фріланс',mort:'Іпотека',groc:'Продукти',carPay:'Авто + страховка',util:'Комунальні',health:'Медстрахування',gas:'Пальне і транспорт',subs:'Підписки і зв\'язок',dine:'Ресторани і розваги',misc:'Інше',taxRef:'Повернення податку',bonus:'Річна премія',vac:'Сімейна відпустка',repair:'Ремонт дому',reno:'Ремонт кухні'}
+en:{chk:'Checking account',emf:'Emergency fund (HYSA)',ret:'401(k)',brk:'Brokerage (index funds)',home:'Home (suburb)',car:'Honda CR-V 2022',sal:'Salary (after tax)',side:'Side income / freelance',mort:'Mortgage payment',groc:'Groceries',carPay:'Car payment + insurance',util:'Utilities',health:'Health insurance (copays)',gas:'Gas & transport',subs:'Subscriptions & phone',dine:'Dining out & entertainment',misc:'Misc / personal',taxRef:'Tax refund',bonus:'Annual bonus',vac:'Family vacation',repair:'Home repair (roof)',reno:'Kitchen renovation',carLoan:'Car loan',friendDebt:'Owed to friend (0% interest)',persLoan:'Personal loan (bank)',loanFriend:'Loaned to friend (0% interest)',loanFamily:'Loaned to cousin (with interest)',loanBiz:'Business loan to partner'},
+es:{chk:'Cuenta corriente',emf:'Fondo de emergencia',ret:'Plan de pensiones',brk:'Fondos indexados',home:'Vivienda',car:'Coche',sal:'Salario (neto)',side:'Ingresos extra / freelance',mort:'Hipoteca',groc:'Supermercado',carPay:'Coche + seguro',util:'Suministros',health:'Seguro médico',gas:'Gasolina y transporte',subs:'Suscripciones y móvil',dine:'Restaurantes y ocio',misc:'Varios / personal',taxRef:'Devolución de impuestos',bonus:'Bonus anual',vac:'Vacaciones familiares',repair:'Reparación del hogar',reno:'Reforma de cocina',carLoan:'Préstamo auto',friendDebt:'Deuda con amigo (0%)',persLoan:'Préstamo personal (banco)',loanFriend:'Prestado a amigo (0%)',loanFamily:'Prestado a primo (con interés)',loanBiz:'Préstamo comercial a socio'},
+fr:{chk:'Compte courant',emf:'Fonds d\'urgence',ret:'Plan épargne retraite',brk:'Fonds indiciels',home:'Résidence principale',car:'Voiture',sal:'Salaire (net)',side:'Revenus complémentaires',mort:'Crédit immobilier',groc:'Courses alimentaires',carPay:'Voiture + assurance',util:'Charges',health:'Mutuelle santé',gas:'Essence et transport',subs:'Abonnements et téléphone',dine:'Restaurants et sorties',misc:'Divers / personnel',taxRef:'Remboursement d\'impôts',bonus:'Prime annuelle',vac:'Vacances en famille',repair:'Travaux maison',reno:'Rénovation cuisine',carLoan:'Crédit auto',friendDebt:'Dette envers un ami (0%)',persLoan:'Prêt personnel (banque)',loanFriend:'Prêté à un ami (0%)',loanFamily:'Prêté à un cousin (avec intérêts)',loanBiz:'Prêt commercial à un associé'},
+de:{chk:'Girokonto',emf:'Notgroschen (Tagesgeld)',ret:'Altersvorsorge',brk:'ETF-Depot',home:'Eigenheim',car:'Auto',sal:'Gehalt (netto)',side:'Nebeneinkommen / Freelance',mort:'Hypothek',groc:'Lebensmittel',carPay:'Auto + Versicherung',util:'Nebenkosten',health:'Krankenversicherung',gas:'Benzin & Transport',subs:'Abos & Handy',dine:'Essen gehen & Freizeit',misc:'Sonstiges',taxRef:'Steuererstattung',bonus:'Jahresbonus',vac:'Familienurlaub',repair:'Hausreparatur',reno:'Küchenrenovierung',carLoan:'Autokredit',friendDebt:'Schuld bei Freund (0%)',persLoan:'Privatkredit (Bank)',loanFriend:'Darlehen an Freund (0%)',loanFamily:'Darlehen an Cousin (mit Zinsen)',loanBiz:'Geschäftsdarlehen an Partner'},
+pt:{chk:'Conta corrente',emf:'Fundo de emergência',ret:'Previdência privada',brk:'Fundos de investimento',home:'Imóvel',car:'Carro',sal:'Salário (líquido)',side:'Renda extra / freelance',mort:'Financiamento imobiliário',groc:'Supermercado',carPay:'Carro + seguro',util:'Contas de luz/água',health:'Plano de saúde',gas:'Combustível e transporte',subs:'Assinaturas e celular',dine:'Restaurantes e lazer',misc:'Diversos / pessoal',taxRef:'Restituição de imposto',bonus:'Bônus anual',vac:'Férias em família',repair:'Reforma da casa',reno:'Reforma da cozinha',carLoan:'Financiamento auto',friendDebt:'Dívida com amigo (0%)',persLoan:'Empréstimo pessoal (banco)',loanFriend:'Emprestado a amigo (0%)',loanFamily:'Emprestado a primo (com juros)',loanBiz:'Empréstimo comercial a sócio'},
+ja:{chk:'普通預金',emf:'緊急資金',ret:'確定拠出年金',brk:'証券口座（インデックス）',home:'自宅',car:'車',sal:'給与（手取り）',side:'副業・フリーランス',mort:'住宅ローン',groc:'食料品',carPay:'車両費・保険',util:'光熱費',health:'健康保険',gas:'ガソリン・交通費',subs:'サブスク・通信費',dine:'外食・娯楽',misc:'雑費',taxRef:'確定申告還付',bonus:'年間ボーナス',vac:'家族旅行',repair:'住宅修繕',reno:'キッチンリフォーム',carLoan:'自動車ローン',friendDebt:'友人への借金（無利子）',persLoan:'個人ローン（銀行）',loanFriend:'友人への貸付（無利子）',loanFamily:'親戚への貸付（利子付き）',loanBiz:'事業パートナーへの貸付'},
+zh:{chk:'活期存款',emf:'应急基金',ret:'养老金账户',brk:'证券账户（指数基金）',home:'住房',car:'汽车',sal:'工资（税后）',side:'副业收入',mort:'房贷',groc:'食品杂货',carPay:'车贷+保险',util:'水电费',health:'医疗保险',gas:'交通费',subs:'订阅和手机',dine:'外出就餐和娱乐',misc:'杂项',taxRef:'退税',bonus:'年终奖',vac:'家庭度假',repair:'房屋维修',reno:'厨房装修',carLoan:'车贷',friendDebt:'欠朋友（0%利息）',persLoan:'个人贷款（银行）',loanFriend:'借给朋友（0%利息）',loanFamily:'借给表亲（有利息）',loanBiz:'商业贷款给合伙人'},
+ko:{chk:'입출금 계좌',emf:'비상금',ret:'퇴직연금',brk:'증권 계좌 (인덱스)',home:'주택',car:'자동차',sal:'급여 (세후)',side:'부업 / 프리랜서',mort:'주택담보대출',groc:'식료품',carPay:'차량비 + 보험',util:'공과금',health:'건강보험',gas:'교통비',subs:'구독 및 통신',dine:'외식 및 여가',misc:'기타',taxRef:'세금 환급',bonus:'연간 보너스',vac:'가족 여행',repair:'집수리',reno:'주방 리모델링',carLoan:'자동차 대출',friendDebt:'친구에게 빚 (무이자)',persLoan:'개인 대출 (은행)',loanFriend:'친구에게 빌려줌 (무이자)',loanFamily:'사촌에게 빌려줌 (이자 포함)',loanBiz:'사업 파트너에게 대출'},
+ru:{chk:'Текущий счёт',emf:'Резервный фонд',ret:'Пенсионный счёт',brk:'Брокерский счёт (индексы)',home:'Жильё',car:'Автомобиль',sal:'Зарплата (после налогов)',side:'Подработка / фриланс',mort:'Ипотека',groc:'Продукты',carPay:'Авто + страховка',util:'Коммунальные',health:'Медстраховка',gas:'Бензин и транспорт',subs:'Подписки и связь',dine:'Рестораны и развлечения',misc:'Прочее',taxRef:'Возврат налога',bonus:'Годовая премия',vac:'Семейный отпуск',repair:'Ремонт дома',reno:'Ремонт кухни',carLoan:'Автокредит',friendDebt:'Долг другу (0%)',persLoan:'Потребительский кредит (банк)',loanFriend:'Займ другу (0%)',loanFamily:'Займ родственнику (с %)',loanBiz:'Бизнес-займ партнёру'},
+ka:{chk:'მიმდინარე ანგარიში',emf:'საგანგებო ფონდი',ret:'საპენსიო ანგარიში',brk:'საინვესტიციო ანგარიში',home:'სახლი',car:'მანქანა',sal:'ხელფასი (გადასახადის შემდეგ)',side:'დამატებითი შემოსავალი',mort:'იპოთეკა',groc:'სურსათი',carPay:'მანქანა + დაზღვევა',util:'კომუნალური',health:'ჯანმრთელობის დაზღვევა',gas:'ბენზინი და ტრანსპორტი',subs:'გამოწერები და ტელეფონი',dine:'რესტორნები და გართობა',misc:'სხვა',taxRef:'გადასახადის დაბრუნება',bonus:'წლიური ბონუსი',vac:'საოჯახო შვებულება',repair:'სახლის შეკეთება',reno:'სამზარეულოს რემონტი',carLoan:'ავტოკრედიტი',friendDebt:'მეგობრისთვის ვალი (0%)',persLoan:'სამომხმარებლო სესხი (ბანკი)',loanFriend:'მეგობარზე გასესხებული (0%)',loanFamily:'ნათესავზე გასესხებული (%-ით)',loanBiz:'ბიზნეს სესხი პარტნიორზე'},
+tr:{chk:'Vadesiz hesap',emf:'Acil durum fonu',ret:'Emeklilik hesabı',brk:'Yatırım hesabı (endeks)',home:'Ev',car:'Araba',sal:'Maaş (net)',side:'Ek gelir / serbest',mort:'Konut kredisi',groc:'Market alışverişi',carPay:'Araba + sigorta',util:'Faturalar',health:'Sağlık sigortası',gas:'Benzin ve ulaşım',subs:'Abonelikler ve telefon',dine:'Dışarıda yemek ve eğlence',misc:'Çeşitli',taxRef:'Vergi iadesi',bonus:'Yıllık prim',vac:'Aile tatili',repair:'Ev tamiri',reno:'Mutfak yenileme',carLoan:'Araç kredisi',friendDebt:'Arkadaşa borç (0%)',persLoan:'Bireysel kredi (banka)',loanFriend:'Arkadaşa borç verilen (0%)',loanFamily:'Akrabaya borç verilen (faizli)',loanBiz:'İş ortağına kredi'},
+ar:{chk:'حساب جاري',emf:'صندوق طوارئ',ret:'حساب تقاعد',brk:'حساب استثمار',home:'منزل',car:'سيارة',sal:'راتب (بعد الضريبة)',side:'دخل إضافي',mort:'قسط المنزل',groc:'بقالة',carPay:'سيارة + تأمين',util:'مرافق',health:'تأمين صحي',gas:'وقود ومواصلات',subs:'اشتراكات وهاتف',dine:'مطاعم وترفيه',misc:'متفرقات',taxRef:'استرداد ضريبي',bonus:'مكافأة سنوية',vac:'إجازة عائلية',repair:'صيانة المنزل',reno:'تجديد المطبخ',carLoan:'قرض سيارة',friendDebt:'دين لصديق (0%)',persLoan:'قرض شخصي (بنك)',loanFriend:'مبلغ مُقرض لصديق (0%)',loanFamily:'مبلغ مُقرض لقريب (بفائدة)',loanBiz:'قرض تجاري لشريك'},
+hi:{chk:'चालू खाता',emf:'आपातकालीन निधि',ret:'पेंशन खाता',brk:'निवेश खाता (इंडेक्स)',home:'घर',car:'कार',sal:'वेतन (कर के बाद)',side:'अतिरिक्त आय / फ्रीलांस',mort:'गृह ऋण',groc:'किराना',carPay:'कार + बीमा',util:'उपयोगिताएँ',health:'स्वास्थ्य बीमा',gas:'ईंधन और परिवहन',subs:'सदस्यता और फोन',dine:'बाहर खाना और मनोरंजन',misc:'विविध',taxRef:'कर वापसी',bonus:'वार्षिक बोनस',vac:'पारिवारिक छुट्टी',repair:'घर की मरम्मत',reno:'रसोई नवीकरण',carLoan:'कार ऋण',friendDebt:'दोस्त को कर्ज (0%)',persLoan:'व्यक्तिगत ऋण (बैंक)',loanFriend:'दोस्त को उधार (0%)',loanFamily:'रिश्तेदार को उधार (ब्याज सहित)',loanBiz:'व्यापार साझेदार को ऋण'},
+uk:{chk:'Поточний рахунок',emf:'Резервний фонд',ret:'Пенсійний рахунок',brk:'Брокерський рахунок',home:'Житло',car:'Автомобіль',sal:'Зарплата (після податків)',side:'Підробіток / фріланс',mort:'Іпотека',groc:'Продукти',carPay:'Авто + страховка',util:'Комунальні',health:'Медстрахування',gas:'Пальне і транспорт',subs:'Підписки і зв\'язок',dine:'Ресторани і розваги',misc:'Інше',taxRef:'Повернення податку',bonus:'Річна премія',vac:'Сімейна відпустка',repair:'Ремонт дому',reno:'Ремонт кухні',carLoan:'Автокредит',friendDebt:'Борг другу (0%)',persLoan:'Споживчий кредит (банк)',loanFriend:'Позика другу (0%)',loanFamily:'Позика родичу (з %)',loanBiz:'Бізнес-позика партнеру'}
 };
 const S=SEED[LANG]||SEED.en;
 
 function load(){try{const r=localStorage.getItem(SK);return r?JSON.parse(r):null}catch{return null}}
-function persist(){try{localStorage.setItem(SK,JSON.stringify({liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam,curTax:D.curTax,currency:D.cur}))}catch{}}
+function persist(){try{localStorage.setItem(SK,JSON.stringify({liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam,curTax:D.curTax,currency:D.cur,sessionName:D.sessionName}))}catch{}}
 const NOW=new Date(),MX=360,DF=NOW.toISOString().slice(0,10);
 const DT=new Date(NOW.getFullYear()+30,NOW.getMonth(),NOW.getDate()).toISOString().slice(0,10);
 const SS=1000;
@@ -741,15 +752,22 @@ const D={
     {id:uid(),name:S.misc,amount:300,from:DF,to:DT,appRate:3,linkedAssetId:''}],
   iev:sv.incomeEvents||[
     {id:uid(),type:'cash',name:S.taxRef,amount:3200,date:`${y1}-04-15`,sellAssetId:''},
-    {id:uid(),type:'cash',name:S.bonus,amount:6000,date:`${y1}-12-15`,sellAssetId:''}],
+    {id:uid(),type:'cash',name:S.bonus,amount:6000,date:`${y1}-12-15`,sellAssetId:''},
+    {id:uid(),type:'loanOut',name:S.loanFriend||'Loaned to friend (0% interest)',amount:5000,date:DF,loanRate:0,monthlyPmt:250,sellAssetId:''},
+    {id:uid(),type:'loanOut',name:S.loanFamily||'Loaned to cousin (with interest)',amount:8000,date:DF,loanRate:5,monthlyPmt:350,sellAssetId:''},
+    {id:uid(),type:'loanOut',name:S.loanBiz||'Business loan to partner',amount:15000,date:DF,loanRate:8,monthlyPmt:500,sellAssetId:''}],
   eev:sv.expenseEvents||[
     {id:uid(),type:'expense',name:S.vac,amount:5000,date:`${y1}-07-01`,appRate:0},
     {id:uid(),type:'expense',name:S.repair,amount:8000,date:`${y1}-10-01`,appRate:0},
-    {id:uid(),type:'buy',name:S.reno,amount:15000,date:`${String(NOW.getFullYear()+2)}-03-01`,appRate:5}],
+    {id:uid(),type:'buy',name:S.reno,amount:15000,date:`${String(NOW.getFullYear()+2)}-03-01`,appRate:5},
+    {id:uid(),type:'debt',name:S.carLoan||'Car loan',amount:18000,date:DF,appRate:6.5,monthlyPmt:450},
+    {id:uid(),type:'debt',name:S.friendDebt||'Owed to friend (0% interest)',amount:3000,date:DF,appRate:0,monthlyPmt:250},
+    {id:uid(),type:'debt',name:S.persLoan||'Personal loan (bank)',amount:10000,date:DF,appRate:9,monthlyPmt:300}],
   sl:sv.slider??0,
   fam:sv.famSize||'solo',
   curTax:sv.curTax??24,
   cur:sv.currency||'USD',
+  sessionName:sv.sessionName||'',
   relOpen:false,
   relExp:null
 };
@@ -1409,6 +1427,9 @@ function renderSections(){
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="liq" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${a.returnRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="liq" data-idx="${i}" data-fld="returnRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     ${_showFC&&!a.disabled?fcV3(_fc.liqValues[a.id]||0,_p1?_p1.liqValues[a.id]||0:0,_p12?_p12.liqValues[a.id]||0:0,'var(--acc)','','liq',a.id):''}
+    <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
+      <div style="min-width:160px"><label>Note</label><input class="sm" value="${esc(a.note||'')}" placeholder="Add a note..." style="width:100%;font-size:11px" data-arr="liq" data-idx="${i}" data-fld="note"></div>
+    </div></div>
     <button class="bd" data-del="liq" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // ILLIQUID ASSETS
@@ -1423,6 +1444,9 @@ function renderSections(){
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="ill" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${a.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="ill" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
     ${_showFC&&!a.disabled?fcV3(_fc.assetValues[a.id]||0,_p1?_p1.assetValues[a.id]||0:0,_p12?_p12.assetValues[a.id]||0:0,'var(--prp)','','ill',a.id):''}
+    <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
+      <div style="min-width:160px"><label>Note</label><input class="sm" value="${esc(a.note||'')}" placeholder="Add a note..." style="width:100%;font-size:11px" data-arr="ill" data-idx="${i}" data-fld="note"></div>
+    </div></div>
     <button class="bd" data-del="ill" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
   // MONTHLY REVENUE
@@ -1442,6 +1466,7 @@ function renderSections(){
       <div><label>${t('link')}</label><select class="sm ls" data-arr="rev" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(r.linkedAssetId)}</select></div>
       <div><label>${t('starts')}</label>${ymPicker('rev',i,'from',r.from)}</div>
       <div><label>${t('ends')}</label>${ymPicker('rev',i,'to',r.to)}</div>
+      <div style="min-width:120px"><label>Note</label><input class="sm" value="${esc(r.note||'')}" placeholder="Note..." style="width:100%;font-size:11px" data-arr="rev" data-idx="${i}" data-fld="note"></div>
     </div></div>
     <button class="bd" data-del="rev" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
@@ -1462,6 +1487,7 @@ function renderSections(){
       <div><label>${t('link')}</label><select class="sm ls" data-arr="cst" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(c.linkedAssetId)}</select></div>
       <div><label>${t('starts')}</label>${ymPicker('cst',i,'from',c.from)}</div>
       <div><label>${t('ends')}</label>${ymPicker('cst',i,'to',c.to)}</div>
+      <div style="min-width:120px"><label>Note</label><input class="sm" value="${esc(c.note||'')}" placeholder="Note..." style="width:100%;font-size:11px" data-arr="cst" data-idx="${i}" data-fld="note"></div>
     </div></div>
     <button class="bd" data-del="cst" data-idx="${i}">×</button></div>`});
   h+=`</div>`;
@@ -1480,6 +1506,7 @@ function renderSections(){
         <div><label>${t('when')}</label>${ymPicker('iev',i,'date',ev.date)}</div>
         ${ev.type==='loanOut'?`<div><label>${t('rate')}</label><div class="pct-wrap" style="position:relative;width:72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${ev.loanRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="iev" data-idx="${i}" data-fld="loanRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
         <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="iev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
+        <div style="min-width:120px"><label>Note</label><input class="sm" value="${esc(ev.note||'')}" placeholder="Note..." style="width:100%;font-size:11px" data-arr="iev" data-idx="${i}" data-fld="note"></div>
       </div></div>
       <button class="bd" data-del="iev" data-idx="${i}">×</button></div>`});
   if(!D.iev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
@@ -1498,6 +1525,7 @@ function renderSections(){
         ${ev.type==='debt'?`<div><label>${t('rate')}</label><div class="pct-wrap" style="position:relative;width:72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${ev.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>
         <div><label>${t('pmtMo')}</label><div style="position:relative;width:90px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${ev.monthlyPmt||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="eev" data-idx="${i}" data-fld="monthlyPmt" data-num="1"></div></div>`:''}
         ${ev.type==='buy'?`<div><label>${t('apprDepr')}</label><div class="pct-wrap" style="position:relative;width:72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${ev.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="eev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div></div>`:''}
+        <div style="min-width:120px"><label>Note</label><input class="sm" value="${esc(ev.note||'')}" placeholder="Note..." style="width:100%;font-size:11px" data-arr="eev" data-idx="${i}" data-fld="note"></div>
       </div></div>
       <button class="bd" data-del="eev" data-idx="${i}">×</button></div>`});
   if(!D.eev.length)h+=`<p style="font-size:11px;color:var(--mut);text-align:center;padding:4px">${t('none')}</p>`;
@@ -1785,6 +1813,17 @@ if(LANG!=='en'){
   const np=document.getElementById('nav-pillars');if(np)np.textContent=t('pillars');
   const rt=document.getElementById('rel-title');if(rt)rt.textContent=t('relocHd');
 }
+// Session name
+const _sn=document.getElementById('session-name');
+if(_sn){
+  _sn.value=D.sessionName;
+  _sn.addEventListener('input',()=>{D.sessionName=_sn.value;persist()});
+  _sn.addEventListener('focus',()=>{document.getElementById('session-name-hint').style.opacity='0'});
+  _sn.addEventListener('blur',()=>{document.getElementById('session-name-hint').style.opacity=_sn.value?'0':'1'});
+  // Show hint on hover if empty
+  _sn.parentElement.addEventListener('mouseenter',()=>{if(!_sn.value)document.getElementById('session-name-hint').style.opacity='1'});
+  _sn.parentElement.addEventListener('mouseleave',()=>{if(document.activeElement!==_sn)document.getElementById('session-name-hint').style.opacity='0'});
+}
 // Currency switcher
 const _cs=document.getElementById('cur-switcher');
 if(_cs){
@@ -1812,6 +1851,192 @@ initSlider();
 renderSections();
 updateView();
 window.addEventListener('resize',()=>drawChart());
+
+// ═══════════════ PROFILES (save/load/search multiple datasets)
+const PROFILES_KEY='networthcast_profiles';
+function loadProfiles(){try{return JSON.parse(localStorage.getItem(PROFILES_KEY))||[]}catch{return[]}}
+function saveProfiles(profiles){try{localStorage.setItem(PROFILES_KEY,JSON.stringify(profiles))}catch{}}
+function getDataSnapshot(){
+  return{liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam,curTax:D.curTax,currency:D.cur,sessionName:D.sessionName};
+}
+function applyDataSnapshot(data){
+  D.liq=data.liquidAssets||[];D.ill=data.ownedAssets||[];D.rev=data.revs||[];D.cst=data.costs||[];
+  D.iev=data.incomeEvents||[];D.eev=data.expenseEvents||[];D.sl=data.slider||0;
+  D.fam=data.famSize||'solo';D.curTax=data.curTax??24;D.cur=data.currency||'USD';
+  D.sessionName=data.sessionName||'';
+  CUR=CURRENCIES[D.cur]||'$';
+  const cs=document.getElementById('cur-switcher');if(cs)cs.value=D.cur;
+  const sn=document.getElementById('session-name');if(sn)sn.value=D.sessionName;
+  persist();fullUpdate();
+}
+
+// ═══════════════ EXPORT
+document.getElementById('btn-export')?.addEventListener('click',()=>{
+  const profiles=loadProfiles();
+  if(!profiles.length){
+    // No profiles — export current data directly
+    exportData(getDataSnapshot(),'networthcast');
+    return;
+  }
+  // Show modal to pick which profiles to export
+  showExportModal(profiles);
+});
+function exportData(data,name){
+  const payload={
+    meta:{app:'NetWorthCast',version:'2.0',exportedAt:new Date().toISOString(),currency:data.currency||D.cur},
+    data:data
+  };
+  const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+  const a=document.createElement('a');
+  a.href=URL.createObjectURL(blob);
+  a.download=`${name.replace(/[^a-zA-Z0-9_-]/g,'_')}_${new Date().toISOString().slice(0,10)}.json`;
+  a.click();URL.revokeObjectURL(a.href);
+}
+function showExportModal(profiles){
+  const m=document.createElement('div');
+  m.id='profile-modal';m.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center';
+  let h=`<div style="background:var(--card);border-radius:16px;max-width:400px;width:calc(100% - 32px);padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;max-height:80vh;overflow-y:auto">
+    <button onclick="this.closest('#profile-modal').remove()" style="position:absolute;top:10px;right:14px;background:0;border:0;font-size:20px;cursor:pointer;color:var(--mut)">&times;</button>
+    <div style="font-weight:700;font-size:14px;margin-bottom:12px">Export Profiles</div>
+    <label style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer;border-bottom:1px solid var(--brd)">
+      <input type="checkbox" checked data-exp="current"> <strong>Current session</strong>
+    </label>`;
+  profiles.forEach((p,i)=>{
+    h+=`<label style="display:flex;align-items:center;gap:8px;padding:6px 0;font-size:13px;cursor:pointer;border-bottom:1px solid var(--brd)">
+      <input type="checkbox" checked data-exp-idx="${i}"> ${esc(p.name)} <span style="font-size:10px;color:var(--mut)">${p.savedAt?.slice(0,10)||''}</span>
+    </label>`;
+  });
+  h+=`<button id="exp-go" style="margin-top:12px;width:100%;background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px;font-size:13px;font-weight:600;cursor:pointer">Export Selected</button></div>`;
+  m.innerHTML=h;document.body.appendChild(m);
+  m.addEventListener('click',e=>{if(e.target===m)m.remove()});
+  document.getElementById('exp-go').addEventListener('click',()=>{
+    const result={};
+    if(m.querySelector('[data-exp]:checked'))result.current=getDataSnapshot();
+    profiles.forEach((p,i)=>{if(m.querySelector(`[data-exp-idx="${i}"]:checked`))result[p.name]=p.data});
+    const payload={meta:{app:'NetWorthCast',version:'2.0',exportedAt:new Date().toISOString()},profiles:result};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'});
+    const a=document.createElement('a');a.href=URL.createObjectURL(blob);
+    a.download=`networthcast_${new Date().toISOString().slice(0,10)}.json`;a.click();URL.revokeObjectURL(a.href);
+    m.remove();
+  });
+}
+
+// ═══════════════ IMPORT
+document.getElementById('btn-import')?.addEventListener('click',()=>document.getElementById('file-import').click());
+document.getElementById('file-import')?.addEventListener('change',e=>{
+  const file=e.target.files[0];if(!file)return;
+  const reader=new FileReader();
+  reader.onload=()=>{
+    try{
+      const json=JSON.parse(reader.result);
+      if(json.profiles){
+        // Multi-profile import
+        const names=Object.keys(json.profiles);
+        if(names.length===1){applyDataSnapshot(json.profiles[names[0]]);return}
+        showImportPickerModal(json.profiles);
+      }else if(json.data){
+        applyDataSnapshot(json.data);
+      }else{
+        // Try as raw data
+        applyDataSnapshot(json);
+      }
+    }catch(err){alert('Invalid file: '+err.message)}
+  };
+  reader.readAsText(file);
+  e.target.value='';
+});
+function showImportPickerModal(profiles){
+  const m=document.createElement('div');
+  m.id='profile-modal';m.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center';
+  const names=Object.keys(profiles);
+  let h=`<div style="background:var(--card);border-radius:16px;max-width:400px;width:calc(100% - 32px);padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative">
+    <button onclick="this.closest('#profile-modal').remove()" style="position:absolute;top:10px;right:14px;background:0;border:0;font-size:20px;cursor:pointer;color:var(--mut)">&times;</button>
+    <div style="font-weight:700;font-size:14px;margin-bottom:12px">Choose profile to load</div>`;
+  names.forEach(n=>{
+    h+=`<button class="imp-pick" data-name="${esc(n)}" style="display:block;width:100%;text-align:left;background:var(--bg);border:1px solid var(--brd);border-radius:8px;padding:8px 12px;margin-bottom:6px;cursor:pointer;font-size:13px;font-family:var(--fn)">${esc(n)}</button>`;
+  });
+  h+=`</div>`;m.innerHTML=h;document.body.appendChild(m);
+  m.addEventListener('click',e=>{if(e.target===m)m.remove()});
+  m.querySelectorAll('.imp-pick').forEach(btn=>{
+    btn.addEventListener('click',()=>{applyDataSnapshot(profiles[btn.dataset.name]);m.remove()});
+  });
+}
+
+// ═══════════════ SAVE/LOAD PROFILES
+// Add save button — we'll put it in the header area
+const _saveBtn=document.createElement('button');
+_saveBtn.id='btn-save';_saveBtn.title='Save / Load profiles';
+_saveBtn.style.cssText='background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0';
+_saveBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>';
+document.getElementById('btn-export')?.before(_saveBtn);
+
+_saveBtn.addEventListener('click',()=>{
+  const profiles=loadProfiles();
+  const m=document.createElement('div');
+  m.id='profile-modal';m.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center';
+  let h=`<div style="background:var(--card);border-radius:16px;max-width:420px;width:calc(100% - 32px);padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;max-height:80vh;display:flex;flex-direction:column">
+    <button onclick="this.closest('#profile-modal').remove()" style="position:absolute;top:10px;right:14px;background:0;border:0;font-size:20px;cursor:pointer;color:var(--mut)">&times;</button>
+    <div style="font-weight:700;font-size:14px;margin-bottom:10px">Profiles</div>
+    <div style="display:flex;gap:6px;margin-bottom:10px">
+      <input id="prof-name" class="sm" placeholder="Profile name..." value="${esc(D.sessionName)}" style="flex:1;font-size:13px;padding:8px 10px">
+      <button id="prof-save-btn" style="background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;white-space:nowrap">Save Current</button>
+    </div>
+    <input id="prof-search" class="sm" placeholder="Search profiles..." style="width:100%;font-size:12px;padding:6px 10px;margin-bottom:8px;${profiles.length<3?'display:none':''}">
+    <div id="prof-list" style="overflow-y:auto;flex:1;max-height:50vh">`;
+  if(!profiles.length){
+    h+=`<p style="font-size:12px;color:var(--mut);text-align:center;padding:16px 0">No saved profiles yet</p>`;
+  }
+  profiles.forEach((p,i)=>{
+    const nw=fm(p.summary?.netWorth||0);
+    h+=`<div class="prof-item" data-idx="${i}" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--brd);border-radius:8px;margin-bottom:4px;cursor:pointer;transition:border-color .15s">
+      <div style="min-width:0"><div style="font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.name)}</div>
+      <div style="font-size:10px;color:var(--mut);font-family:var(--mo)">${p.savedAt?.slice(0,10)||''} · ${nw}</div></div>
+      <div style="display:flex;gap:4px;flex-shrink:0">
+        <button class="prof-load" data-idx="${i}" style="background:var(--acc-lt);color:var(--acc);border:0;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer">Load</button>
+        <button class="prof-del" data-idx="${i}" style="background:var(--red-bg);color:var(--red);border:0;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer">×</button>
+      </div></div>`;
+  });
+  h+=`</div></div>`;
+  m.innerHTML=h;document.body.appendChild(m);
+  m.addEventListener('click',e=>{if(e.target===m)m.remove()});
+  // Save
+  document.getElementById('prof-save-btn').addEventListener('click',()=>{
+    const name=document.getElementById('prof-name').value.trim();
+    if(!name){document.getElementById('prof-name').focus();return}
+    const snap=getDataSnapshot();
+    const summary={netWorth:FC.length?FC[0].value:0,liqTotal:D.liq.reduce((s,a)=>s+(a.value||0),0),illTotal:D.ill.reduce((s,a)=>s+(a.value||0),0)};
+    const existing=profiles.findIndex(p=>p.name===name);
+    if(existing>=0){profiles[existing]={name,data:snap,summary,savedAt:new Date().toISOString()}}
+    else{profiles.push({name,data:snap,summary,savedAt:new Date().toISOString()})}
+    saveProfiles(profiles);m.remove();_saveBtn.click();
+  });
+  // Search
+  document.getElementById('prof-search')?.addEventListener('input',e=>{
+    const q=e.target.value.toLowerCase();
+    m.querySelectorAll('.prof-item').forEach(el=>{
+      const name=el.querySelector('div div')?.textContent?.toLowerCase()||'';
+      el.style.display=name.includes(q)?'flex':'none';
+    });
+  });
+  // Load
+  m.querySelectorAll('.prof-load').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const idx=+btn.dataset.idx;
+      if(profiles[idx]){applyDataSnapshot(profiles[idx].data);m.remove()}
+    });
+  });
+  // Delete (with confirmation)
+  m.querySelectorAll('.prof-del').forEach(btn=>{
+    btn.addEventListener('click',e=>{
+      e.stopPropagation();
+      const idx=+btn.dataset.idx;
+      const name=profiles[idx]?.name||'this profile';
+      if(!confirm(`Delete "${name}"? This cannot be undone.`))return;
+      profiles.splice(idx,1);saveProfiles(profiles);m.remove();_saveBtn.click();
+    });
+  });
+});
 
 // ═══════════════ SERVICE WORKER & PWA INSTALL
 if('serviceWorker'in navigator){navigator.serviceWorker.register('/sw.js').catch(()=>{})}
