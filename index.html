@@ -218,7 +218,7 @@
 :root{--bg:#f6f5f2;--card:#fff;--brd:#e5e2dc;--txt:#1c1917;--mut:#8c857d;--acc:#2563eb;--acc-lt:#dbeafe;--grn:#059669;--grn-bg:#ecfdf5;--red:#dc2626;--red-bg:#fef2f2;--ylw:#d97706;--prp:#7c3aed;--prp-bg:#f5f3ff;--fn:'Outfit',sans-serif;--mo:'IBM Plex Mono',monospace;--rad:12px;--shd:0 1px 3px rgba(0,0,0,.05)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--fn);color:var(--txt);background:var(--bg);min-height:100vh}
-.w{max-width:860px;margin:0 auto;padding:16px 16px 120px}
+.w{max-width:860px;margin:0 auto;padding:16px 16px 200px}
 .c{background:var(--card);border-radius:var(--rad);border:1px solid var(--brd);box-shadow:var(--shd);margin-bottom:12px}
 .cp{padding:16px 20px}
 input,select{font-family:var(--fn);color:var(--txt)}
@@ -291,6 +291,16 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .primary-tip::before{content:'';position:absolute;top:-5px;left:16px;width:10px;height:10px;background:var(--txt);transform:rotate(45deg)}
 .primary-badge:hover .primary-tip{display:block}
 .primary-badge{font-size:8px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;padding:1px 5px;border-radius:3px;background:var(--acc);color:#fff;font-family:var(--mo);margin-left:6px;white-space:nowrap}
+/* ═══════════════ PCT SLIDER POPUP ═══════════════ */
+.pct-pop{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);z-index:60;background:var(--card);border:1px solid var(--brd);border-radius:8px;box-shadow:0 4px 16px rgba(0,0,0,.12);padding:4px 6px;display:flex;align-items:center;gap:4px;white-space:nowrap}
+.pct-wrap:has(.pct-pop){z-index:50}
+.rw:has(.pct-pop),.rw-rc:has(.pct-pop),.rw-ev:has(.pct-pop){overflow:visible!important}
+.pct-pop::after{content:'';position:absolute;bottom:-4px;left:50%;transform:translateX(-50%) rotate(45deg);width:8px;height:8px;background:var(--card);border-right:1px solid var(--brd);border-bottom:1px solid var(--brd)}
+.pct-pop button{background:0;border:1px solid var(--brd);border-radius:4px;width:24px;height:24px;cursor:pointer;font-size:12px;font-family:var(--mo);font-weight:700;color:var(--acc);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.pct-pop button:hover{background:var(--acc-lt)}
+.pct-pop button:active{background:var(--acc);color:#fff}
+.pct-pop input[type="range"]{width:80px;height:4px;accent-color:var(--acc);cursor:pointer}
+.pct-pop .pct-pop-val{font-size:10px;font-family:var(--mo);font-weight:600;color:var(--txt);min-width:32px;text-align:center}
 .fc-val{font-size:11px;font-weight:600;font-family:var(--mo);white-space:nowrap;flex-shrink:0;opacity:.7}
 .fc-vm{font-size:9px;font-weight:500;color:var(--mut)!important;margin-right:4px}
 .drag-handle{cursor:grab;color:var(--mut);font-size:12px;padding:2px 4px;line-height:1;flex-shrink:0;opacity:.3;transition:opacity .15s;user-select:none}
@@ -326,7 +336,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
 
 /* ═══════════════ MOBILE RESPONSIVE ═══════════════ */
 @media(max-width:680px){
-  .w{padding:10px 10px 110px}
+  .w{padding:10px 10px 180px}
   #h-val{font-size:32px!important}
   .col-hdr{display:none}
   /* Hero card: tighter padding for more chart space */
@@ -344,7 +354,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
   #nav-pillars{display:none!important}
   header nav{display:none!important}
   header>div:last-child{gap:4px!important}
-  #cur-switcher{width:54px!important;font-size:10px!important;padding:3px 4px!important}
+  #cur-switcher{width:70px!important;font-size:10px!important;padding:3px 4px!important}
   #lang-switcher{font-size:10px!important;padding:3px 4px!important;max-width:90px}
   /* All inputs bigger for touch */
   .rw input,.rw select{font-size:14px!important;padding:9px 8px!important;min-height:38px}
@@ -426,7 +436,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
       <span style="font-size:11px;color:var(--mut);margin-left:4px" id="nav-pillars">Net Worth · Forecast · Relocate</span>
     </nav>
     <div style="margin-left:auto;display:flex;align-items:center;gap:6px">
-    <select id="cur-switcher" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;font-size:11px;font-family:var(--mo);color:var(--txt);cursor:pointer;outline:none;width:62px">
+    <select id="cur-switcher" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;font-size:11px;font-family:var(--mo);color:var(--txt);cursor:pointer;outline:none;width:76px">
       <option value="USD">$ USD</option>
       <option value="EUR">€ EUR</option>
       <option value="GBP">£ GBP</option>
@@ -548,6 +558,12 @@ input,select{font-family:var(--fn);color:var(--txt)}
     </div>
   </div>
 
+  <!-- Breakdown -->
+  <div id="bkdn"></div>
+
+  <!-- Editable sections -->
+  <div id="secs"></div>
+
   <!-- Relocate -->
   <div class="c" style="overflow:hidden" id="reloc">
     <div id="rel-hd" style="padding:12px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
@@ -556,12 +572,6 @@ input,select{font-family:var(--fn);color:var(--txt)}
     </div>
     <div id="rel-body" style="display:none;padding:0 18px 14px"></div>
   </div>
-
-  <!-- Breakdown -->
-  <div id="bkdn"></div>
-
-  <!-- Editable sections -->
-  <div id="secs"></div>
   </main>
 </div>
 
@@ -1207,8 +1217,31 @@ function renderBreakdown(){
     </span>`}
 
   const _t=t;
+  // FIRE
+  const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
+  const fireNum=mCost>0?(mCost*12)/.04:0;
+  const fireVariants=[
+    {id:'coast',label:'Coast',num:fireNum?fireNum/Math.pow(1.07,20):0,color:'#0891b2'},
+    {id:'lean',label:'Lean',num:fireNum*0.6,color:'#16a34a'},
+    {id:'fire',label:'FIRE',num:fireNum,color:'#f59e0b'},
+    {id:'fat',label:'Fat',num:fireNum*1.5,color:'#dc2626'}
+  ];
+  const fireMonths=fireVariants.map(v=>({...v,month:v.num>0?FC.findIndex(p=>p.cash>=v.num):-1}));
+  const _tShort=m=>{if(m<=0)return _t('now');const y=Math.floor(m/12),mo=m%12;if(!y)return`${mo}${_t('moS')}`;if(!mo)return`${y}${_t('yrS')}`;return`${y}${_t('yrS')} ${mo}${_t('moS')}`};
+
   let h=`<div class="c cp" style="padding:14px 18px">
   <div style="font-size:10px;text-transform:uppercase;letter-spacing:1.5px;color:var(--mut);font-family:var(--mo);margin-bottom:4px">${_t('by')} ${cur.date.toLocaleDateString(LANG==='en'?'en':LANG,{month:'short',year:'numeric'})} — ${fmT(D.sl)}</div>`;
+
+  // FIRE section
+  if(fireNum>0){
+    h+=`<div class="bh"><span class="bhl">FIRE</span></div>`;
+    for(const fv of fireMonths){
+      const reached=fv.month>0&&fv.month<=mi;
+      const timeStr=fv.month>0?_tShort(fv.month):'—';
+      h+=`<div class="br"><span style="display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;border-radius:50%;background:${fv.color};flex-shrink:0"></span><span style="color:${fv.color};font-weight:600;font-size:12px">${fv.label}</span></span><span style="display:flex;gap:8px;align-items:baseline;font-family:var(--mo)"><span style="color:var(--mut);font-size:10px">${timeStr}</span><span style="font-weight:600;color:${fv.color};min-width:64px;text-align:right">${fm(fv.num)}${reached?' ✓':''}</span></span></div>`;
+    }
+    h+=`<div class="dv"></div>`;
+  }
 
   // Money In (summary)
   h+=`<div class="bh"><span class="bhl" style="color:var(--grn)">${_t('moneyIn')}</span>${vals3(totalIn,inY,inM,'var(--grn)','+')}</div>`;
@@ -1558,6 +1591,46 @@ function bindSections(){
       persist();fullUpdate();
     });
   });
+  // Percentage slider popups (hover-based, survive during interaction)
+  secs.querySelectorAll('.pct-wrap').forEach(wrap=>{
+    const inp=wrap.querySelector('.pct-input');
+    if(!inp)return;
+    let pop=null,hoverTimer=null;
+    function showPop(){
+      if(pop)return;
+      const curVal=parseFloat(inp.value)||0;
+      const mn=curVal-5,mx=curVal+5;
+      pop=document.createElement('div');
+      pop.className='pct-pop';
+      pop.innerHTML=`<button class="pct-dec">◀</button><input type="range" min="${mn}" max="${mx}" step="0.5" value="${curVal}"><span class="pct-pop-val">${curVal.toFixed(1)}%</span><button class="pct-inc">▶</button>`;
+      wrap.appendChild(pop);
+      const rng=pop.querySelector('input[type="range"]');
+      const valSpan=pop.querySelector('.pct-pop-val');
+      const arrName=inp.dataset.arr,idx=+inp.dataset.idx,fld=inp.dataset.fld;
+      function apply(v){
+        const nv=Math.round(v*2)/2;
+        inp.value=nv.toFixed(1);valSpan.textContent=nv.toFixed(1)+'%';rng.value=nv;
+        // Update data directly without rebuilding sections
+        const arr=ARRS[arrName];
+        if(arr&&arr[idx])arr[idx][fld]=nv;
+        persist();runFC();updateView();updateSectionForecasts();
+      }
+      rng.addEventListener('input',()=>apply(parseFloat(rng.value)));
+      pop.querySelector('.pct-dec').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();apply(parseFloat(rng.value)-0.5)});
+      pop.querySelector('.pct-inc').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();apply(parseFloat(rng.value)+0.5)});
+      pop.addEventListener('mousedown',e=>{if(e.target.type!=='range')e.preventDefault()});
+    }
+    function hidePop(){hoverTimer=setTimeout(()=>{if(pop){pop.remove();pop=null;fullUpdate()}},300)}
+    function cancelHide(){clearTimeout(hoverTimer)}
+    wrap.addEventListener('mouseenter',()=>{cancelHide();showPop()});
+    wrap.addEventListener('mouseleave',hidePop);
+    wrap.addEventListener('touchstart',()=>{cancelHide();showPop()},{passive:true});
+    // On touch: close other popups when opening this one
+    wrap.addEventListener('touchstart',()=>{
+      secs.querySelectorAll('.pct-pop').forEach(p=>{if(pop&&p!==pop){p.remove()}});
+    },{passive:true});
+  });
+
   // Eye toggle (disable/enable for simulation)
   secs.querySelectorAll('[data-eye]').forEach(el=>{
     el.addEventListener('click',()=>{
@@ -1631,8 +1704,6 @@ function renderFloatDash(){
   if(!FC.length)return;
   const mi=Math.min(D.sl,FC.length-1);
   const cur=FC[mi];
-  const prev1=mi>=1?FC[mi-1]:null;
-  const prev12=mi>=12?FC[mi-12]:null;
   const _t=t;
 
   // FIRE values
@@ -1645,65 +1716,28 @@ function renderFloatDash(){
     {id:'fat',label:'Fat',num:fireNum*1.5,color:'#dc2626'}
   ];
   const fireMonths=fireVariants.map(v=>({...v,month:v.num>0?FC.findIndex(p=>p.cash>=v.num):-1}));
-
-  // Time helpers
   const _tShort=m=>{if(m<=0)return _t('now');const y=Math.floor(m/12),mo=m%12;if(!y)return`${mo}${_t('moS')}`;if(!mo)return`${y}${_t('yrS')}`;return`${y}${_t('yrS')} ${mo}${_t('moS')}`};
   const sliderDate=cur.date.toLocaleDateString(LANG==='en'?'en':LANG,{month:'short',year:'numeric'});
   const timeToSlider=fmT(D.sl);
 
-  // Delta helpers
-  function d1(cur,prev,id,map){return prev?((cur[map]||{})[id]||0)-((prev[map]||{})[id]||0):(cur[map]||{})[id]||0}
-  function dF(cur,prev,field){return prev?(cur[field]||0)-(prev[field]||0):(cur[field]||0)}
-
-  // Money in totals
+  // Totals
   const totalIn=D.rev.reduce((s,r)=>s+(cur.revCum[r.id]||0),0)+D.iev.filter(e=>cur.evtTriggered[e.id]).reduce((s,e)=>s+(cur.evtTriggered[e.id]?.value||0),0)+cur.cumReturns;
-  const inM=prev1?totalIn-(D.rev.reduce((s,r)=>s+(prev1.revCum[r.id]||0),0)+D.iev.filter(e=>prev1.evtTriggered[e.id]).reduce((s,e)=>s+(prev1.evtTriggered[e.id]?.value||0),0)+prev1.cumReturns):totalIn;
-  const inY=prev12?totalIn-(D.rev.reduce((s,r)=>s+(prev12.revCum[r.id]||0),0)+D.iev.filter(e=>prev12.evtTriggered[e.id]).reduce((s,e)=>s+(prev12.evtTriggered[e.id]?.value||0),0)+prev12.cumReturns):totalIn;
-
-  // Money out totals
   const totalOut=D.cst.reduce((s,c)=>s+(cur.costCum[c.id]||0),0)+D.eev.filter(e=>cur.expTriggered[e.id]&&e.type!=='debt').reduce((s,e)=>s+(e.amount||0),0)+D.eev.filter(e=>e.type==='debt').reduce((s,e)=>s+(cur.costCum[e.id]||0),0);
-  const outM=prev1?totalOut-(D.cst.reduce((s,c)=>s+(prev1.costCum[c.id]||0),0)+D.eev.filter(e=>prev1.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0)):totalOut;
-  const outY=prev12?totalOut-(D.cst.reduce((s,c)=>s+(prev12.costCum[c.id]||0),0)+D.eev.filter(e=>prev12.expTriggered[e.id]).reduce((s,e)=>s+(e.amount||0),0)):totalOut;
-
-  // Illiquid total
   const hO=D.ill.filter(a=>!cur.soldAssets.has(a.id)).reduce((s,a)=>s+(cur.assetValues[a.id]||0),0);
   const hB=Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).reduce((s,[k])=>s+(cur.boughtValues[k]||0),0);
   const illTotal=hO+hB;
 
-  const _moL=_t('mo'),_yrL='/'+_t('yrS');
-  // 3-col value helper (month, year, total)
-  function v3(total,yr,mo,color,prefix){
-    let s='';
-    if(mi>=1)s+=`<span class="fd-vm">${prefix}${fm(mo)}${_moL}</span>`;
-    if(mi>=12)s+=`<span class="fd-vm">${prefix}${fm(yr)}${_yrL}</span>`;
-    s+=`<span class="fd-v" style="color:${color}">${prefix}${fm(total)}</span>`;
-    return s;
-  }
-
   let h=`<button class="fd-toggle" id="fd-close">&times;</button>`;
-
-  // Slider date & time
   h+=`<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin-bottom:6px;padding-right:16px">${sliderDate} &mdash; ${timeToSlider}</div>`;
 
-  // Assets section
+  // Total / Liquid / Illiquid
   h+=`<div class="fd-sect">`;
   h+=`<div class="fd-sect-hd"><span style="color:var(--acc)">${_t('total')}</span><span style="font-size:11px;font-weight:700;color:${cur.value>=0?'var(--acc)':'var(--red)'}">${fm(cur.value)}</span></div>`;
   h+=`<div class="fd-row"><span class="fd-label" style="color:#059669;font-weight:600">${_t('liquid')}</span><span class="fd-v" style="color:#059669">${fm(cur.cash)}</span></div>`;
-  // Liquid asset details
-  D.liq.forEach(a=>{const dis=a.disabled;
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:#059669;padding-left:10px">▪ ${esc(a.name)} <span style="font-size:8px;color:var(--mut)">(${a.returnRate>0?'+':''}${a.returnRate||0}%/${_t('yrS')})</span></span><span class="fd-v" style="color:#059669">${fm(dis?0:cur.liqValues[a.id]||0)}</span></div>`;
-  });
   h+=`<div class="fd-row"><span class="fd-label" style="color:#ea580c;font-weight:600">${_t('illiquid')}</span><span class="fd-v" style="color:#ea580c">${fm(illTotal)}</span></div>`;
-  // Illiquid asset details
-  D.ill.forEach(a=>{const dis=a.disabled;if(!dis&&cur.soldAssets.has(a.id))return;
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:#ea580c;padding-left:10px">▪ ${esc(a.name)} <span style="font-size:8px;color:var(--mut)">(${a.appRate>0?'+':''}${a.appRate||0}%/${_t('yrS')})</span></span><span class="fd-v" style="color:#ea580c">${fm(dis?0:cur.assetValues[a.id]||0)}</span></div>`;
-  });
-  Object.entries(cur.boughtAssets).filter(([k])=>(cur.boughtValues[k]||0)>0&&!cur.soldAssets.has('bought_'+k)).forEach(([k,b])=>{
-    h+=`<div class="fd-row fd-detail"><span class="fd-label" style="color:#ea580c;padding-left:10px">▪ ${esc(b.name)} <span style="font-size:8px;color:var(--mut)">(${b.appRate>0?'+':''}${b.appRate||0}%/${_t('yrS')})</span></span><span class="fd-v" style="color:#ea580c">${fm(cur.boughtValues[k])}</span></div>`;
-  });
   h+=`</div>`;
 
-  // FIRE section
+  // FIRE
   h+=`<div class="fd-div"></div><div class="fd-sect">`;
   h+=`<div class="fd-sect-hd"><span>FIRE</span></div>`;
   for(const fv of fireMonths){
@@ -1713,52 +1747,23 @@ function renderFloatDash(){
   }
   h+=`</div>`;
 
-  // Money In section
-  h+=`<div class="fd-div"></div><div class="fd-sect">`;
-  h+=`<div class="fd-sect-hd"><span style="color:var(--grn)">${_t('moneyIn')}</span><span class="fd-vals">${v3(totalIn,inY,inM,'var(--grn)','+')}</span></div>`;
-  // Revenue items (desktop detail)
-  D.rev.filter(r=>(cur.revCum[r.id]||0)>0||r.disabled).forEach(r=>{
-    const dis=r.disabled;const rv=dis?0:cur.revCum[r.id]||0;const lm=dis?0:d1(cur,prev1,r.id,'revCum');const ly=dis?0:d1(cur,prev12,r.id,'revCum');
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(r.name||_t('incomeTag'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
-  });
-  // Loan-out repayments (desktop detail)
-  D.iev.filter(e=>e.type==='loanOut'&&((cur.revCum[e.id]||0)>0||e.disabled)).forEach(e=>{
-    const dis=e.disabled;const rv=dis?0:cur.revCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'revCum');const ly=dis?0:d1(cur,prev12,e.id,'revCum');
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">↑ ${esc(e.name||_t('loanOut'))}</span><span class="fd-vals">${v3(rv,ly,lm,'var(--grn)','+')}</span></div>`;
-  });
-  // One-time income events (desktop detail)
-  D.iev.filter(e=>e.type!=='loanOut'&&(cur.evtTriggered[e.id]||e.disabled)).forEach(e=>{
-    const dis=e.disabled;const val=dis?0:(cur.evtTriggered[e.id]?.value||0);
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--grn)">◆ ${esc(dis?e.name:(cur.evtTriggered[e.id]?.name||_t('incomeTag')))}</span><span class="fd-v" style="color:var(--grn)">+${fm(val)}</span></div>`;
-  });
-  // Investment returns (desktop detail)
-  {const lm=dF(cur,prev1,'cumReturns');const ly=dF(cur,prev12,'cumReturns');
-    h+=`<div class="fd-row fd-detail"><span class="fd-label" style="color:var(--acc)">◎ ${_t('invReturns')}</span><span class="fd-vals">${v3(cur.cumReturns,ly,lm,'var(--acc)','+')}</span></div>`}
-  h+=`</div>`;
+  // Money In (summary)
+  h+=`<div class="fd-div"></div><div class="fd-row"><span class="fd-label" style="color:var(--grn);font-weight:600">${_t('moneyIn')}</span><span class="fd-v" style="color:var(--grn)">+${fm(totalIn)}</span></div>`;
 
-  // Money Out section
-  h+=`<div class="fd-div"></div><div class="fd-sect">`;
-  h+=`<div class="fd-sect-hd"><span style="color:var(--red)">${_t('moneyOut')}</span><span class="fd-vals">${v3(totalOut,outY,outM,'var(--red)','-')}</span></div>`;
-  // Cost items (desktop detail)
-  D.cst.filter(c=>(cur.costCum[c.id]||0)>0||c.disabled).forEach(c=>{
-    const dis=c.disabled;const cv=dis?0:cur.costCum[c.id]||0;const lm=dis?0:d1(cur,prev1,c.id,'costCum');const ly=dis?0:d1(cur,prev12,c.id,'costCum');
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(c.name||_t('expense'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
-  });
-  // One-time expense events (desktop detail)
-  D.eev.filter(e=>e.type!=='debt'&&(cur.expTriggered[e.id]||e.disabled)).forEach(e=>{
-    const dis=e.disabled;const val=dis?0:(e.amount||0);
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">◆ ${esc(e.name||_t('expense'))}</span><span class="fd-v" style="color:var(--red)">-${fm(val)}</span></div>`;
-  });
-  // Debt payments (desktop detail)
-  D.eev.filter(e=>e.type==='debt'&&((cur.costCum[e.id]||0)>0||e.disabled)).forEach(e=>{
-    const dis=e.disabled;const cv=dis?0:cur.costCum[e.id]||0;const lm=dis?0:d1(cur,prev1,e.id,'costCum');const ly=dis?0:d1(cur,prev12,e.id,'costCum');
-    h+=`<div class="fd-row fd-detail" style="${dis?'opacity:.35':''}"><span class="fd-label" style="color:var(--red)">↓ ${esc(e.name||_t('debt'))}</span><span class="fd-vals">${v3(cv,ly,lm,'var(--red)','-')}</span></div>`;
-  });
-  h+=`</div>`;
+  // Money Out (summary)
+  h+=`<div class="fd-row"><span class="fd-label" style="color:var(--red);font-weight:600">${_t('moneyOut')}</span><span class="fd-v" style="color:var(--red)">-${fm(totalOut)}</span></div>`;
+
+  // Debts (summary)
+  if(D.eev.some(e=>e.type==='debt')){
+    h+=`<div class="fd-row"><span class="fd-label" style="color:var(--red);font-weight:600">${_t('debts')}</span><span class="fd-v" style="color:var(--red)">-${fm(cur.debtTotal||0)}</span></div>`;
+  }
+
+  // Receivables (summary)
+  if(D.iev.some(e=>e.type==='loanOut')){
+    h+=`<div class="fd-row"><span class="fd-label" style="color:var(--grn);font-weight:600">${_t('receivables')}</span><span class="fd-v" style="color:var(--grn)">+${fm(cur.loanOutTotal||0)}</span></div>`;
+  }
 
   fd.innerHTML=h;
-
-  // Close button
   document.getElementById('fd-close')?.addEventListener('click',()=>{_fdOpen=false;renderFloatDash()});
 }
 
@@ -1910,7 +1915,7 @@ window.addEventListener('appinstalled',()=>{
 </div>
 </noscript>
 
-<footer style="max-width:860px;margin:0 auto;padding:16px 16px 24px;text-align:center;font-size:10px;color:#8c857d;font-family:'Outfit',sans-serif" role="contentinfo" id="app-footer">
+<footer style="max-width:860px;margin:0 auto;padding:16px 16px 24px;padding-bottom:160px;text-align:center;font-size:10px;color:#8c857d;font-family:'Outfit',sans-serif" role="contentinfo" id="app-footer">
 </footer>
 <script>
 // Footer i18n
