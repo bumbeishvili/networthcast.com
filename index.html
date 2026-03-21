@@ -1921,6 +1921,7 @@ function renderFloatDash(){
 
   let h=`<button class="fd-toggle" id="fd-close">&times;</button>`;
   h+=`<div style="font-size:9px;text-transform:uppercase;letter-spacing:1.2px;color:var(--mut);margin-bottom:6px;padding-right:16px">${sliderDate} &mdash; ${timeToSlider}</div>`;
+  h+=`<div id="fd-mini-wrap" style="position:relative;margin-bottom:10px"><canvas id="fd-mini-cv" style="width:100%;height:110px;display:block;border-radius:6px"></canvas><div id="fd-mini-ov" style="position:absolute;inset:0;pointer-events:none;overflow:hidden"></div></div>`;
 
   // Total / Liquid / Illiquid
   h+=`<div class="fd-sect">`;
@@ -1957,6 +1958,93 @@ function renderFloatDash(){
 
   fd.innerHTML=h;
   document.getElementById('fd-close')?.addEventListener('click',()=>{_fdOpen=false;renderFloatDash()});
+
+  // Mini chart
+  (function drawMiniChart(){
+    const cv=document.getElementById('fd-mini-cv');
+    const ov=document.getElementById('fd-mini-ov');
+    if(!cv||!ov||!FC.length)return;
+    const W=cv.parentElement.clientWidth,H=110;
+    cv.width=W*2;cv.height=H*2;cv.style.width=W+'px';cv.style.height=H+'px';
+    const ctx=cv.getContext('2d');ctx.scale(2,2);ctx.clearRect(0,0,W,H);
+    const ei=Math.max(6,Math.min(D.sl||6,FC.length-1));
+    const vis=FC.slice(0,ei+1),len=vis.length;
+    const p={t:6,r:60,b:20,l:6},cw=W-p.l-p.r,ch=H-p.t-p.b;
+    const vTotal=vis.map(d=>d.value),vLiq=vis.map(d=>d.cash),vIll=vis.map(d=>d.assetTotal);
+    const allVals=[...vTotal,...vLiq,...vIll];
+    let mn=Math.min(...allVals,0),mx=Math.max(...allVals,1);
+    const rng=mx-mn||1;
+    const xO=i=>p.l+(i/Math.max(len-1,1))*cw;
+    const yO=v=>p.t+ch-((v-mn)/rng)*ch;
+    const MO='IBM Plex Mono,monospace';
+    const hasIll=vIll.some(v=>v>0),hasLiq=vLiq.some(v=>v>0);
+    const precise=ei<=24;
+    // Grid lines
+    ctx.strokeStyle=getComputedStyle(document.documentElement).getPropertyValue('--brd')||'#e5e0d9';
+    ctx.lineWidth=.5;
+    for(let i=0;i<=2;i++){const v=mn+(rng/2)*i,y=yO(v);ctx.beginPath();ctx.moveTo(p.l,y);ctx.lineTo(W-p.r,y);ctx.stroke()}
+    if(mn<0){ctx.save();ctx.strokeStyle='rgba(220,38,38,0.3)';ctx.lineWidth=1;ctx.setLineDash([3,3]);ctx.beginPath();ctx.moveTo(p.l,yO(0));ctx.lineTo(W-p.r,yO(0));ctx.stroke();ctx.restore()}
+    // X labels
+    ctx.fillStyle='#8c857d';ctx.font=`7px ${MO}`;ctx.textAlign='left';ctx.fillText(fmT(0),p.l,H-2);
+    ctx.textAlign='center';ctx.fillText(fmT(ei),p.l+cw/2,H-2);
+    // Draw series
+    function drawS(vals,color,alpha,lw){
+      ctx.beginPath();ctx.moveTo(xO(0),yO(0));
+      for(let i=0;i<len;i++)ctx.lineTo(xO(i),yO(vals[i]));
+      ctx.lineTo(xO(len-1),yO(0));ctx.closePath();
+      const gr=ctx.createLinearGradient(0,p.t,0,p.t+ch);
+      gr.addColorStop(0,color.replace(')',`,${alpha})`).replace('rgb','rgba'));
+      gr.addColorStop(1,color.replace(')',',0.01)').replace('rgb','rgba'));
+      ctx.fillStyle=gr;ctx.fill();
+      ctx.beginPath();
+      for(let i=0;i<len;i++){const x=xO(i),y=yO(vals[i]);i===0?ctx.moveTo(x,y):ctx.lineTo(x,y)}
+      ctx.strokeStyle=color;ctx.lineWidth=lw;ctx.lineJoin='round';ctx.stroke();
+      const ex=xO(len-1),ey=yO(vals[len-1]);
+      ctx.beginPath();ctx.arc(ex,ey,lw+1.5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
+      ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();
+    }
+    if(hasIll)drawS(vIll,'rgb(234,88,12)',0.06,1);
+    if(hasLiq)drawS(vLiq,'rgb(5,150,105)',0.06,1);
+    drawS(vTotal,'rgb(37,99,235)',0.10,1.5);
+    // Slider marker
+    if(D.sl>0&&mi<len){const sx=xO(mi);ctx.save();ctx.strokeStyle='rgba(37,99,235,0.35)';ctx.lineWidth=1;ctx.setLineDash([2,2]);ctx.beginPath();ctx.moveTo(sx,p.t);ctx.lineTo(sx,p.t+ch);ctx.stroke();ctx.restore()}
+    // End value labels
+    const endX=xO(len-1)+5,endLabels=[];
+    endLabels.push({val:fm(vTotal[len-1],precise),color:'#2563eb',y:yO(vTotal[len-1])});
+    if(hasLiq)endLabels.push({val:fm(vLiq[len-1],precise),color:'#059669',y:yO(vLiq[len-1])});
+    if(hasIll)endLabels.push({val:fm(vIll[len-1],precise),color:'#ea580c',y:yO(vIll[len-1])});
+    endLabels.sort((a,b)=>a.y-b.y);
+    const minG=10;for(let i=1;i<endLabels.length;i++){if(endLabels[i].y-endLabels[i-1].y<minG)endLabels[i].y=endLabels[i-1].y+minG}
+    ctx.font=`bold 7px ${MO}`;ctx.textAlign='left';
+    for(const lb of endLabels){ctx.fillStyle=lb.color;ctx.fillText(lb.val,endX,lb.y+3)}
+    // Store mini state & wire hover
+    const _st={xO,yO,vTotal,vLiq,vIll,hasLiq,hasIll,p,W,H,precise,len};
+    cv.addEventListener('mousemove',e=>{
+      const r=cv.getBoundingClientRect();
+      const x=(e.clientX-r.left)*(W/r.width);
+      const hmi=Math.round(Math.max(0,Math.min(len-1,((x-p.l)/cw)*(len-1))));
+      const {xO:xo,yO:yo,vTotal:vT,vLiq:vL,vIll:vI,hasLiq:hL,hasIll:hI,p:cp,W:cW,H:cH,precise:pr,len:cl}=_st;
+      if(hmi<0||hmi>=cl){ov.innerHTML='';return}
+      const cx2=xo(hmi),pct=(cx2/cW)*100;
+      const tot=vT[hmi],lq=vL[hmi],il=vI[hmi];
+      const tipRight=pct<50;
+      const tipPos=tipRight?`left:calc(${pct}% + 8px)`:`right:calc(${100-pct}% + 8px)`;
+      const dots=[];
+      dots.push({x:pct,y:(yo(tot)/cH)*100,color:'#2563eb'});
+      if(hL)dots.push({x:pct,y:(yo(lq)/cH)*100,color:'#059669'});
+      if(hI)dots.push({x:pct,y:(yo(il)/cH)*100,color:'#ea580c'});
+      ov.innerHTML=`
+        <div style="position:absolute;left:${pct}%;top:${(cp.t/cH*100).toFixed(1)}%;height:${((cH-cp.t-cp.b)/cH*100).toFixed(1)}%;width:1px;background:rgba(28,25,23,0.2);transform:translateX(-50%);pointer-events:none"></div>
+        ${dots.map(d=>`<div style="position:absolute;left:${d.x.toFixed(1)}%;top:${d.y.toFixed(1)}%;width:7px;height:7px;background:${d.color};border:1.5px solid #fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>`).join('')}
+        <div style="position:absolute;${tipPos};top:4px;background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:6px 9px;font-size:10px;font-family:var(--mo);white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.12);pointer-events:none;z-index:10">
+          <div style="font-weight:700;margin-bottom:4px;color:var(--txt);font-size:9px">${fmT(hmi)}</div>
+          <div style="color:#2563eb;margin-bottom:1px">⬤ Total &nbsp;<b>${fm(tot,pr)}</b></div>
+          ${hL?`<div style="color:#059669;margin-bottom:1px">⬤ Liquid &nbsp;<b>${fm(lq,pr)}</b></div>`:''}
+          ${hI?`<div style="color:#ea580c">⬤ Assets &nbsp;<b>${fm(il,pr)}</b></div>`:''}
+        </div>`;
+    });
+    cv.addEventListener('mouseleave',()=>{ov.innerHTML=''});
+  })();
 }
 
 // Open button
