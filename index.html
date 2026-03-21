@@ -1182,11 +1182,22 @@ function updateSectionForecasts(){
   // Update each .fc-val span by data attributes
   document.querySelectorAll('.fc-val[data-fc-arr]').forEach(el=>{
     const arr=el.dataset.fcArr,id=el.dataset.fcId;
-    let total=0,prev1=0,prev12=0,prefix='';
+    let total=0,prev1=0,prev12=0,prefix='',fromDate='';
     if(arr==='liq'){total=cur.liqValues[id]||0;prev1=p1?p1.liqValues[id]||0:0;prev12=p12?p12.liqValues[id]||0:0}
     else if(arr==='ill'){total=cur.assetValues[id]||0;prev1=p1?p1.assetValues[id]||0:0;prev12=p12?p12.assetValues[id]||0:0}
-    else if(arr==='rev'){total=cur.revCum[id]||0;prev1=p1?p1.revCum[id]||0:0;prev12=p12?p12.revCum[id]||0:0;prefix='+'}
-    else if(arr==='cst'){total=cur.costCum[id]||0;prev1=p1?p1.costCum[id]||0:0;prev12=p12?p12.costCum[id]||0:0;prefix='-'}
+    else if(arr==='rev'){total=cur.revCum[id]||0;prev1=p1?p1.revCum[id]||0:0;prev12=p12?p12.revCum[id]||0:0;prefix='+';const row=D.rev.find(r=>r.id===id);fromDate=row?.from||''}
+    else if(arr==='cst'){total=cur.costCum[id]||0;prev1=p1?p1.costCum[id]||0:0;prev12=p12?p12.costCum[id]||0:0;prefix='-';const row=D.cst.find(c=>c.id===id);fromDate=row?.from||''}
+    // If 0 and row hasn't started yet, show "starts [month]"
+    if(total===0&&fromDate){
+      const sliderDate=new Date(NOW.getFullYear(),NOW.getMonth()+mi,1);
+      const startDate=new Date(fromDate);
+      if(startDate>sliderDate){
+        const label=startDate.toLocaleString('default',{month:'short',year:'numeric'});
+        el.innerHTML=`starts ${label}`;el.style.color='var(--mut)';el.style.fontSize='10px';el.style.fontStyle='italic';
+        return;
+      }
+    }
+    el.style.color='';el.style.fontSize='';el.style.fontStyle='';
     const mo=p1?total-prev1:total,yr=p12?total-prev12:total;
     let h='';
     if(mi>=1)h+=`<span class="fc-vm">${prefix}${fm(mo)}${_moL}</span>`;
@@ -1440,7 +1451,16 @@ function renderSections(){
   const _showFC=_fc&&D.sl>0;
   const _moL=t('mo'),_yrL='/'+t('yrS');
   // Helper: forecast 3-col display (month, year, total)
-  function fcV3(total,prev1Val,prev12Val,color,prefix,arr,id){
+  function fcV3(total,prev1Val,prev12Val,color,prefix,arr,id,fromDate){
+    // If total is 0 and row hasn't started yet, show "starts [month]" instead of $0
+    if(total===0&&fromDate){
+      const sliderDate=new Date(NOW.getFullYear(),NOW.getMonth()+_mi,1);
+      const startDate=new Date(fromDate);
+      if(startDate>sliderDate){
+        const label=startDate.toLocaleString('default',{month:'short',year:'numeric'});
+        return `<span class="fc-val" style="color:var(--mut);font-size:10px;font-style:italic" data-fc-arr="${arr}" data-fc-id="${id}">starts ${label}</span>`;
+      }
+    }
     const mo=_p1!=null?total-prev1Val:total;
     const yr=_p12!=null?total-prev12Val:total;
     let s=`<span class="fc-val" style="color:${color}" data-fc-arr="${arr}" data-fc-id="${id}">`;
@@ -1499,7 +1519,7 @@ function renderSections(){
     <input class="sm" value="${esc(r.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="rev" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${r.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="rev" data-idx="${i}" data-fld="amount" data-num="1"></div>
     <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${r.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="rev" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
-    ${_showFC&&!r.disabled?fcV3(_fc.revCum[r.id]||0,_p1?_p1.revCum[r.id]||0:0,_p12?_p12.revCum[r.id]||0:0,'var(--grn)','+','rev',r.id):''}
+    ${_showFC&&!r.disabled?fcV3(_fc.revCum[r.id]||0,_p1?_p1.revCum[r.id]||0:0,_p12?_p12.revCum[r.id]||0:0,'var(--grn)','+','rev',r.id,r.from):''}
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div><label>${t('link')}</label><select class="sm ls" data-arr="rev" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(r.linkedAssetId)}</select></div>
       <div><label>${t('starts')}</label>${ymPicker('rev',i,'from',r.from)}</div>
@@ -1520,7 +1540,7 @@ function renderSections(){
     <input class="sm" value="${esc(c.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="cst" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${c.amount||''}" style="padding-left:18px;text-align:right;width:100%" data-arr="cst" data-idx="${i}" data-fld="amount" data-num="1"></div>
     <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${c.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="cst" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:7px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
-    ${_showFC&&!c.disabled?fcV3(_fc.costCum[c.id]||0,_p1?_p1.costCum[c.id]||0:0,_p12?_p12.costCum[c.id]||0:0,'var(--red)','-','cst',c.id):''}
+    ${_showFC&&!c.disabled?fcV3(_fc.costCum[c.id]||0,_p1?_p1.costCum[c.id]||0:0,_p12?_p12.costCum[c.id]||0:0,'var(--red)','-','cst',c.id,c.from):''}
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div><label>${t('link')}</label><select class="sm ls" data-arr="cst" data-idx="${i}" data-fld="linkedAssetId">${linkOpts(c.linkedAssetId)}</select></div>
       <div><label>${t('starts')}</label>${ymPicker('cst',i,'from',c.from)}</div>
