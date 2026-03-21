@@ -2029,6 +2029,7 @@ _saveBtn.addEventListener('click',()=>{
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
       <input id="prof-name" class="sm" placeholder="Profile name..." value="${esc(D.sessionName)}" style="flex:1 1 150px;min-width:0;font-size:13px;padding:8px 10px">
       <button id="prof-save-btn" style="background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;flex:0 0 auto">Save</button>
+      <button id="prof-fresh-btn" style="background:var(--bg);color:var(--mut);border:1px solid var(--brd);border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;flex:0 0 auto">New</button>
     </div>
     <input id="prof-search" class="sm" placeholder="Search profiles..." style="width:100%;font-size:12px;padding:6px 10px;margin-bottom:8px;box-sizing:border-box;${profiles.length<3?'display:none':''}">
     <div id="prof-list" style="overflow-y:auto;flex:1;max-height:50vh">`;
@@ -2058,6 +2059,12 @@ _saveBtn.addEventListener('click',()=>{
     if(existing>=0){profiles[existing]={name,data:snap,summary,savedAt:new Date().toISOString()}}
     else{profiles.push({name,data:snap,summary,savedAt:new Date().toISOString()})}
     saveProfiles(profiles);m.remove();_saveBtn.click();
+  });
+  // Start Fresh
+  document.getElementById('prof-fresh-btn').addEventListener('click',()=>{
+    if(!confirm('Start a blank profile? Any unsaved changes will be lost.'))return;
+    applyDataSnapshot({liquidAssets:[],ownedAssets:[],revs:[],costs:[],incomeEvents:[],expenseEvents:[],slider:0,famSize:'solo',curTax:24,currency:D.cur,sessionName:''});
+    m.remove();
   });
   // Search
   document.getElementById('prof-search')?.addEventListener('input',e=>{
