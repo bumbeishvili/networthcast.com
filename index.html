@@ -1598,10 +1598,11 @@ function bindSections(){
       wrap.classList.remove('open');
       console.log(tag,'CLOSED');
     },300)};
-    wrap.querySelector('.more-btn').addEventListener('mouseenter',()=>show('btn-mouseenter'));
+    let hoverDelay=null;
+    wrap.querySelector('.more-btn').addEventListener('mouseenter',()=>{clearTimeout(hoverDelay);hoverDelay=setTimeout(()=>show('btn-mouseenter'),500)});
     const moreBtn=wrap.querySelector('.more-btn');
-    moreBtn.addEventListener('click',e=>{e.stopPropagation();show('btn-click')});
-    wrap.addEventListener('mouseleave',()=>{console.log(tag,'mouseleave');tryHide('mouseleave')});
+    moreBtn.addEventListener('click',e=>{e.stopPropagation();clearTimeout(hoverDelay);show('btn-click')});
+    wrap.addEventListener('mouseleave',()=>{clearTimeout(hoverDelay);console.log(tag,'mouseleave');tryHide('mouseleave')});
     wrap.addEventListener('mouseenter',()=>{console.log(tag,'mouseenter');clearTimeout(timer)});
     wrap.querySelectorAll('select').forEach(sel=>{
       sel.addEventListener('mousedown',()=>{locked=true;show('select-mousedown')});
@@ -1697,9 +1698,10 @@ function bindSections(){
       pop.querySelector('.pct-inc').addEventListener('click',e=>{e.preventDefault();e.stopPropagation();apply(parseFloat(rng.value)+0.5)});
       pop.addEventListener('mousedown',e=>{if(e.target.type!=='range')e.preventDefault()});
     }
-    function hidePop(){hoverTimer=setTimeout(()=>{if(pop){pop.remove();pop=null;fullUpdate()}},300)}
+    let enterDelay=null;
+    function hidePop(){clearTimeout(enterDelay);hoverTimer=setTimeout(()=>{if(pop){pop.remove();pop=null;fullUpdate()}},300)}
     function cancelHide(){clearTimeout(hoverTimer)}
-    wrap.addEventListener('mouseenter',()=>{cancelHide();showPop()});
+    wrap.addEventListener('mouseenter',()=>{cancelHide();clearTimeout(enterDelay);enterDelay=setTimeout(showPop,500)});
     wrap.addEventListener('mouseleave',hidePop);
     wrap.addEventListener('touchstart',()=>{cancelHide();showPop()},{passive:true});
     // On touch: close other popups when opening this one
