@@ -1646,7 +1646,7 @@ function renderSections(){
 }
 
 // ═══════════════ EVENT DELEGATION FOR SECTIONS
-const ARRS={liq:D.liq,ill:D.ill,rev:D.rev,cst:D.cst,iev:D.iev,eev:D.eev};
+const ARRS={liq:D.liq,ill:D.ill,rev:D.rev,cst:D.cst,iev:D.iev,eev:D.eev}; // kept const; properties mutated by applyDataSnapshot
 function bindSections(){
   const secs=document.getElementById('secs');
   // More tooltips — hover to open, stays open while interacting
@@ -1732,7 +1732,10 @@ function bindSections(){
       persist();
       keepTooltipOpen(el);
       const _a=el.dataset.arr,_i=el.dataset.idx,_f=el.dataset.fld;
-      const pf=_pendingFocus&&(_pendingFocus.arr!==_a||_pendingFocus.idx!==_f)?_pendingFocus:null;
+      // Text-only fields (name, note, etc.) are already saved by input event and don't affect
+      // forecasts — skip re-render so focus is never lost when tabbing between fields
+      if(!el.dataset.num&&!el.dataset.rebuild){flashByAttrs(_a,_i,_f);return}
+      const pf=_pendingFocus&&(_pendingFocus.arr!==_a||_pendingFocus.idx!==_i||_pendingFocus.fld!==_f)?_pendingFocus:null;
       _pendingFocus=null;
       if(el.dataset.rebuild){const idx=_saveOpenMore();runFC();renderSections();updateView();_restoreOpenMore(idx)}
       else{runFC();updateView();renderSectionTotals()}
@@ -2020,16 +2023,20 @@ function saveProfiles(profiles){try{localStorage.setItem(PROFILES_KEY,JSON.strin
 function getDataSnapshot(){
   return{liquidAssets:D.liq,ownedAssets:D.ill,revs:D.rev,costs:D.cst,incomeEvents:D.iev,expenseEvents:D.eev,slider:D.sl,famSize:D.fam,curTax:D.curTax,currency:D.cur,sessionName:D.sessionName};
 }
-function applyDataSnapshot(data){
+function applyDataSnapshot(data,profileId){
   D.liq=data.liquidAssets||[];D.ill=data.ownedAssets||[];D.rev=data.revs||[];D.cst=data.costs||[];
   D.iev=data.incomeEvents||[];D.eev=data.expenseEvents||[];D.sl=data.slider||0;
   D.fam=data.famSize||'solo';D.curTax=data.curTax??24;D.cur=data.currency||'USD';
   D.sessionName=data.sessionName||'';
+  D.activeProfileId=profileId||null;
+  // Sync ARRS references so event handlers always target the current arrays
+  ARRS.liq=D.liq;ARRS.ill=D.ill;ARRS.rev=D.rev;ARRS.cst=D.cst;ARRS.iev=D.iev;ARRS.eev=D.eev;
   CUR=CURRENCIES[D.cur]||'$';
   const cs=document.getElementById('cur-switcher');if(cs)cs.value=D.cur;
   const sn=document.getElementById('session-name');if(sn)sn.value=D.sessionName;
   persist();fullUpdate();
 }
+function genProfileId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
 
 // ═══════════════ EXPORT
 document.getElementById('btn-export')?.addEventListener('click',()=>{
@@ -2150,11 +2157,12 @@ _saveBtn.addEventListener('click',()=>{
   }
   profiles.forEach((p,i)=>{
     const nw=fm(p.summary?.netWorth||0);
-    h+=`<div class="prof-item" data-idx="${i}" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid var(--brd);border-radius:8px;margin-bottom:4px;cursor:pointer;transition:border-color .15s">
-      <div style="min-width:0"><div style="font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.name)}</div>
+    const isActive=D.activeProfileId&&p.id===D.activeProfileId;
+    h+=`<div class="prof-item" data-idx="${i}" style="display:flex;align-items:center;justify-content:space-between;padding:8px 10px;border:1px solid ${isActive?'var(--acc)':'var(--brd)'};border-radius:8px;margin-bottom:4px;cursor:pointer;transition:border-color .15s;background:${isActive?'var(--acc-lt)':''}">
+      <div style="min-width:0"><div style="font-weight:600;font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${esc(p.name)}${isActive?' <span style="font-size:9px;background:var(--acc);color:#fff;border-radius:4px;padding:1px 5px;margin-left:4px;vertical-align:middle">active</span>':''}</div>
       <div style="font-size:10px;color:var(--mut);font-family:var(--mo)">${p.savedAt?.slice(0,10)||''} · ${nw}</div></div>
       <div style="display:flex;gap:4px;flex-shrink:0">
-        <button class="prof-load" data-idx="${i}" style="background:var(--acc-lt);color:var(--acc);border:0;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer">Load</button>
+        <button class="prof-load" data-idx="${i}" data-id="${p.id||''}" style="background:var(--acc-lt);color:var(--acc);border:0;border-radius:6px;padding:4px 10px;font-size:11px;font-weight:600;cursor:pointer">${isActive?'Reload':'Load'}</button>
         <button class="prof-del" data-idx="${i}" style="background:var(--red-bg);color:var(--red);border:0;border-radius:6px;padding:4px 8px;font-size:11px;cursor:pointer">×</button>
       </div></div>`;
   });
@@ -2167,15 +2175,22 @@ _saveBtn.addEventListener('click',()=>{
     if(!name){document.getElementById('prof-name').focus();return}
     const snap=getDataSnapshot();
     const summary={netWorth:FC.length?FC[0].value:0,liqTotal:D.liq.reduce((s,a)=>s+(a.value||0),0),illTotal:D.ill.reduce((s,a)=>s+(a.value||0),0)};
-    const existing=profiles.findIndex(p=>p.name===name);
-    if(existing>=0){profiles[existing]={name,data:snap,summary,savedAt:new Date().toISOString()}}
-    else{profiles.push({name,data:snap,summary,savedAt:new Date().toISOString()})}
+    // If a profile is currently loaded, update it by ID; otherwise match by name or create new
+    const byId=D.activeProfileId?profiles.findIndex(p=>p.id===D.activeProfileId):-1;
+    if(byId>=0){
+      profiles[byId]={...profiles[byId],name,data:snap,summary,savedAt:new Date().toISOString()};
+      D.sessionName=name;
+    }else{
+      const byName=profiles.findIndex(p=>p.name===name);
+      if(byName>=0){profiles[byName]={...profiles[byName],name,data:snap,summary,savedAt:new Date().toISOString()}}
+      else{const id=genProfileId();profiles.push({id,name,data:snap,summary,savedAt:new Date().toISOString()});D.activeProfileId=id}
+    }
     saveProfiles(profiles);m.remove();_saveBtn.click();
   });
   // Start Fresh
   document.getElementById('prof-fresh-btn').addEventListener('click',()=>{
     if(!confirm('Start a blank profile? Any unsaved changes will be lost.'))return;
-    applyDataSnapshot({liquidAssets:[],ownedAssets:[],revs:[],costs:[],incomeEvents:[],expenseEvents:[],slider:0,famSize:'solo',curTax:24,currency:D.cur,sessionName:''});
+    applyDataSnapshot({liquidAssets:[],ownedAssets:[],revs:[],costs:[],incomeEvents:[],expenseEvents:[],slider:0,famSize:'solo',curTax:24,currency:D.cur,sessionName:''},null);
     m.remove();
   });
   // Search
@@ -2191,7 +2206,12 @@ _saveBtn.addEventListener('click',()=>{
     btn.addEventListener('click',e=>{
       e.stopPropagation();
       const idx=+btn.dataset.idx;
-      if(profiles[idx]){applyDataSnapshot(profiles[idx].data);m.remove()}
+      if(profiles[idx]){
+        // Ensure profile has an id (backfill for old profiles)
+        if(!profiles[idx].id){profiles[idx].id=genProfileId();saveProfiles(profiles)}
+        applyDataSnapshot(profiles[idx].data,profiles[idx].id);
+        m.remove();
+      }
     });
   });
   // Delete (with confirmation)
