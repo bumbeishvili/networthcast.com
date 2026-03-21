@@ -909,6 +909,33 @@ function runFC(){
 }
 
 // ═══════════════ CHART (canvas)
+let _chartState=null; // chart state for hover
+function showChartHover(mi){
+  const ov=document.getElementById('chart-hover-ov');
+  if(!ov||!_chartState)return;
+  const {xO,yO,vTotal,vLiq,vIll,hasLiq,hasIll,p,W,H,precise,len}=_chartState;
+  if(mi<0||mi>=len){ov.innerHTML='';return}
+  const cx=xO(mi),pct=(cx/W)*100;
+  const total=vTotal[mi],liq=vLiq[mi],ill=vIll[mi];
+  const date=fmT(mi);
+  // Tooltip: show on the right if cursor is in first 55% of chart, else left
+  const tipRight=pct<55;
+  const tipPos=tipRight?`left:calc(${pct}% + 10px)`:`right:calc(${100-pct}% + 10px)`;
+  // Dots for each active series
+  const dots=[];
+  dots.push({x:pct,y:(yO(total)/H)*100,color:'#2563eb'});
+  if(hasLiq)dots.push({x:pct,y:(yO(liq)/H)*100,color:'#059669'});
+  if(hasIll)dots.push({x:pct,y:(yO(ill)/H)*100,color:'#ea580c'});
+  ov.innerHTML=`
+    <div style="position:absolute;left:${pct}%;top:${(p.t/H*100).toFixed(1)}%;height:${((H-p.t-p.b)/H*100).toFixed(1)}%;width:1px;background:rgba(28,25,23,0.2);transform:translateX(-50%);pointer-events:none"></div>
+    ${dots.map(d=>`<div style="position:absolute;left:${d.x.toFixed(1)}%;top:${d.y.toFixed(1)}%;width:8px;height:8px;background:${d.color};border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>`).join('')}
+    <div style="position:absolute;${tipPos};top:${(p.t/H*100).toFixed(1)}%;background:var(--card);border:1px solid var(--brd);border-radius:10px;padding:8px 11px;font-size:11px;font-family:var(--mo);white-space:nowrap;box-shadow:0 6px 20px rgba(0,0,0,.12);pointer-events:none;z-index:10">
+      <div style="font-weight:700;margin-bottom:5px;color:var(--txt);font-size:10px">${date}</div>
+      <div style="color:#2563eb;margin-bottom:2px">⬤ Total &nbsp;<b>${fm(total,precise)}</b></div>
+      ${hasLiq?`<div style="color:#059669;margin-bottom:2px">⬤ Liquid &nbsp;<b>${fm(liq,precise)}</b></div>`:''}
+      ${hasIll?`<div style="color:#ea580c">⬤ Assets &nbsp;<b>${fm(ill,precise)}</b></div>`:''}
+    </div>`;
+}
 function drawChart(){
   const cv=document.getElementById('cv'),bx=document.getElementById('chart-box');
   if(!cv||!bx||!FC.length)return;
@@ -1059,6 +1086,29 @@ function drawChart(){
     ctx.fillStyle=m.color;
     ctx.textAlign='left';
     ctx.fillText(m.label,lx,ly);
+  }
+
+  // Store chart state for hover
+  _chartState={xO,yO,vTotal,vLiq,vIll,hasLiq,hasIll,p,W,H,precise,len};
+
+  // Set up hover overlay once
+  if(!cv._hoverReady){
+    cv._hoverReady=true;
+    bx.style.position='relative';
+    const ov=document.createElement('div');
+    ov.id='chart-hover-ov';
+    ov.style.cssText='position:absolute;inset:0;pointer-events:none;overflow:hidden';
+    bx.appendChild(ov);
+    cv.addEventListener('mousemove',e=>{
+      if(!_chartState)return;
+      const r=cv.getBoundingClientRect();
+      const x=e.clientX-r.left;
+      const {p:cp,W:cW,len:cLen}=_chartState;
+      const cw2=cW-cp.l-cp.r;
+      const mi=Math.round(Math.max(0,Math.min(cLen-1,((x-cp.l)/cw2)*(cLen-1))));
+      showChartHover(mi);
+    });
+    cv.addEventListener('mouseleave',()=>{const ov=document.getElementById('chart-hover-ov');if(ov)ov.innerHTML=''});
   }
 }
 
