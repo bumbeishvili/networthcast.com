@@ -591,7 +591,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
         <div id="ticks"></div>
         <div class="sth" id="thumb"></div>
       </div>
-      <div id="labels" style="position:relative;height:16px;margin-top:2px"></div>
+      <div id="labels" style="position:relative;height:16px;margin-top:2px"><span id="thumb-lbl" style="position:absolute;transform:translateX(-50%);font-size:9px;font-weight:700;font-family:var(--mo);color:var(--acc);white-space:nowrap;pointer-events:none;z-index:1"></span></div>
     </div>
   </div>
 
@@ -1130,7 +1130,12 @@ function initSlider(){
     const lbl=t.yr===0?t.label:t.yr;
     lbH+=`<span style="position:absolute;left:${t.pct}%;transform:translateX(-50%);font-size:9px;font-family:var(--mo);color:${t.yr===0?'var(--txt)':'var(--mut)'};font-weight:${t.yr===0?600:400}"${isLast?' class="sl-last"':''}>${lbl}</span>`});
 
-  document.getElementById('labels').innerHTML=lbH;
+  const _lblC=document.getElementById('labels');
+  _lblC.innerHTML=lbH;
+  // Re-add thumb position label
+  const _tLbl=document.createElement('span');_tLbl.id='thumb-lbl';
+  _tLbl.style.cssText='position:absolute;transform:translateX(-50%);font-size:9px;font-weight:700;font-family:var(--mo);color:var(--acc);white-space:nowrap;pointer-events:none;z-index:1';
+  _lblC.appendChild(_tLbl);
   // Quick buttons — rendered dynamically so FIRE button can be positioned correctly
   document.getElementById('qbtns').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const m=+b.dataset.qm;if(m>=0){D.sl=Math.min(m,MX);persist();fullUpdate();document.getElementById('tip').style.opacity='0'}});
 
@@ -1169,6 +1174,21 @@ function updateSliderPos(){
   document.getElementById('thumb').style.transition=slDrag?'none':'all .15s';
   document.getElementById('tip').style.left=`clamp(44px,${pct}%,calc(100% - 44px))`;
   document.getElementById('tip-t').textContent=`${fmF(cur.value)}  ${fmT(D.sl)}`;
+  const _tl=document.getElementById('thumb-lbl');
+  if(_tl){
+    _tl.textContent=fmT(D.sl);
+    _tl.style.left=pct+'%';
+    // Hide axis labels that overlap with the thumb label (after layout)
+    requestAnimationFrame(()=>{
+      const tlr=_tl.getBoundingClientRect();
+      if(!tlr.width)return;
+      document.querySelectorAll('#labels>span:not(#thumb-lbl)').forEach(s=>{
+        const sr=s.getBoundingClientRect();
+        const overlap=!(sr.right<tlr.left-4||sr.left>tlr.right+4);
+        s.style.opacity=overlap?'0':'';
+      });
+    });
+  }
   // Compute all FIRE months
   const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
   const fireNum=mCost>0?(mCost*12)/.04:0;
