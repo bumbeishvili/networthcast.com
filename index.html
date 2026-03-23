@@ -523,6 +523,9 @@ input,select{font-family:var(--fn);color:var(--txt)}
       <option value="id">Bahasa Indonesia</option>
       <option value="ms">Bahasa Melayu</option>
     </select>
+    <button id="btn-share" title="Share via link" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    </button>
     <button id="btn-export" title="Export data" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
     </button>
@@ -2145,6 +2148,76 @@ function applyDataSnapshot(data,profileId){
   persist();fullUpdate();
 }
 function genProfileId(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6)}
+
+// ═══════════════ SHARE VIA URL
+async function compressData(obj){
+  const json=JSON.stringify(obj);
+  const blob=new Blob([json]);
+  const cs=new CompressionStream('deflate');
+  const stream=blob.stream().pipeThrough(cs);
+  const buf=await new Response(stream).arrayBuffer();
+  // base64url encode
+  let b='';const bytes=new Uint8Array(buf);
+  for(let i=0;i<bytes.length;i++)b+=String.fromCharCode(bytes[i]);
+  return btoa(b).replace(/\+/g,'-').replace(/\//g,'_').replace(/=+$/,'');
+}
+async function decompressData(str){
+  // base64url decode
+  let b64=str.replace(/-/g,'+').replace(/_/g,'/');
+  while(b64.length%4)b64+='=';
+  const raw=atob(b64);
+  const bytes=new Uint8Array(raw.length);
+  for(let i=0;i<raw.length;i++)bytes[i]=raw.charCodeAt(i);
+  const ds=new DecompressionStream('deflate');
+  const stream=new Blob([bytes]).stream().pipeThrough(ds);
+  const text=await new Response(stream).text();
+  return JSON.parse(text);
+}
+
+document.getElementById('btn-share')?.addEventListener('click',async()=>{
+  const btn=document.getElementById('btn-share');
+  try{
+    const snap=getDataSnapshot();
+    const compressed=await compressData(snap);
+    const url=new URL(window.location);
+    url.hash='d='+compressed;
+    url.search=''; // keep it clean
+    await navigator.clipboard.writeText(url.toString());
+    // Visual feedback — toast
+    btn.style.color='#059669';
+    const toast=document.createElement('div');
+    toast.textContent='Share link copied to clipboard';
+    toast.style.cssText='position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#059669;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;font-family:var(--fn);z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,.15);opacity:0;transition:opacity .2s';
+    document.body.appendChild(toast);
+    requestAnimationFrame(()=>toast.style.opacity='1');
+    setTimeout(()=>{toast.style.opacity='0';setTimeout(()=>toast.remove(),300)},2500);
+    setTimeout(()=>{btn.style.color=''},2500);
+  }catch(e){
+    console.error('Share failed:',e);
+    btn.style.color='#dc2626';
+    const toast=document.createElement('div');
+    toast.textContent='Failed to copy share link';
+    toast.style.cssText='position:fixed;top:16px;left:50%;transform:translateX(-50%);background:#dc2626;color:#fff;padding:10px 20px;border-radius:10px;font-size:13px;font-weight:600;font-family:var(--fn);z-index:99999;box-shadow:0 6px 20px rgba(0,0,0,.15);opacity:0;transition:opacity .2s';
+    document.body.appendChild(toast);
+    requestAnimationFrame(()=>toast.style.opacity='1');
+    setTimeout(()=>{toast.style.opacity='0';setTimeout(()=>toast.remove(),300)},2500);
+    setTimeout(()=>{btn.style.color='';btn.title='Share via link'},2000);
+  }
+});
+
+// On page load: detect shared data in URL hash
+(async function loadSharedData(){
+  const hash=window.location.hash;
+  if(!hash||!hash.startsWith('#d='))return;
+  try{
+    const data=await decompressData(hash.slice(3));
+    if(data&&(data.liquidAssets||data.ownedAssets||data.revs)){
+      applyDataSnapshot(data);
+      // Clean hash from URL without reload
+      history.replaceState(null,'',window.location.pathname+window.location.search);
+    }
+  }catch(e){console.error('Failed to load shared data:',e)}
+})();
 
 // ═══════════════ EXPORT
 document.getElementById('btn-export')?.addEventListener('click',()=>{
