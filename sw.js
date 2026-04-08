@@ -1,7 +1,16 @@
-const CACHE_NAME = 'networthcast-v1';
+const CACHE_NAME = 'networthcast-v5';
 const ASSETS = [
   '/',
   '/index.html',
+  '/_styles/main.css',
+  '/_js/app.js',
+  '/_js/state.js',
+  '/_js/i18n.js',
+  '/_js/forecast.js',
+  '/_js/chart.js',
+  '/_js/slider.js',
+  '/_js/sections.js',
+  '/_js/profiles.js',
   '/manifest.json',
   '/icon-192.png',
   '/icon-512.png'
