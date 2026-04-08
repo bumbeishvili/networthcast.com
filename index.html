@@ -215,7 +215,7 @@
 <link rel="dns-prefetch" href="https://fonts.gstatic.com">
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#f6f5f2;--card:#fff;--brd:#e5e2dc;--txt:#1c1917;--mut:#8c857d;--acc:#2563eb;--acc-lt:#dbeafe;--grn:#059669;--grn-bg:#ecfdf5;--red:#dc2626;--red-bg:#fef2f2;--ylw:#d97706;--prp:#7c3aed;--prp-bg:#f5f3ff;--fn:'Outfit',sans-serif;--mo:'IBM Plex Mono',monospace;--rad:12px;--shd:0 1px 3px rgba(0,0,0,.05)}
+:root{--bg:#f6f5f2;--card:#fff;--brd:#e5e2dc;--txt:#1c1917;--mut:#8c857d;--acc:#2563eb;--acc-lt:#dbeafe;--grn:#16a34a;--grn-bg:#f0fdf4;--red:#dc2626;--red-bg:#fef2f2;--ylw:#d97706;--liq:#059669;--liq-bg:#ecfdf5;--ill:#0d9488;--ill-bg:#f0fdfa;--prp:#7c3aed;--prp-bg:#f5f3ff;--fn:'Outfit',sans-serif;--mo:'IBM Plex Mono',monospace;--rad:12px;--shd:0 1px 3px rgba(0,0,0,.05)}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 body{font-family:var(--fn);color:var(--txt);background:var(--bg);min-height:100vh}
 .w{max-width:860px;margin:0 auto;padding:16px 16px 200px}
@@ -285,6 +285,9 @@ input,select{font-family:var(--fn);color:var(--txt)}
 .more-pop .ls{width:auto!important;flex:none!important;padding:4px 6px;font-size:11px}
 .more-pop select,.more-pop input{font-size:11px;padding:4px 6px}
 .more-close{position:absolute;top:4px;right:6px;background:0;border:0;cursor:pointer;color:var(--mut);font-size:14px;line-height:1;padding:2px 4px;border-radius:4px;font-family:var(--mo)}.more-close:hover{color:var(--txt);background:var(--brd)}
+.dm-item:hover{background:var(--acc-lt)!important;color:var(--acc)!important}
+.fire-info:hover .fire-tip{display:block!important}
+@media(max-width:680px){.fire-tip{left:auto!important;right:0!important;transform:translateY(-50%)!important;white-space:normal!important;min-width:180px;max-width:220px}}
 .rw-primary{background:var(--acc-lt);border-left:3px solid var(--acc);border-bottom:1px solid #bfdbfe;padding-left:8px;border-radius:4px 0 0 4px;position:relative}
 .rw-primary::before{content:'★';position:absolute;left:-14px;top:50%;transform:translateY(-50%);font-size:9px;color:var(--acc)}
 .primary-tip{display:none;position:absolute;left:0;top:calc(100% + 8px);z-index:30;background:var(--txt);color:#fff;font-size:11px;font-weight:400;font-family:var(--fn);line-height:1.5;padding:10px 14px;border-radius:8px;width:280px;white-space:normal;text-transform:none;letter-spacing:0;box-shadow:0 4px 16px rgba(0,0,0,.2);pointer-events:none}
@@ -423,6 +426,7 @@ input,select{font-family:var(--fn);color:var(--txt)}
   #h-val{font-size:26px!important}
   .ym .ym-m{width:48px!important}.ym .ym-y{width:56px!important}
   .ce>div[style*="grid-template-columns"]{grid-template-columns:1fr 1fr!important}
+  #bkdn>div{grid-template-columns:repeat(2,1fr)!important}
 }
 </style>
 </head>
@@ -526,12 +530,26 @@ input,select{font-family:var(--fn);color:var(--txt)}
     <button id="btn-share" title="Share via link" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
     </button>
-    <button id="btn-export" title="Export data" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-    </button>
-    <button id="btn-import" title="Import data" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-    </button>
+    <div id="data-menu" style="position:relative;display:inline-block">
+      <button id="data-menu-btn" title="Data menu" style="background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="12" cy="5" r="1"/><circle cx="12" cy="19" r="1"/></svg>
+      </button>
+      <div id="data-menu-pop" style="display:none;position:absolute;right:0;top:calc(100% + 6px);z-index:100;background:var(--card);border:1px solid var(--brd);border-radius:10px;box-shadow:0 8px 24px rgba(0,0,0,.12);padding:4px 0;min-width:160px;font-family:var(--fn)">
+        <button id="btn-save" class="dm-item" style="display:flex;align-items:center;gap:8px;width:100%;padding:8px 14px;background:0;border:0;cursor:pointer;font-size:12px;font-family:var(--fn);color:var(--txt);text-align:left">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+          Saved
+        </button>
+        <div style="height:1px;background:var(--brd);margin:4px 0"></div>
+        <button id="btn-export" class="dm-item" style="display:flex;align-items:center;gap:8px;width:100%;padding:8px 14px;background:0;border:0;cursor:pointer;font-size:12px;font-family:var(--fn);color:var(--txt);text-align:left">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export JSON
+        </button>
+        <button id="btn-import" class="dm-item" style="display:flex;align-items:center;gap:8px;width:100%;padding:8px 14px;background:0;border:0;cursor:pointer;font-size:12px;font-family:var(--fn);color:var(--txt);text-align:left">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+          Import JSON
+        </button>
+      </div>
+    </div>
     <input type="file" id="file-import" accept=".json" style="display:none">
     <button id="pwa-install" style="display:none;background:var(--acc);color:#fff;border:0;border-radius:8px;padding:6px 12px;font-size:11px;font-weight:600;font-family:var(--fn);cursor:pointer;white-space:nowrap;align-items:center;gap:4px">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="vertical-align:-2px"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
@@ -598,8 +616,8 @@ input,select{font-family:var(--fn);color:var(--txt)}
     </div>
   </div>
 
-  <!-- Breakdown -->
-  <div id="bkdn"></div>
+  <!-- Breakdown (sticky tiles) -->
+  <div id="bkdn" style="position:sticky;top:0;z-index:80;background:var(--bg);padding-top:6px"></div>
 
   <!-- Editable sections -->
   <div id="secs"></div>
@@ -617,7 +635,6 @@ input,select{font-family:var(--fn);color:var(--txt)}
 
 <!-- Floating Dashboard -->
 <div id="float-dash" class="hidden"></div>
-<button class="fd-btn" id="fd-open" title="Open dashboard">📊 Dashboard</button>
 
 <script>
 /* ═══════════════════════════════════════════════════════════════
@@ -697,7 +714,7 @@ const uid=()=>Math.random().toString(36).slice(2,9);
 const esc=s=>(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 let CUR='$';
 const CURRENCIES={USD:'$',EUR:'€',GBP:'£',JPY:'¥',CNY:'¥',KRW:'₩',INR:'₹',TRY:'₺',RUB:'₽',UAH:'₴',GEL:'₾',PLN:'zł',CZK:'Kč',SEK:'kr',NOK:'kr',DKK:'kr',CHF:'Fr',BRL:'R$',AUD:'A$',CAD:'C$',THB:'฿',VND:'₫',IDR:'Rp',MYR:'RM',BDT:'৳',PHP:'₱',SGD:'S$',HKD:'HK$',TWD:'NT$',ARS:'$',MXN:'$',COP:'$',PEN:'S/'};
-function fm(n,precise){if(n==null||isNaN(n))return CUR+'0';const s=n<0?'-':'',a=Math.abs(n);if(a>=1e6){const d=precise?2:1;return s+CUR+(a/1e6).toFixed(d)+'M'}if(a>=1e3){const d=precise?1:0;return s+CUR+(a/1e3).toFixed(d)+'k'}return s+CUR+Math.round(a).toLocaleString()}
+function fm(n,precise){if(n==null||isNaN(n))return CUR+'0';const s=n<0?'-':'',a=Math.abs(n);if(a>=1e6){const d=a>=100e6?1:a>=10e6?2:3;return s+CUR+(a/1e6).toFixed(precise?Math.max(d,2):d)+'M'}if(a>=1e3){const d=a>=100e3?0:1;return s+CUR+(a/1e3).toFixed(precise?Math.max(d,1):d)+'k'}return s+CUR+Math.round(a).toLocaleString()}
 function fmF(n){if(n==null||isNaN(n))return CUR+'0';return(n<0?'-'+CUR:CUR)+Math.abs(Math.round(n)).toLocaleString()}
 function fmT(m){if(m<=0)return t('now');const y=Math.floor(m/12),mo=m%12;const tNow=t('now'),tMo=t('inMo'),tYr=t('inYr'),tYrMo=t('inYrMo');if(!y)return tMo.replace('{m}',mo);if(!mo)return tYr.replace('{y}',y);return tYrMo.replace('{y}',y).replace('{m}',mo)}
 function customConfirm(name){
@@ -924,7 +941,7 @@ function showChartHover(mi){
   const dots=[];
   dots.push({x:pct,y:(yO(total)/H)*100,color:'#2563eb'});
   if(hasLiq)dots.push({x:pct,y:(yO(liq)/H)*100,color:'#059669'});
-  if(hasIll)dots.push({x:pct,y:(yO(ill)/H)*100,color:'#ea580c'});
+  if(hasIll)dots.push({x:pct,y:(yO(ill)/H)*100,color:'#0d9488'});
   ov.innerHTML=`
     <div style="position:absolute;left:${pct}%;top:${(p.t/H*100).toFixed(1)}%;height:${((H-p.t-p.b)/H*100).toFixed(1)}%;width:1px;background:rgba(28,25,23,0.2);transform:translateX(-50%);pointer-events:none"></div>
     ${dots.map(d=>`<div style="position:absolute;left:${d.x.toFixed(1)}%;top:${d.y.toFixed(1)}%;width:8px;height:8px;background:${d.color};border:2px solid #fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>`).join('')}
@@ -932,7 +949,7 @@ function showChartHover(mi){
       <div style="font-weight:700;margin-bottom:5px;color:var(--txt);font-size:10px">${date}</div>
       <div style="color:#2563eb;margin-bottom:2px">⬤ Total &nbsp;<b>${fm(total,precise)}</b></div>
       ${hasLiq?`<div style="color:#059669;margin-bottom:2px">⬤ Liquid &nbsp;<b>${fm(liq,precise)}</b></div>`:''}
-      ${hasIll?`<div style="color:#ea580c">⬤ Assets &nbsp;<b>${fm(ill,precise)}</b></div>`:''}
+      ${hasIll?`<div style="color:#0d9488">⬤ Assets &nbsp;<b>${fm(ill,precise)}</b></div>`:''}
     </div>`;
 }
 function drawChart(){
@@ -953,12 +970,14 @@ function drawChart(){
   const fN=mCost>0?(mCost*12)/.04:null;
   const leanN=fN?fN*0.6:null;
   const fatN=fN?fN*1.5:null;
+  const baristaN=fN?fN*0.5:null;
   // Coast FIRE: how much you need now so 7% growth reaches fN in 20 years
   const coastN=fN?fN/Math.pow(1.07,20):null;
   // Find crossing indices for each (liquid assets)
   function findCross(target){if(!target||target<=0)return -1;for(let i=0;i<len;i++)if(vis[i].cash>=target)return i;return -1}
   const fireTypes=[
     {id:'coast',label:'Coast',num:coastN,color:'#0891b2',bg:'rgba(8,145,178,',idx:findCross(coastN)},
+    {id:'barista',label:'Barista',num:baristaN,color:'#8b5cf6',bg:'rgba(139,92,246,',idx:findCross(baristaN)},
     {id:'lean',label:'Lean',num:leanN,color:'#16a34a',bg:'rgba(22,163,74,',idx:findCross(leanN)},
     {id:'fire',label:'FIRE',num:fN,color:'#f59e0b',bg:'rgba(245,158,11,',idx:findCross(fN)},
     {id:'fat',label:'Fat',num:fatN,color:'#dc2626',bg:'rgba(220,38,38,',idx:findCross(fatN)}
@@ -1007,7 +1026,7 @@ function drawChart(){
   // Draw series back-to-front: illiquid, liquid, total
   const hasIll=vIll.some(v=>v>0);
   const hasLiq=vLiq.some(v=>v>0);
-  if(hasIll)drawSeries(vIll,'rgb(234,88,12)',0.06,1.5);
+  if(hasIll)drawSeries(vIll,'rgb(13,148,136)',0.06,1.5);
   if(hasLiq)drawSeries(vLiq,'rgb(5,150,105)',0.06,1.5);
   drawSeries(vTotal,'rgb(37,99,235)',0.10,2);
 
@@ -1024,7 +1043,7 @@ function drawChart(){
   const labels=[];
   labels.push({name:t('total'),val:fm(vTotal[len-1],precise),color:'#2563eb',y:yO(vTotal[len-1]),big:true});
   if(hasLiq)labels.push({name:t('liquid'),val:fm(vLiq[len-1],precise),color:'#059669',y:yO(vLiq[len-1])});
-  if(hasIll)labels.push({name:t('illiquid'),val:fm(vIll[len-1],precise),color:'#ea580c',y:yO(vIll[len-1])});
+  if(hasIll)labels.push({name:t('illiquid'),val:fm(vIll[len-1],precise),color:'#0d9488',y:yO(vIll[len-1])});
   labels.sort((a,b)=>a.y-b.y);
   const minGap=20;
   for(let i=1;i<labels.length;i++){
@@ -1131,7 +1150,7 @@ function initSlider(){
   _lblC.innerHTML=lbH;
   // Re-add thumb position label
   const _tLbl=document.createElement('span');_tLbl.id='thumb-lbl';
-  _tLbl.style.cssText='position:absolute;transform:translateX(-50%);font-size:9px;font-weight:700;font-family:var(--mo);color:var(--acc);white-space:nowrap;pointer-events:none;z-index:1';
+  _tLbl.style.cssText='position:absolute;transform:translateX(-50%);font-size:14px;font-weight:800;font-family:var(--mo);color:var(--acc);white-space:nowrap;pointer-events:none;z-index:1;text-shadow:0 0 6px rgba(37,99,235,.2)';
   _lblC.appendChild(_tLbl);
   // Quick buttons — rendered dynamically so FIRE button can be positioned correctly
   document.getElementById('qbtns').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;const m=+b.dataset.qm;if(m>=0){D.sl=Math.min(m,MX);persist();fullUpdate();document.getElementById('tip').style.opacity='0'}});
@@ -1191,6 +1210,7 @@ function updateSliderPos(){
   const fireNum=mCost>0?(mCost*12)/.04:0;
   const fireVariants=[
     {id:'coast',label:'Coast',num:fireNum?fireNum/Math.pow(1.07,20):0,color:'#0891b2',bg:'#ecfeff'},
+    {id:'barista',label:'Barista',num:fireNum?fireNum*0.5:0,color:'#8b5cf6',bg:'#f5f3ff'},
     {id:'lean',label:'Lean',num:fireNum*0.6,color:'#16a34a',bg:'#f0fdf4'},
     {id:'fire',label:'FIRE',num:fireNum,color:'#f59e0b',bg:'#fffbeb'},
     {id:'fat',label:'Fat',num:fireNum*1.5,color:'#dc2626',bg:'#fef2f2'}
@@ -1205,7 +1225,7 @@ function updateSliderPos(){
     let allBtns=timeBtns.map(b=>({...b,fireId:null,fireColor:null,fireBg:null}));
     // Add FIRE buttons
     const _mob=window.innerWidth<=680;
-    const _fireIcons={coast:'⛵',lean:'🌱',fire:'🔥',fat:'👑'};
+    const _fireIcons={coast:'⛵',barista:'☕',lean:'🌱',fire:'🔥',fat:'👑'};
     for(const fv of fireMonths){
       if(fv.month<=0)continue;
       const existing=allBtns.find(b=>b.m===fv.month);
@@ -1324,7 +1344,39 @@ function tg(label,bg,col){return`<span class="tg" style="background:${bg};color:
 // ═══════════════ BREAKDOWN (summaries only)
 function renderBreakdown(){
   const el=document.getElementById('bkdn');
-  if(D.sl<=0){el.innerHTML='';return}
+  // Summary tiles — always visible
+  // Tile values: use forecast data when slider > 0, current input data when at "now"
+  let tLiq,tIll,tRev,tCost,tNet,surplus,tileLabel;
+  if(D.sl>0&&FC.length>0){
+    const fc=FC[Math.min(D.sl,FC.length-1)];
+    tLiq=fc.cash;
+    tIll=fc.assetTotal;
+    // Monthly revenue/cost at that point (use cumulative diffs for the last month)
+    const fcP=D.sl>=1?FC[Math.min(D.sl-1,FC.length-1)]:null;
+    tRev=fcP?D.rev.reduce((s,r)=>s+((fc.revCum[r.id]||0)-(fcP.revCum[r.id]||0)),0):D.rev.filter(r=>!r.disabled).reduce((s,r)=>s+(r.amount||0),0);
+    tCost=fcP?D.cst.reduce((s,c)=>s+((fc.costCum[c.id]||0)-(fcP.costCum[c.id]||0)),0):D.cst.filter(c=>!c.disabled).reduce((s,c)=>s+(c.amount||0),0);
+    tileLabel=fmT(D.sl);
+  }else{
+    tLiq=D.liq.filter(a=>!a.disabled).reduce((s,a)=>s+(a.value||0),0);
+    tIll=D.ill.filter(a=>!a.disabled).reduce((s,a)=>s+(a.value||0),0);
+    tRev=D.rev.filter(r=>!r.disabled).reduce((s,r)=>s+(r.amount||0),0);
+    tCost=D.cst.filter(c=>!c.disabled).reduce((s,c)=>s+(c.amount||0),0);
+    tileLabel=t('now')||'now';
+  }
+  tNet=tLiq+tIll;
+  surplus=tRev-tCost;
+  const tiles=[
+    {label:'Net Worth',value:fm(tNet),color:tNet>=0?'var(--acc)':'var(--red)'},
+    {label:'Liquid',value:fm(tLiq),color:'var(--liq)'},
+    {label:'Illiquid',value:fm(tIll),color:'var(--ill)'},
+    {label:'Revenue',value:'+'+fm(tRev)+t('mo'),color:'var(--grn)'},
+    {label:'Costs',value:'-'+fm(tCost)+t('mo'),color:'var(--red)'},
+    {label:'Surplus',value:(surplus>=0?'+':'')+fm(surplus)+t('mo'),color:surplus>=0?'var(--grn)':'var(--red)'}
+  ];
+  const tileLblStyle='font-size:9px;text-transform:uppercase;letter-spacing:1px;color:var(--mut);font-family:var(--mo);margin-bottom:4px';
+  let bkH='';
+  bkH+=`<div style="display:grid;margin-top:2px;grid-template-columns:repeat(3,1fr);gap:8px;padding:0 0 10px">${tiles.map(t=>`<div class="c" style="padding:12px;text-align:center"><div style="${tileLblStyle}">${t.label}</div><div style="font-size:16px;font-weight:700;font-family:var(--mo);color:${t.color}">${t.value}</div></div>`).join('')}</div>`;
+  el.innerHTML=bkH;return;
   const mi=Math.min(D.sl,FC.length-1);
   const cur=FC[mi];
   const prev1=mi>=1?FC[mi-1]:null;
@@ -1356,8 +1408,10 @@ function renderBreakdown(){
   // FIRE
   const mCost=D.cst.reduce((s,c)=>s+(c.amount||0),0);
   const fireNum=mCost>0?(mCost*12)/.04:0;
+  const _fireDescs={coast:'Stop saving now — let compound growth do the rest over ~20 years',barista:'Work part-time to cover expenses while investments grow to full FIRE',lean:'Minimal lifestyle — 60% of full FIRE number covers basic expenses',fire:'Full financial independence — 4% withdrawal covers all expenses',fat:'Comfortable retirement — 150% of FIRE number for extra lifestyle spending'};
   const fireVariants=[
     {id:'coast',label:'Coast',num:fireNum?fireNum/Math.pow(1.07,20):0,color:'#0891b2'},
+    {id:'barista',label:'Barista',num:fireNum?fireNum*0.5:0,color:'#8b5cf6'},
     {id:'lean',label:'Lean',num:fireNum*0.6,color:'#16a34a'},
     {id:'fire',label:'FIRE',num:fireNum,color:'#f59e0b'},
     {id:'fat',label:'Fat',num:fireNum*1.5,color:'#dc2626'}
@@ -1374,7 +1428,8 @@ function renderBreakdown(){
     for(const fv of fireMonths){
       const reached=fv.month>0&&fv.month<=mi;
       const timeStr=fv.month>0?_tShort(fv.month):'—';
-      h+=`<div class="br"><span style="display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;border-radius:50%;background:${fv.color};flex-shrink:0"></span><span style="color:${fv.color};font-weight:600;font-size:12px">${fv.label}</span></span><span style="display:flex;gap:8px;align-items:baseline;font-family:var(--mo)"><span style="color:var(--mut);font-size:10px">${timeStr}</span><span style="font-weight:600;color:${fv.color};min-width:64px;text-align:right">${fm(fv.num)}${reached?' ✓':''}</span></span></div>`;
+      const desc=_fireDescs[fv.id]||'';
+      h+=`<div class="br"><span style="display:flex;align-items:center;gap:4px"><span style="width:6px;height:6px;border-radius:50%;background:${fv.color};flex-shrink:0"></span><span style="color:${fv.color};font-weight:600;font-size:12px">${fv.label}</span><span class="fire-info" style="position:relative;display:inline-flex;align-items:center;cursor:help"><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="var(--mut)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12.01" y2="8"/></svg><span class="fire-tip" style="display:none;position:absolute;left:20px;top:50%;transform:translateY(-50%);background:var(--card);border:1px solid var(--brd);border-radius:8px;padding:6px 10px;font-size:11px;font-weight:400;color:var(--txt);white-space:nowrap;box-shadow:0 4px 14px rgba(0,0,0,.12);z-index:50;font-family:var(--fn)">${desc}</span></span></span><span style="display:flex;gap:8px;align-items:baseline;font-family:var(--mo)"><span style="color:var(--mut);font-size:10px">${timeStr}</span><span style="font-weight:600;color:${fv.color};min-width:64px;text-align:right">${fm(fv.num)}${reached?' ✓':''}</span></span></div>`;
     }
     h+=`<div class="dv"></div>`;
   }
@@ -1411,7 +1466,7 @@ function renderBreakdown(){
     h+=`<div class="dv"></div><div class="bh"><span class="bhl" style="color:var(--prp)">${_t('illAssets')}</span><span class="bhr" style="color:var(--prp);opacity:.45">Σ ${fm(tH)}</span></div>`;
   }
 
-  h+=`</div>`;el.innerHTML=h;
+  h+=`</div>`;el.innerHTML=bkH+h;
 }
 
 // ═══════════════ RELOCATE
@@ -1541,7 +1596,7 @@ function renderSections(){
   let h='';
   // LIQUID ASSETS
   const fcLiq=_showFC?fm(_fc.cash):'';
-  h+=secHd(t('liqHd'),'var(--acc)','addLiq()',`<span class="sr" style="color:var(--acc)">${fm(tLiq)}${_showFC?` <span style="color:var(--mut);font-weight:400">→</span> <span id="fc-hd-liq">${fcLiq}</span>`:''}</span>`);
+  h+=secHd(t('liqHd'),'var(--liq)','addLiq()',`<span class="sr" style="color:var(--liq)">${fm(tLiq)}${_showFC?` <span style="color:var(--mut);font-weight:400">→</span> <span id="fc-hd-liq">${fcLiq}</span>`:''}</span>`);
   if(D.liq.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('value')}</span><span style="flex:0 0 72px;text-align:right">${t('returnYr')}</span><span style="flex:0 0 56px"></span></div>`;
   D.liq.forEach((a,i)=>{
     const isPrimary=i===0;
@@ -1553,7 +1608,7 @@ function renderSections(){
     <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="liq" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="liq" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${a.returnRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="liq" data-idx="${i}" data-fld="returnRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
-    ${_showFC&&!a.disabled?fcV3(_fc.liqValues[a.id]||0,_p1?_p1.liqValues[a.id]||0:0,_p12?_p12.liqValues[a.id]||0:0,'var(--acc)','','liq',a.id):''}
+    ${_showFC&&!a.disabled?fcV3(_fc.liqValues[a.id]||0,_p1?_p1.liqValues[a.id]||0:0,_p12?_p12.liqValues[a.id]||0:0,'var(--liq)','','liq',a.id):''}
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div style="min-width:160px"><label>Note</label><input class="sm" value="${esc(a.note||'')}" placeholder="Add a note..." style="width:100%;font-size:11px" data-arr="liq" data-idx="${i}" data-fld="note"></div>
     </div></div>
@@ -1562,7 +1617,7 @@ function renderSections(){
   // ILLIQUID ASSETS
   const tIll=D.ill.reduce((s,a)=>s+(a.value||0),0);
   const fcIll=_showFC?fm(_fc.assetTotal):'';
-  h+=secHd(t('illHd'),'var(--prp)','addIll()',`<span class="sr" style="color:var(--prp)">${fm(tIll)}${_showFC?` <span style="color:var(--mut);font-weight:400">→</span> <span id="fc-hd-ill">${fcIll}</span>`:''}</span>`,t('illHint'));
+  h+=secHd(t('illHd'),'var(--ill)','addIll()',`<span class="sr" style="color:var(--ill)">${fm(tIll)}${_showFC?` <span style="color:var(--mut);font-weight:400">→</span> <span id="fc-hd-ill">${fcIll}</span>`:''}</span>`,t('illHint'));
   if(D.ill.length)h+=`<div class="col-hdr"><span style="flex:1 1 100px;min-width:60px">${t('name')}</span><span style="flex:0 0 100px;text-align:right">${t('value')}</span><span style="flex:0 0 72px;text-align:right">${t('appYr')}</span><span style="flex:0 0 56px"></span></div>`;
   D.ill.forEach((a,i)=>{h+=`<div class="rw${a.disabled?' disabled':''}" draggable="true" data-drag-arr="ill" data-drag-idx="${i}">
     <span class="drag-handle">⠿</span>
@@ -1570,7 +1625,7 @@ function renderSections(){
     <input class="sm" value="${esc(a.name)}" placeholder="${t('name')}" style="flex:1 1 100px;min-width:60px" data-arr="ill" data-idx="${i}" data-fld="name">
     <div style="position:relative;flex:0 0 100px"><span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:11px">${CUR}</span><input class="sm" type="number" value="${a.value||''}" placeholder="0" style="padding-left:18px;text-align:right;width:100%" data-arr="ill" data-idx="${i}" data-fld="value" data-num="1"></div>
     <div class="pct-wrap" style="position:relative;flex:0 0 72px"><input class="sm pct-input" type="text" inputmode="decimal" value="${a.appRate??''}" placeholder="0" style="text-align:right;width:100%;padding-right:22px" data-arr="ill" data-idx="${i}" data-fld="appRate" data-num="1"><span style="position:absolute;right:8px;top:50%;transform:translateY(-50%);color:var(--mut);font-size:10px;font-family:var(--mo)">%</span></div>
-    ${_showFC&&!a.disabled?fcV3(_fc.assetValues[a.id]||0,_p1?_p1.assetValues[a.id]||0:0,_p12?_p12.assetValues[a.id]||0:0,'var(--prp)','','ill',a.id):''}
+    ${_showFC&&!a.disabled?fcV3(_fc.assetValues[a.id]||0,_p1?_p1.assetValues[a.id]||0:0,_p12?_p12.assetValues[a.id]||0:0,'var(--ill)','','ill',a.id):''}
     <div class="more-wrap"><button class="more-btn">⋯</button><div class="more-pop">
       <div style="min-width:160px"><label>Note</label><input class="sm" value="${esc(a.note||'')}" placeholder="Add a note..." style="width:100%;font-size:11px" data-arr="ill" data-idx="${i}" data-fld="note"></div>
     </div></div>
@@ -1920,6 +1975,7 @@ function renderFloatDash(){
   const fireNum=mCost>0?(mCost*12)/.04:0;
   const fireVariants=[
     {id:'coast',label:'Coast',num:fireNum?fireNum/Math.pow(1.07,20):0,color:'#0891b2'},
+    {id:'barista',label:'Barista',num:fireNum?fireNum*0.5:0,color:'#8b5cf6'},
     {id:'lean',label:'Lean',num:fireNum*0.6,color:'#16a34a'},
     {id:'fire',label:'FIRE',num:fireNum,color:'#f59e0b'},
     {id:'fat',label:'Fat',num:fireNum*1.5,color:'#dc2626'}
@@ -1944,7 +2000,7 @@ function renderFloatDash(){
   h+=`<div class="fd-sect">`;
   h+=`<div class="fd-sect-hd"><span style="color:var(--acc)">${_t('total')}</span><span style="font-size:11px;font-weight:700;color:${cur.value>=0?'var(--acc)':'var(--red)'}">${fm(cur.value)}</span></div>`;
   h+=`<div class="fd-row"><span class="fd-label" style="color:#059669;font-weight:600">${_t('liquid')}</span><span class="fd-v" style="color:#059669">${fm(cur.cash)}</span></div>`;
-  h+=`<div class="fd-row"><span class="fd-label" style="color:#ea580c;font-weight:600">${_t('illiquid')}</span><span class="fd-v" style="color:#ea580c">${fm(illTotal)}</span></div>`;
+  h+=`<div class="fd-row"><span class="fd-label" style="color:#0d9488;font-weight:600">${_t('illiquid')}</span><span class="fd-v" style="color:#0d9488">${fm(illTotal)}</span></div>`;
   h+=`</div>`;
 
   // FIRE
@@ -2020,7 +2076,7 @@ function renderFloatDash(){
       ctx.beginPath();ctx.arc(ex,ey,lw+1.5,0,Math.PI*2);ctx.fillStyle=color;ctx.fill();
       ctx.strokeStyle='#fff';ctx.lineWidth=1;ctx.stroke();
     }
-    if(hasIll)drawS(vIll,'rgb(234,88,12)',0.06,1);
+    if(hasIll)drawS(vIll,'rgb(13,148,136)',0.06,1);
     if(hasLiq)drawS(vLiq,'rgb(5,150,105)',0.06,1);
     drawS(vTotal,'rgb(37,99,235)',0.10,1.5);
     // Slider marker
@@ -2029,7 +2085,7 @@ function renderFloatDash(){
     const endX=xO(len-1)+5,endLabels=[];
     endLabels.push({val:fm(vTotal[len-1],precise),color:'#2563eb',y:yO(vTotal[len-1])});
     if(hasLiq)endLabels.push({val:fm(vLiq[len-1],precise),color:'#059669',y:yO(vLiq[len-1])});
-    if(hasIll)endLabels.push({val:fm(vIll[len-1],precise),color:'#ea580c',y:yO(vIll[len-1])});
+    if(hasIll)endLabels.push({val:fm(vIll[len-1],precise),color:'#0d9488',y:yO(vIll[len-1])});
     endLabels.sort((a,b)=>a.y-b.y);
     const minG=10;for(let i=1;i<endLabels.length;i++){if(endLabels[i].y-endLabels[i-1].y<minG)endLabels[i].y=endLabels[i-1].y+minG}
     ctx.font=`bold 7px ${MO}`;ctx.textAlign='left';
@@ -2049,7 +2105,7 @@ function renderFloatDash(){
       const dots=[];
       dots.push({x:pct,y:(yo(tot)/cH)*100,color:'#2563eb'});
       if(hL)dots.push({x:pct,y:(yo(lq)/cH)*100,color:'#059669'});
-      if(hI)dots.push({x:pct,y:(yo(il)/cH)*100,color:'#ea580c'});
+      if(hI)dots.push({x:pct,y:(yo(il)/cH)*100,color:'#0d9488'});
       ov.innerHTML=`
         <div style="position:absolute;left:${pct}%;top:${(cp.t/cH*100).toFixed(1)}%;height:${((cH-cp.t-cp.b)/cH*100).toFixed(1)}%;width:1px;background:rgba(28,25,23,0.2);transform:translateX(-50%);pointer-events:none"></div>
         ${dots.map(d=>`<div style="position:absolute;left:${d.x.toFixed(1)}%;top:${d.y.toFixed(1)}%;width:7px;height:7px;background:${d.color};border:1.5px solid #fff;border-radius:50%;transform:translate(-50%,-50%);pointer-events:none;box-shadow:0 1px 4px rgba(0,0,0,.2)"></div>`).join('')}
@@ -2057,7 +2113,7 @@ function renderFloatDash(){
           <div style="font-weight:700;margin-bottom:4px;color:var(--txt);font-size:9px">${fmT(hmi)}</div>
           <div style="color:#2563eb;margin-bottom:1px">⬤ Total &nbsp;<b>${fm(tot,pr)}</b></div>
           ${hL?`<div style="color:#059669;margin-bottom:1px">⬤ Liquid &nbsp;<b>${fm(lq,pr)}</b></div>`:''}
-          ${hI?`<div style="color:#ea580c">⬤ Assets &nbsp;<b>${fm(il,pr)}</b></div>`:''}
+          ${hI?`<div style="color:#0d9488">⬤ Assets &nbsp;<b>${fm(il,pr)}</b></div>`:''}
         </div>`;
     });
     cv.addEventListener('mouseleave',()=>{ov.innerHTML=''});
@@ -2175,7 +2231,10 @@ document.getElementById('btn-share')?.addEventListener('click',async()=>{
     const compressed=await compressData(snap);
     const url=new URL(window.location);
     url.hash='d='+compressed;
-    url.search=''; // keep it clean
+    // Preserve language param, remove everything else
+    const _lang=url.searchParams.get('lang');
+    url.search='';
+    if(_lang&&_lang!=='en')url.searchParams.set('lang',_lang);
     await navigator.clipboard.writeText(url.toString());
     // Visual feedback — toast
     btn.style.color='#059669';
@@ -2305,21 +2364,26 @@ function showImportPickerModal(profiles){
   });
 }
 
-// ═══════════════ SAVE/LOAD PROFILES
-// Add save button — we'll put it in the header area
-const _saveBtn=document.createElement('button');
-_saveBtn.id='btn-save';_saveBtn.title='Save / Load profiles';
-_saveBtn.style.cssText='background:var(--card);border:1px solid var(--brd);border-radius:6px;padding:4px 6px;cursor:pointer;color:var(--mut);line-height:0';
-_saveBtn.innerHTML='<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>';
-document.getElementById('btn-export')?.before(_saveBtn);
+// ═══════════════ DATA MENU (toggle dropdown)
+(function(){
+  const menuBtn=document.getElementById('data-menu-btn');
+  const menuPop=document.getElementById('data-menu-pop');
+  if(!menuBtn||!menuPop)return;
+  menuBtn.addEventListener('click',e=>{e.stopPropagation();menuPop.style.display=menuPop.style.display==='none'?'block':'none'});
+  document.addEventListener('click',e=>{if(!menuPop.contains(e.target)&&e.target!==menuBtn)menuPop.style.display='none'});
+  // Close menu when any item is clicked (except save which opens its own modal)
+  menuPop.querySelectorAll('.dm-item').forEach(btn=>{btn.addEventListener('click',()=>{menuPop.style.display='none'})});
+})();
 
+// ═══════════════ SAVE/LOAD PROFILES
+const _saveBtn=document.getElementById('btn-save');
 _saveBtn.addEventListener('click',()=>{
   const profiles=loadProfiles();
   const m=document.createElement('div');
   m.id='profile-modal';m.style.cssText='position:fixed;inset:0;z-index:9999;background:rgba(0,0,0,.5);display:flex;align-items:center;justify-content:center';
   let h=`<div style="background:var(--card);border-radius:16px;max-width:420px;width:calc(100% - 32px);padding:20px;box-shadow:0 20px 60px rgba(0,0,0,.2);position:relative;max-height:80vh;display:flex;flex-direction:column;box-sizing:border-box;overflow:hidden">
     <button onclick="this.closest('#profile-modal').remove()" style="position:absolute;top:10px;right:14px;background:0;border:0;font-size:20px;cursor:pointer;color:var(--mut)">&times;</button>
-    <div style="font-weight:700;font-size:14px;margin-bottom:10px">Profiles</div>
+    <div style="font-weight:700;font-size:14px;margin-bottom:10px">Saved</div>
     <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
       <input id="prof-name" class="sm" placeholder="Profile name..." value="${esc(D.sessionName)}" style="flex:1 1 150px;min-width:0;font-size:13px;padding:8px 10px">
       <button id="prof-save-btn" style="background:var(--acc);color:#fff;border:0;border-radius:8px;padding:8px 14px;font-size:12px;font-weight:600;cursor:pointer;flex:0 0 auto">Save</button>
@@ -2408,14 +2472,17 @@ const _isSafari=/^((?!chrome|android).)*safari/i.test(navigator.userAgent);
 const _isStandalone=window.matchMedia('(display-mode:standalone)').matches||navigator.standalone;
 let _deferredPrompt=null;
 
+const _pwaInstalled=_isStandalone||localStorage.getItem('pwa_installed')==='1';
+
 // Show button on iOS/Safari (no beforeinstallprompt) if not already installed
-if((_isIOS||_isSafari)&&!_isStandalone){
+if((_isIOS||_isSafari)&&!_pwaInstalled){
   const btn=document.getElementById('pwa-install');
   if(btn)btn.style.display='inline-flex';
 }
 
 window.addEventListener('beforeinstallprompt',e=>{
   e.preventDefault();
+  if(_pwaInstalled)return;
   _deferredPrompt=e;
   const btn=document.getElementById('pwa-install');
   if(btn)btn.style.display='inline-flex';
@@ -2427,6 +2494,7 @@ document.getElementById('pwa-install')?.addEventListener('click',async()=>{
     _deferredPrompt.prompt();
     const{outcome}=await _deferredPrompt.userChoice;
     _deferredPrompt=null;
+    if(outcome==='accepted')localStorage.setItem('pwa_installed','1');
     document.getElementById('pwa-install').style.display='none';
   }else{
     // iOS/Safari — show instructions modal
@@ -2444,6 +2512,7 @@ document.getElementById('ios-modal')?.addEventListener('click',e=>{
 });
 
 window.addEventListener('appinstalled',()=>{
+  localStorage.setItem('pwa_installed','1');
   document.getElementById('pwa-install').style.display='none';
   _deferredPrompt=null;
 });
